@@ -1,6 +1,6 @@
 export default function Home() {
   return (
-    <div className="text-center italic font-mono mt-8">
+    <div className="text-center italic font-geist-mono mt-8">
       <h1 className="text-5xl font-bold bg-gradient-to-l from-red-500 via-primary to-red-500 text-transparent bg-clip-text mb-4">
         Welcome to MovSeek!
       </h1>
