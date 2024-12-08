@@ -4,18 +4,17 @@ import MovieList from '@/components/MovieList';
 import { useEffect, useRef, useState } from 'react';
 
 export default function Home() {
-  const [activeButton, setActiveButton] = useState<'A' | 'B'>('A');
+  const [activeButton, setActiveButton] = useState<'day' | 'week'>('day');
   const [backgroundStyle, setBackgroundStyle] = useState({});
   const buttonARef = useRef<HTMLButtonElement>(null);
   const buttonBRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
-    const activeRef = activeButton === 'A' ? buttonARef.current : buttonBRef.current;
+    const activeRef = activeButton === 'day' ? buttonARef.current : buttonBRef.current;
     if (activeRef) {
       const rect = activeRef.getBoundingClientRect();
       setBackgroundStyle({
         width: `${rect.width}px`,
-        height: `${rect.height}px`,
         transform: `translateX(${activeRef.offsetLeft}px)`,
       });
     }
@@ -53,32 +52,34 @@ export default function Home() {
           <section className="container py-6">
             <div className="flex items-center content-center">
               <h1 className="text-4xl text-start font-bold mr-14 mb-6">Trending</h1>
-              <div className="relative flex items-center bg-sky-700 p-1 mb-6 rounded-full w-fit">
+              <div className="relative flex items-center bg-sky-700 pr-1 mb-6 rounded-full w-fit">
                 <div
-                  className="absolute top-1 left-0 right-0 bg-gradient-to-r from-purple-400 to-sky-500 rounded-full border-white border transition-all duration-300 ease-in-out"
+                  className={`absolute h-8 w-[79.22px] top-1 ${
+                    activeButton === 'day' ? 'left-1' : 'left-0'
+                  } bg-gradient-to-r from-purple-400 to-sky-500 rounded-full border-white border transition-all duration-300 ease-in-out`}
                   style={backgroundStyle}
                 ></div>
                 <button
                   ref={buttonARef}
-                  onClick={() => setActiveButton('A')}
+                  onClick={() => setActiveButton('day')}
                   className={`z-10 px-4 py-2 rounded-full font-medium transition-all duration-300 ease-in-out ${
-                    activeButton === 'A' ? 'text-white' : 'text-white opacity-60'
+                    activeButton === 'day' ? 'text-white' : 'text-white opacity-60'
                   }`}
                 >
                   Today
                 </button>
                 <button
                   ref={buttonBRef}
-                  onClick={() => setActiveButton('B')}
+                  onClick={() => setActiveButton('week')}
                   className={`z-10 px-4 py-2 rounded-full font-medium transition-all duration-300 ease-in-out ${
-                    activeButton === 'B' ? 'text-white' : 'text-white opacity-60'
+                    activeButton === 'week' ? 'text-white' : 'text-white opacity-60'
                   }`}
                 >
                   This week
                 </button>
               </div>
             </div>
-            <MovieList category="trending" />
+            <MovieList mediaType="movie" timeWindow={activeButton} />
           </section>
           {/* <section className="container py-6">
             <h1 className="text-4xl font-bold mb-6">Xu Hướng</h1>

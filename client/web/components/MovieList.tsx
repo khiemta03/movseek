@@ -4,17 +4,56 @@ import { useEffect, useRef, useState } from 'react';
 import MovieCard from './MovieCard';
 import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext } from './ui/carousel';
 import Autoplay from 'embla-carousel-autoplay';
+import { fetchTrending } from '@/utils/apis/trending';
 
 interface MovieListProps {
-  category: string;
+  mediaType: 'all' | 'movie' | 'tv' | 'person';
+  timeWindow: 'day' | 'week';
 }
 
-const MovieList = ({ category }: MovieListProps) => {
+interface Movie {
+  id: number;
+  title: string;
+  poster: string;
+  releaseDate: string;
+  rating: number;
+}
+
+const MovieList = ({ mediaType, timeWindow }: MovieListProps) => {
   const [viewMode, setViewMode] = useState<'carousel' | 'grid'>('carousel');
   const [transitioning, setTransitioning] = useState(false);
   const [backgroundStyle, setBackgroundStyle] = useState({});
   const buttonARef = useRef<HTMLButtonElement>(null);
   const buttonBRef = useRef<HTMLButtonElement>(null);
+  const [movies, setMovies] = useState<Movie[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchTrendingMovies = async () => {
+      try {
+        setLoading(true);
+        const response = await fetchTrending(mediaType, timeWindow);
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const data = response.data.results.map((movie: Record<string, any>) => ({
+          id: movie.id,
+          title: movie.title,
+          poster: movie.poster_path,
+          releaseDate: movie.release_date,
+          rating: movie.vote_average,
+        }));
+        setMovies(data);
+        console.log(data);
+      } catch (err) {
+        setError('Failed to fetch movies');
+        console.log(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchTrendingMovies();
+  }, [mediaType, timeWindow]);
 
   useEffect(() => {
     const activeRef = viewMode === 'carousel' ? buttonARef.current : buttonBRef.current;
@@ -22,7 +61,6 @@ const MovieList = ({ category }: MovieListProps) => {
       const rect = activeRef.getBoundingClientRect();
       setBackgroundStyle({
         width: `${rect.width}px`,
-        height: `${rect.height}px`,
         transform: `translateX(${activeRef.offsetLeft}px)`,
       });
     }
@@ -38,162 +76,15 @@ const MovieList = ({ category }: MovieListProps) => {
     }
   };
 
-  const movies = [
-    {
-      id: 1,
-      title: 'A miraculous conception. A merciless king.',
-      poster: 'https://th.bing.com/th/id/OIP.Gx-zcrqyJsQYrr1g14qCEAHaK9?w=188&h=279&c=7&r=0&o=5&dpr=2&pid=1.7',
-      releaseDate: '2024-12-05',
-      rating: 8.0,
-    },
-    {
-      id: 2,
-      title: 'Movie 2',
-      poster: 'https://th.bing.com/th/id/OIP.QblrzVh2BqODKiAlvUCMqAHaKf?w=188&h=266&c=7&r=0&o=5&dpr=2&pid=1.7',
-      releaseDate: '2024-12-05',
-      rating: 7.0,
-    },
-    {
-      id: 3,
-      title: 'Movie 3',
-      poster: 'https://th.bing.com/th/id/OIP.gwUCRkCrlItYPT7oEALsKAHaLH?w=188&h=282&c=7&r=0&o=5&dpr=2&pid=1.7',
-      releaseDate: '2024-12-05',
-      rating: 6.0,
-    },
-    {
-      id: 4,
-      title: 'Movie 1',
-      poster: 'https://th.bing.com/th/id/OIP.Gx-zcrqyJsQYrr1g14qCEAHaK9?w=188&h=279&c=7&r=0&o=5&dpr=2&pid=1.7',
-      releaseDate: '2024-12-05',
-      rating: 5.0,
-    },
-    {
-      id: 5,
-      title: 'Movie 2',
-      poster: 'https://th.bing.com/th/id/OIP.QblrzVh2BqODKiAlvUCMqAHaKf?w=188&h=266&c=7&r=0&o=5&dpr=2&pid=1.7',
-      releaseDate: '2024-12-05',
-      rating: 4.0,
-    },
-    {
-      id: 6,
-      title: 'Movie 3',
-      poster: 'https://th.bing.com/th/id/OIP.gwUCRkCrlItYPT7oEALsKAHaLH?w=188&h=282&c=7&r=0&o=5&dpr=2&pid=1.7',
-      releaseDate: '2024-12-05',
-      rating: 3.0,
-    },
-    {
-      id: 7,
-      title: 'Movie 1',
-      poster: 'https://th.bing.com/th/id/OIP.Gx-zcrqyJsQYrr1g14qCEAHaK9?w=188&h=279&c=7&r=0&o=5&dpr=2&pid=1.7',
-      releaseDate: '2024-12-05',
-      rating: 0.0,
-    },
-    {
-      id: 8,
-      title: 'Movie 2',
-      poster: 'https://th.bing.com/th/id/OIP.QblrzVh2BqODKiAlvUCMqAHaKf?w=188&h=266&c=7&r=0&o=5&dpr=2&pid=1.7',
-      releaseDate: '2024-12-05',
-      rating: 7.0,
-    },
-    {
-      id: 9,
-      title: 'Movie 3',
-      poster: 'https://th.bing.com/th/id/OIP.gwUCRkCrlItYPT7oEALsKAHaLH?w=188&h=282&c=7&r=0&o=5&dpr=2&pid=1.7',
-      releaseDate: '2024-12-05',
-      rating: 7.0,
-    },
-    {
-      id: 10,
-      title: 'Movie 1',
-      poster: 'https://th.bing.com/th/id/OIP.Gx-zcrqyJsQYrr1g14qCEAHaK9?w=188&h=279&c=7&r=0&o=5&dpr=2&pid=1.7',
-      releaseDate: '2024-12-05',
-      rating: 7.0,
-    },
-    {
-      id: 11,
-      title: 'Movie 2',
-      poster: 'https://th.bing.com/th/id/OIP.QblrzVh2BqODKiAlvUCMqAHaKf?w=188&h=266&c=7&r=0&o=5&dpr=2&pid=1.7',
-      releaseDate: '2024-12-05',
-      rating: 7.0,
-    },
-    {
-      id: 12,
-      title: 'Movie 3',
-      poster: 'https://th.bing.com/th/id/OIP.gwUCRkCrlItYPT7oEALsKAHaLH?w=188&h=282&c=7&r=0&o=5&dpr=2&pid=1.7',
-      releaseDate: '2024-12-05',
-      rating: 7.0,
-    },
-    {
-      id: 13,
-      title: 'Movie 1',
-      poster: 'https://th.bing.com/th/id/OIP.Gx-zcrqyJsQYrr1g14qCEAHaK9?w=188&h=279&c=7&r=0&o=5&dpr=2&pid=1.7',
-      releaseDate: '2024-12-05',
-      rating: 7.0,
-    },
-    {
-      id: 14,
-      title: 'Movie 2',
-      poster: 'https://th.bing.com/th/id/OIP.QblrzVh2BqODKiAlvUCMqAHaKf?w=188&h=266&c=7&r=0&o=5&dpr=2&pid=1.7',
-      releaseDate: '2024-12-05',
-      rating: 7.0,
-    },
-    {
-      id: 15,
-      title: 'Movie 3',
-      poster: 'https://th.bing.com/th/id/OIP.gwUCRkCrlItYPT7oEALsKAHaLH?w=188&h=282&c=7&r=0&o=5&dpr=2&pid=1.7',
-      releaseDate: '2024-12-05',
-      rating: 7.0,
-    },
-    {
-      id: 16,
-      title: 'Movie 1',
-      poster: 'https://th.bing.com/th/id/OIP.Gx-zcrqyJsQYrr1g14qCEAHaK9?w=188&h=279&c=7&r=0&o=5&dpr=2&pid=1.7',
-      releaseDate: '2024-12-05',
-      rating: 7.0,
-    },
-    {
-      id: 17,
-      title: 'Movie 2',
-      poster: 'https://th.bing.com/th/id/OIP.QblrzVh2BqODKiAlvUCMqAHaKf?w=188&h=266&c=7&r=0&o=5&dpr=2&pid=1.7',
-      releaseDate: '2024-12-05',
-      rating: 7.0,
-    },
-    {
-      id: 18,
-      title: 'Movie 3',
-      poster: 'https://th.bing.com/th/id/OIP.gwUCRkCrlItYPT7oEALsKAHaLH?w=188&h=282&c=7&r=0&o=5&dpr=2&pid=1.7',
-      releaseDate: '2024-12-05',
-      rating: 7.0,
-    },
-    {
-      id: 19,
-      title: 'Movie 1',
-      poster: 'https://th.bing.com/th/id/OIP.Gx-zcrqyJsQYrr1g14qCEAHaK9?w=188&h=279&c=7&r=0&o=5&dpr=2&pid=1.7',
-      releaseDate: '2024-12-05',
-      rating: 7.0,
-    },
-    {
-      id: 20,
-      title: 'Movie 2',
-      poster: 'https://th.bing.com/th/id/OIP.QblrzVh2BqODKiAlvUCMqAHaKf?w=188&h=266&c=7&r=0&o=5&dpr=2&pid=1.7',
-      releaseDate: '2024-12-05',
-      rating: 7.0,
-    },
-    {
-      id: 21,
-      title: 'Movie 3',
-      poster: 'https://th.bing.com/th/id/OIP.gwUCRkCrlItYPT7oEALsKAHaLH?w=188&h=282&c=7&r=0&o=5&dpr=2&pid=1.7',
-      releaseDate: '2024-12-05',
-      rating: 7.0,
-    },
-  ];
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>{error}</p>;
 
   return (
     <div className="relative w-full py-4">
       <div className="flex justify-end">
         <div className="relative items-center bg-white border-2 border-blue-500 mb-6 rounded-full w-fit">
           <div
-            className="absolute z-0 top-0 left-0 right-0 bg-blue-500 rounded-full border-white border transition-all duration-300 ease-in-out"
+            className="absolute h-9 w-[165.33px] z-0 top-0 left-0 right-0 bg-blue-500 rounded-full border-white border transition-all duration-300 ease-in-out"
             style={backgroundStyle}
           ></div>
           <button

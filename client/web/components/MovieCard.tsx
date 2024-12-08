@@ -1,7 +1,8 @@
 import { formatDate } from '@/lib/utils';
 import Image from 'next/image';
-import React from 'react';
+import React, { useState } from 'react';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import { TMDB_API } from '@/utils/constants';
 
 interface MovieCardProps {
   title: string;
@@ -11,7 +12,7 @@ interface MovieCardProps {
 }
 
 const MovieCard: React.FC<MovieCardProps> = ({ title, releaseDate, poster, rating }) => {
-  const width = 100;
+  const [imageSrc, setImageSrc] = useState(TMDB_API.POSTER(poster));
   const colors = {
     success: {
       active: '#4caf50',
@@ -48,12 +49,18 @@ const MovieCard: React.FC<MovieCardProps> = ({ title, releaseDate, poster, ratin
         <Tooltip>
           <TooltipTrigger>
             <Image
-              src={poster}
+              loading="lazy"
+              src={imageSrc}
               alt={title}
               className="w-full h-60 object-cover hover:cursor-pointer"
-              width={width}
-              height={width * 1.618}
-              priority
+              width={400}
+              height={400 * 1.618}
+              onError={() =>
+                setImageSrc(
+                  'https://www.kindpng.com/picc/m/376-3761402_pictures-images-photos-polaroid-polaroid-icon-png-transparent.png',
+                )
+              }
+              // priority
             />
           </TooltipTrigger>
           <TooltipContent>
@@ -72,12 +79,14 @@ const MovieCard: React.FC<MovieCardProps> = ({ title, releaseDate, poster, ratin
           }}
         ></div>
         <div className="absolute inset-1 bg-gray-800 rounded-full"></div>
-        <span className="absolute text-white text-xs font-bold">{rating > 0 ? `${rating * 10}%` : 'NR'}</span>
+        <span className="absolute text-white text-xs font-bold">
+          {rating > 0 ? `${Math.round(rating * 10)}%` : 'NR'}
+        </span>
       </div>
 
       <div className="absolute top-3/4 bottom-0 left-0 right-0 bg-gradient-to-t from-stone-900 to-transparent px-2 py-5">
         <h3 className="text-xs text-white font-bold line-clamp-2 hover:text-primary hover:cursor-pointer">{title}</h3>
-        <p className="text-xs text-white">{formatDate(releaseDate)}</p>
+        <p className="text-xs text-white">{releaseDate}</p>
       </div>
     </div>
   );
