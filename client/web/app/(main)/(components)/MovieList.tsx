@@ -2,7 +2,13 @@
 
 import { useEffect, useRef, useState } from 'react';
 import MovieCard from './MovieCard';
-import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext } from './ui/carousel';
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselPrevious,
+  CarouselNext,
+} from '../../../components/ui/carousel';
 import Autoplay from 'embla-carousel-autoplay';
 import { fetchTrending } from '@/utils/apis/trending';
 import MovieCardDummpy from './MovieCardDummy';
@@ -137,6 +143,7 @@ const MovieList = ({ mediaType, timeWindow }: MovieListProps) => {
                   : movies.map((movie) => (
                       <CarouselItem key={movie.id} className="basis-44 h-80">
                         <MovieCard
+                          id={movie.id}
                           title={movie.title}
                           poster={movie.poster}
                           releaseDate={movie.releaseDate}
@@ -168,6 +175,7 @@ const MovieList = ({ mediaType, timeWindow }: MovieListProps) => {
             {movies.map((movie) => (
               <div key={movie.id} className="h-80">
                 <MovieCard
+                  id={movie.id}
                   title={movie.title}
                   poster={movie.poster}
                   releaseDate={movie.releaseDate}

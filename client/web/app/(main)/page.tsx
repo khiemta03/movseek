@@ -1,6 +1,6 @@
 'use client';
 
-import MovieList from '@/components/MovieList';
+import MovieList from '@/app/(main)/(components)/MovieList';
 import { useEffect, useRef, useState } from 'react';
 
 export default function Home() {

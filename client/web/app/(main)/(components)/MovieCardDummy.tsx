@@ -22,7 +22,7 @@ const MovieCardDummpy: React.FC = () => {
           <TooltipTrigger>
             {/*eslint-disable-next-line @next/next/no-img-element*/}
             <img
-              src="/poster-dummy.png"
+              src="/poster-default.svg"
               alt="loading..."
               className="w-full h-60 object-contain hover:cursor-pointer"
               width="400"
