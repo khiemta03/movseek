@@ -7,12 +7,41 @@ interface MovieCardProps {
   title: string;
   releaseDate: string;
   poster: string;
-  rating: number; // Rating to display in the progress bar
-  onDetailsClick: () => void;
+  rating: number;
 }
 
-const MovieCard: React.FC<MovieCardProps> = ({ title, releaseDate, poster, rating, onDetailsClick }) => {
+const MovieCard: React.FC<MovieCardProps> = ({ title, releaseDate, poster, rating }) => {
   const width = 100;
+  const colors = {
+    success: {
+      active: '#4caf50',
+      inactive: '#29432c',
+    },
+    warning: {
+      active: '#d3d553',
+      inactive: '#2f321b',
+    },
+    danger: {
+      active: '#be365d',
+      inactive: '#501934',
+    },
+    nr: {
+      active: '#666666',
+      inactive: '#666666',
+    },
+  };
+  const categorize = (rating: number) => {
+    if (rating >= 7) {
+      return colors.success;
+    } else if (rating >= 5) {
+      return colors.warning;
+    } else if (rating > 0) {
+      return colors.danger;
+    } else {
+      return colors.nr;
+    }
+  };
+
   return (
     <div className="relative w-full h-full bg-white font-geist shadow-lg rounded-lg overflow-hidden hover:shadow-xl transition-shadow">
       <TooltipProvider>
@@ -37,15 +66,17 @@ const MovieCard: React.FC<MovieCardProps> = ({ title, releaseDate, poster, ratin
         <div
           className="absolute inset-0 rounded-full"
           style={{
-            background: `conic-gradient(#4caf50 ${rating * 10}%, #29432c ${rating * 10}%)`,
+            background: `conic-gradient(${categorize(rating).active} ${rating * 10}%, ${categorize(rating).inactive} ${
+              rating * 10
+            }%)`,
           }}
         ></div>
         <div className="absolute inset-1 bg-gray-800 rounded-full"></div>
-        <span className="absolute text-white text-xs font-bold">{rating * 10}%</span>
+        <span className="absolute text-white text-xs font-bold">{rating > 0 ? `${rating * 10}%` : 'NR'}</span>
       </div>
 
-      <div className="absolute top-3/4 bottom-0 left-0 right-0 bg-gradient-to-t from-stone-900 to-transparent px-1 py-5">
-        <h3 className="text-xs text-white line-clamp-2 hover:text-primary hover:cursor-pointer">{title}</h3>
+      <div className="absolute top-3/4 bottom-0 left-0 right-0 bg-gradient-to-t from-stone-900 to-transparent px-2 py-5">
+        <h3 className="text-xs text-white font-bold line-clamp-2 hover:text-primary hover:cursor-pointer">{title}</h3>
         <p className="text-xs text-white">{formatDate(releaseDate)}</p>
       </div>
     </div>
