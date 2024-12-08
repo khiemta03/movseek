@@ -12,6 +12,7 @@ interface MovieCardProps {
 }
 
 const MovieCard: React.FC<MovieCardProps> = ({ title, releaseDate, poster, rating }) => {
+  console.log(releaseDate);
   const [imageSrc, setImageSrc] = useState(TMDB_API.POSTER(poster));
   const colors = {
     success: {
@@ -49,18 +50,13 @@ const MovieCard: React.FC<MovieCardProps> = ({ title, releaseDate, poster, ratin
         <Tooltip>
           <TooltipTrigger>
             <Image
-              loading="lazy"
               src={imageSrc}
               alt={title}
               className="w-full h-60 object-cover hover:cursor-pointer"
               width={400}
               height={400 * 1.618}
-              onError={() =>
-                setImageSrc(
-                  'https://www.kindpng.com/picc/m/376-3761402_pictures-images-photos-polaroid-polaroid-icon-png-transparent.png',
-                )
-              }
-              // priority
+              onError={() => setImageSrc('poster-dummy.png')}
+              priority
             />
           </TooltipTrigger>
           <TooltipContent>
@@ -86,7 +82,7 @@ const MovieCard: React.FC<MovieCardProps> = ({ title, releaseDate, poster, ratin
 
       <div className="absolute top-3/4 bottom-0 left-0 right-0 bg-gradient-to-t from-stone-900 to-transparent px-2 py-5">
         <h3 className="text-xs text-white font-bold line-clamp-2 hover:text-primary hover:cursor-pointer">{title}</h3>
-        <p className="text-xs text-white">{releaseDate}</p>
+        <p className="text-xs text-white">{releaseDate != '' ? formatDate(releaseDate) : ''}</p>
       </div>
     </div>
   );

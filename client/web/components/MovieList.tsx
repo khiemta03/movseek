@@ -5,6 +5,7 @@ import MovieCard from './MovieCard';
 import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext } from './ui/carousel';
 import Autoplay from 'embla-carousel-autoplay';
 import { fetchTrending } from '@/utils/apis/trending';
+import MovieCardDummpy from './MovieCardDummy';
 
 interface MovieListProps {
   mediaType: 'all' | 'movie' | 'tv' | 'person';
@@ -43,7 +44,6 @@ const MovieList = ({ mediaType, timeWindow }: MovieListProps) => {
           rating: movie.vote_average,
         }));
         setMovies(data);
-        console.log(data);
       } catch (err) {
         setError('Failed to fetch movies');
         console.log(err);
@@ -66,6 +66,15 @@ const MovieList = ({ mediaType, timeWindow }: MovieListProps) => {
     }
   }, [viewMode]);
 
+  useEffect(() => {
+    if (loading === true) {
+      setTransitioning(true);
+      setTimeout(() => {
+        setTransitioning(false);
+      }, 500);
+    }
+  }, [loading]);
+
   const handleModeChange = (mode: 'carousel' | 'grid') => {
     if (mode !== viewMode) {
       setTransitioning(true);
@@ -76,7 +85,8 @@ const MovieList = ({ mediaType, timeWindow }: MovieListProps) => {
     }
   };
 
-  if (loading) return <p>Loading...</p>;
+  const moviesDummy = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+
   if (error) return <p>{error}</p>;
 
   return (
@@ -118,7 +128,23 @@ const MovieList = ({ mediaType, timeWindow }: MovieListProps) => {
           >
             <div className="flex space-x-8">
               <CarouselContent>
-                {movies.map((movie) => (
+                {loading
+                  ? moviesDummy.map((movie) => (
+                      <CarouselItem key={movie} className="basis-44 h-80">
+                        <MovieCardDummpy />
+                      </CarouselItem>
+                    ))
+                  : movies.map((movie) => (
+                      <CarouselItem key={movie.id} className="basis-44 h-80">
+                        <MovieCard
+                          title={movie.title}
+                          poster={movie.poster}
+                          releaseDate={movie.releaseDate}
+                          rating={movie.rating}
+                        />
+                      </CarouselItem>
+                    ))}
+                {/* {movies.map((movie) => (
                   <CarouselItem key={movie.id} className="basis-44 h-80">
                     <MovieCard
                       title={movie.title}
@@ -127,7 +153,7 @@ const MovieList = ({ mediaType, timeWindow }: MovieListProps) => {
                       rating={movie.rating}
                     />
                   </CarouselItem>
-                ))}
+                ))} */}
               </CarouselContent>
               <div className="absolute top-1/2 left-8 transform -translate-y-1/2">
                 <CarouselPrevious className="p-2 bg-gray-800 text-white rounded-full" />
