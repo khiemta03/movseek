@@ -3,6 +3,7 @@ export const TMDB_API = {
     `/trending/${mediaType}/${timeWindow}`,
   MOVIE_DETAILS: (movieId: number) => `/movie/${movieId}`,
   MOVIE_CREDITS: (movieId: number) => `/movie/${movieId}/credits`,
+  MOVIE_KEYWORDS: (movieId: number) => `/movie/${movieId}/keywords`,
   SEARCH_MOVIE: (query: string) => `/search/movie?query=${query}`,
   POSTER: (poster: string) => `https://image.tmdb.org/t/p/original/${poster}`,
 };

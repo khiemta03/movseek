@@ -20,6 +20,7 @@ function pickMovieFields(movie: any) {
     budget: movie.budget,
     genres: movie.genres,
     id: movie.id,
+    homepage: movie.homepage,
     origin_country: movie.origin_country,
     original_language: movie.original_language,
     original_title: movie.original_title,
@@ -70,4 +71,12 @@ function handleMovieCredits(data: any) {
   return { cast, crew };
 }
 
-export { convertMinutes, getCrewByJob, pickMovieFields, handleMovieCredits };
+function formatCurrency(amount: number): string {
+  return `$${amount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+}
+
+function getSizeOfCrew(crewGrouped: CrewGroupedByDepartment): number {
+  return Object.values(crewGrouped).reduce((total, crewArray) => total + crewArray.length, 0);
+}
+
+export { getSizeOfCrew, formatCurrency, convertMinutes, getCrewByJob, pickMovieFields, handleMovieCredits };

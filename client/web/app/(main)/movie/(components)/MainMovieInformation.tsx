@@ -30,7 +30,7 @@ const MainMovieInformation: React.FC<MainMovieInformationProps> = ({ movie, crea
       <div className="absolute z-0 inset-0 bg-black/70"></div>
       <div className="relative z-10 container mx-auto text-white">
         <div className="flex flex-row px-20 gap-4">
-          <div className="relative w-96 h-[450px] aspect-[2/3] rounded-lg overflow-hidden">
+          <div className="relative h-[450px] aspect-[2/3] rounded-lg overflow-hidden">
             <Image
               src={imageSrc}
               alt={movie.title}

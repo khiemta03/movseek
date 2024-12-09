@@ -8,6 +8,7 @@ interface Movie {
   budget: number;
   genres: Genre[];
   id: string;
+  homepage: string;
   origin_country: string[];
   original_language: string;
   original_title: string;
@@ -56,4 +57,9 @@ interface Credits {
   crew: CrewGroupedByDepartment;
 }
 
-export type { Genre, Movie, Cast, Crew, CrewGroupedByDepartment, Credits };
+interface Keyword {
+  id: number;
+  name: string;
+}
+
+export type { Genre, Movie, Cast, Crew, CrewGroupedByDepartment, Credits, Keyword };

@@ -34,7 +34,6 @@ const MovieList = ({ mediaType, timeWindow }: MovieListProps) => {
   const buttonBRef = useRef<HTMLButtonElement>(null);
   const [movies, setMovies] = useState<Movie[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchTrendingMovies = async () => {
@@ -51,7 +50,6 @@ const MovieList = ({ mediaType, timeWindow }: MovieListProps) => {
         }));
         setMovies(data);
       } catch (err) {
-        setError('Failed to fetch movies');
         console.log(err);
       } finally {
         setLoading(false);
@@ -92,8 +90,6 @@ const MovieList = ({ mediaType, timeWindow }: MovieListProps) => {
   };
 
   const moviesDummy = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
-
-  if (error) return <p>{error}</p>;
 
   return (
     <div className="relative w-full py-4">
