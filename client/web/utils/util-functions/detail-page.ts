@@ -1,0 +1,73 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { Crew, CrewGroupedByDepartment } from '../types';
+
+function convertMinutes(minutes: number): string {
+  const hours = Math.floor(minutes / 60);
+  const minutesRemaining = minutes % 60;
+  return `${hours}h ${minutesRemaining}m`;
+}
+
+function getCrewByJob(crewGrouped: CrewGroupedByDepartment, department: string, job: string): Crew[] {
+  const departmentCrew = crewGrouped[department];
+  if (!departmentCrew) return [];
+
+  return departmentCrew.filter((member) => member.job === job);
+}
+
+function pickMovieFields(movie: any) {
+  return {
+    backdrop_path: movie.backdrop_path,
+    budget: movie.budget,
+    genres: movie.genres,
+    id: movie.id,
+    origin_country: movie.origin_country,
+    original_language: movie.original_language,
+    original_title: movie.original_title,
+    overview: movie.overview,
+    popularity: movie.popularity,
+    poster_path: movie.poster_path,
+    release_date: movie.release_date,
+    revenue: movie.revenue,
+    runtime: movie.runtime,
+    status: movie.status,
+    tagline: movie.tagline,
+    title: movie.title,
+    vote_average: movie.vote_average,
+    vote_count: movie.vote_count,
+  };
+}
+
+function handleMovieCredits(data: any) {
+  const cast = data.cast.map((member: any) => ({
+    id: member.id,
+    name: member.name,
+    original_name: member.original_name,
+    popularity: member.popularity,
+    profile_path: member.profile_path,
+    cast_id: member.cast_id,
+    character: member.character,
+    credit_id: member.credit_id,
+    order: member.order,
+  }));
+
+  const crew = data.crew.reduce((grouped: any, member: any) => {
+    if (!grouped[member.department]) {
+      grouped[member.department] = [];
+    }
+    grouped[member.department].push({
+      id: member.id,
+      name: member.name,
+      original_name: member.original_name,
+      popularity: member.popularity,
+      profile_path: member.profile_path,
+      credit_id: member.credit_id,
+      department: member.department,
+      job: member.job,
+    });
+    return grouped;
+  }, {});
+
+  return { cast, crew };
+}
+
+export { convertMinutes, getCrewByJob, pickMovieFields, handleMovieCredits };
