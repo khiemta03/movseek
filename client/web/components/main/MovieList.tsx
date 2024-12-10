@@ -1,17 +1,11 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import MovieCard from './MovieCard';
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselPrevious,
-  CarouselNext,
-} from '../../../components/ui/carousel';
+import MovieCard from '@/components/main/MovieCard';
+import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext } from '@/components/ui/carousel';
 import Autoplay from 'embla-carousel-autoplay';
-import { fetchTrending } from '@/utils/apis/trending';
-import MovieCardDummpy from './MovieCardDummy';
+import { fetchTrending } from '@/apis/trending';
+import MovieCardDummpy from '@/components/main/MovieCardDummy';
 
 interface MovieListProps {
   mediaType: 'all' | 'movie' | 'tv' | 'person';

@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import { TMDB_API } from '@/utils/constants';
-import Loading from '../../loading';
+import Loading from '@/app/(main)/loading';
 
 const MainMovieInformationDummy = () => {
   return (
@@ -16,11 +16,11 @@ const MainMovieInformationDummy = () => {
       >
         <div className="absolute z-0 inset-0 bg-black/70"></div>
         <div className="relative z-10 container mx-auto text-white">
-          <div className="flex flex-row px-20 gap-4">
+          <div className="flex flex-row gap-4">
             <div className="relative w-96 h-[450px] aspect-[2/3] rounded-lg overflow-hidden">
               <Image src="/poster-default.svg" alt={'loading...'} layout="fill" objectFit="contain" />
             </div>
-            <div className="flex flex-col justify-center items-center ml-5">
+            <div className="flex flex-col justify-center items-center ml-10">
               <Loading />
             </div>
           </div>

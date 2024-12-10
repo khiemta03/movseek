@@ -1,8 +1,8 @@
-import { Credits } from '@/utils/types';
-import CastCard from './CastCard';
+import { Credits } from '@/models/movie-detail-types';
+import CastCard from '@/components/movie/CastCard';
 import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext } from '@/components/ui/carousel';
 import Autoplay from 'embla-carousel-autoplay';
-import FullCaseAndCrew from './FullCaseAndCrew';
+import FullCaseAndCrew from '@/components/movie/FullCaseAndCrew';
 
 interface CastListProps {
   credits: Credits;

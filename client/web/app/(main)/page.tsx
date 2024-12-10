@@ -1,6 +1,6 @@
 'use client';
 
-import MovieList from '@/app/(main)/(components)/MovieList';
+import MovieList from '@/components/main/MovieList';
 import { useEffect, useRef, useState } from 'react';
 
 export default function Home() {
@@ -47,7 +47,7 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="container mx-auto px-10 min-h-screen">
+      <div className="container mx-auto">
         <main className="flex-grow text-black">
           <section className="container py-6">
             <div className="flex items-center content-center">

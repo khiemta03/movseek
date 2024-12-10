@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import { TMDB_API } from '@/utils/constants';
-import { Cast } from '@/utils/types';
+import { Cast } from '@/models/movie-detail-types';
 
 interface CastCardProps {
   actor: Cast;
@@ -14,11 +14,11 @@ const CastCard: React.FC<CastCardProps> = ({ actor }) => {
     <div className="relative w-full h-full bg-white font-geist shadow-lg rounded-lg overflow-hidden hover:shadow-xl transition-shadow">
       <Image
         src={imageSrc}
-        alt={'abc'}
+        alt={actor.name}
         className="w-full h-60 object-cover hover:cursor-pointer"
         width={400}
         height={400 * 1.618}
-        onError={() => setImageSrc('/poster-default.svg')}
+        onError={() => setImageSrc(actor.gender == 1 ? '/default-female-avatar.svg' : '/default-male-avatar.svg')}
         priority
       />
 

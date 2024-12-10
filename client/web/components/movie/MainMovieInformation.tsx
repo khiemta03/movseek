@@ -1,13 +1,13 @@
 import Image from 'next/image';
-import Rating from '../(components)/Rating';
 import { TMDB_API } from '@/utils/constants';
 import { formatDate } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Heart, List } from 'lucide-react';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
-import type { Cast, Credits, Crew, Movie } from '@/utils/types';
+import type { Cast, Credits, Crew, Movie } from '@/models/movie-detail-types';
 import { convertMinutes, getCrewByJob } from '@/utils/util-functions/detail-page';
 import { useState } from 'react';
+import Rating from '@/components/movie/Rating';
 
 interface MainMovieInformationProps {
   movie: Movie;
@@ -29,7 +29,7 @@ const MainMovieInformation: React.FC<MainMovieInformationProps> = ({ movie, crea
     >
       <div className="absolute z-0 inset-0 bg-black/70"></div>
       <div className="relative z-10 container mx-auto text-white">
-        <div className="flex flex-row px-20 gap-4">
+        <div className="flex flex-row gap-4">
           <div className="relative h-[450px] aspect-[2/3] rounded-lg overflow-hidden">
             <Image
               src={imageSrc}
@@ -40,7 +40,7 @@ const MainMovieInformation: React.FC<MainMovieInformationProps> = ({ movie, crea
             />
           </div>
 
-          <div className="flex flex-col justify-around items-start ml-5">
+          <div className="flex flex-col justify-around items-start ml-10">
             <div>
               <h1 className="text-3xl font-bold">{movie.original_title}</h1>
               <div className="flex flex-row gap-6 text-sm">

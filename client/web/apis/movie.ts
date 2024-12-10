@@ -1,5 +1,5 @@
 import axiosInstance from '@/lib/axios.config';
-import { TMDB_API } from '../constants';
+import { TMDB_API } from '@/utils/constants';
 
 export const fetchMovieDetail = (id: number) => {
   return axiosInstance.get(TMDB_API.MOVIE_DETAILS(id));

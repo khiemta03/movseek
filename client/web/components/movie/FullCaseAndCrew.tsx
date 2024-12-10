@@ -1,6 +1,6 @@
-import { Credits } from '@/utils/types';
+import { Credits } from '@/models/movie-detail-types';
 import { getSizeOfCrew } from '@/utils/util-functions/detail-page';
-import CastAndCrewImage from './CastAndCrewImage';
+import CastAndCrewImage from '@/components/movie/CastAndCrewImage';
 
 interface FullCaseAndCrewProps {
   credits: Credits;
@@ -15,7 +15,7 @@ const FullCaseAndCrew: React.FC<FullCaseAndCrewProps> = ({ credits }) => {
         </div>
         {credits.cast.map((actor, index) => (
           <div key={index} className="flex flex-row items-center gap-4">
-            <CastAndCrewImage image={actor.profile_path} name={actor.name} />
+            <CastAndCrewImage image={actor.profile_path} name={actor.name} gender={actor.gender} />
             <div>
               <h3 className="text-sm font-bold line-clamp-2 hover:text-primary hover:cursor-pointer">{actor.name}</h3>
               <p className="text-sm italic mt-1">{actor.character}</p>
@@ -35,7 +35,7 @@ const FullCaseAndCrew: React.FC<FullCaseAndCrewProps> = ({ credits }) => {
             <div className="flex flex-col gap-4">
               {crewMembers.map((member, index) => (
                 <div key={index} className="flex flex-row items-center gap-4">
-                  <CastAndCrewImage image={member.profile_path} name={member.name} />
+                  <CastAndCrewImage image={member.profile_path} name={member.name} gender={member.gender} />
                   <div>
                     <h3 className="text-sm font-bold hover:text-primary hover:cursor-pointer">{member.name}</h3>
                     <p className="text-sm italic mt-1">{member.job}</p>
