@@ -64,15 +64,6 @@ const MovieDetail = () => {
     }
   }, [idMovie]);
 
-  // useEffect(() => {
-  //   if (loading === true) {
-  //     setTransitioning(true);
-  //     setTimeout(() => {
-  //       setTransitioning(false);
-  //     }, 300);
-  //   }
-  // }, [loading]);
-
   const handleModeChange = (mode: boolean) => {
     if (mode !== isDisplayFullCastAndCrew) {
       setTransitioningCast(true);
@@ -97,7 +88,6 @@ const MovieDetail = () => {
                 transitioningCast ? 'opacity-0' : 'opacity-100'
               }`}
             >
-              {/* <div className="w-4/5"> */}
               <div className="flex justify-between">
                 {!isDisplayFullCastAndCrew && <h2 className="text-2xl font-bold mb-4">Top Billed Cast</h2>}
                 <div></div>
@@ -105,13 +95,7 @@ const MovieDetail = () => {
                   {isDisplayFullCastAndCrew ? 'View less' : 'View Full Cast & Crew'}
                 </Button>
               </div>
-              <CastList
-                credits={creadits}
-                isfull={isDisplayFullCastAndCrew}
-                transitioning={transitioningCast}
-                setTransitioning={setTransitioningCast}
-              />
-              {/* </div> */}
+              <CastList credits={creadits} isfull={isDisplayFullCastAndCrew} />
             </div>
             <div className="w-1/5">
               <AltMovieInformation movie={movie} keywords={keywords} />
