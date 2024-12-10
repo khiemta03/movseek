@@ -7,7 +7,7 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/comp
 import type { Cast, Credits, Crew, Movie } from '@/models/movie-detail-types';
 import { convertMinutes, getCrewByJob } from '@/utils/util-functions/detail-page';
 import { useState } from 'react';
-import Rating from '@/components/movie/Rating';
+import Rating from '@/components/movie/rating';
 
 interface MainMovieInformationProps {
   movie: Movie;

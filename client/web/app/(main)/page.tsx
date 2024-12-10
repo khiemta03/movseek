@@ -3,6 +3,7 @@
 import MovieList from '@/components/main/movie-list';
 import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { TMDB_API } from '@/utils/constants';
 
 export default function Home() {
   const [activeButton, setActiveButton] = useState<'day' | 'week'>('day');
@@ -38,8 +39,19 @@ export default function Home() {
 
   return (
     <div className="text-center italic font-geist-mono">
-      <div className="bg-gradient-to-r from-purple-500 via-cyan-500 to-purple-500 py-10 px-5 shadow-lg text-center">
-        <div className="container mx-auto">
+      <div
+        className="relative py-10 px-5 shadow-lg text-center"
+        style={{
+          backgroundImage: `url(/background-${Math.floor(Math.random() * 10) + 1}.jpg)`,
+          backgroundSize: '100%',
+          backgroundRepeat: 'no-repeat',
+          backgroundPosition: 'top',
+        }}
+        suppressHydrationWarning
+      >
+        <div className="absolute z-0 inset-0 bg-black/70"></div>
+
+        <div className="relative z-10 container mx-auto">
           <h1 className="text-5xl font-bold bg-gradient-to-l from-red-500 via-primary to-red-500 text-transparent bg-clip-text mb-4">
             Welcome to MovSeek!
           </h1>
