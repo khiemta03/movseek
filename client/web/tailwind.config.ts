@@ -1,5 +1,6 @@
 import type { Config } from 'tailwindcss';
 import tailwindcssAnimate from 'tailwindcss-animate';
+import lineClamp from '@tailwindcss/line-clamp';
 
 export default {
   darkMode: ['class'],
@@ -23,6 +24,7 @@ export default {
         },
         primary: {
           DEFAULT: 'hsl(var(--primary))',
+          dark: 'hsl(var(--primary-dark))',
           foreground: 'hsl(var(--primary-foreground))',
         },
         secondary: {
@@ -63,5 +65,5 @@ export default {
       },
     },
   },
-  plugins: [tailwindcssAnimate],
+  plugins: [tailwindcssAnimate, lineClamp],
 } satisfies Config;

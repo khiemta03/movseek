@@ -1,7 +1,7 @@
 'use client';
 
 import { SignedIn, SignedOut, UserButton } from '@clerk/nextjs';
-import { Button } from './ui/button';
+import { Button } from '../../../components/ui/button';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 
@@ -9,7 +9,7 @@ const Header = () => {
   const router = useRouter();
 
   return (
-    <header className="px-4 py-3 border-b bg-primary">
+    <header className="px-4 py-3 bg-primary">
       <div className="container flex items-center justify-between mx-auto">
         <div
           className="text-2xl font-bold cursor-pointer select-none bg-gradient-to-l from-white via-indigo-300 to-red-200 text-transparent bg-clip-text"
