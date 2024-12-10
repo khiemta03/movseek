@@ -3,7 +3,6 @@
 import MovieList from '@/components/main/movie-list';
 import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { TMDB_API } from '@/utils/constants';
 
 export default function Home() {
   const [activeButton, setActiveButton] = useState<'day' | 'week'>('day');
