@@ -1,6 +1,6 @@
 import { Credits } from '@/models/movie-detail-types';
 import { getSizeOfCrew } from '@/utils/util-functions/detail-page';
-import CastAndCrewImage from '@/components/movie/CastAndCrewImage';
+import CastAndCrewImage from '@/components/movie/cast-and-crew-image';
 
 interface FullCaseAndCrewProps {
   credits: Credits;

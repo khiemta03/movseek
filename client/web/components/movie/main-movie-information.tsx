@@ -36,7 +36,7 @@ const MainMovieInformation: React.FC<MainMovieInformationProps> = ({ movie, crea
               alt={movie.title}
               layout="fill"
               objectFit="contain"
-              onError={() => setImageSrc('poster-default.svg')}
+              onError={() => setImageSrc('/poster-default.svg')}
             />
           </div>
 
@@ -44,11 +44,20 @@ const MainMovieInformation: React.FC<MainMovieInformationProps> = ({ movie, crea
             <div>
               <h1 className="text-3xl font-bold">{movie.original_title}</h1>
               <div className="flex flex-row gap-6 text-sm">
-                <div>{formatDate(movie.release_date)}</div>
-                <div>●</div>
-                <div>{movie.genres.map((genre) => genre.name).join(', ')}</div>
-                <div>●</div>
-                <div>{convertMinutes(movie.runtime)}</div>
+                {movie.release_date && <div>{formatDate(movie.release_date)}</div>}
+                {movie.genres.length > 0 && (
+                  <>
+                    <div>●</div>
+                    <div>{movie.genres.map((genre) => genre.name).join(', ')}</div>
+                  </>
+                )}
+                {movie.runtime != null && movie.runtime > 0 && (
+                  <>
+                    {''}
+                    <div>●</div>
+                    <div>{convertMinutes(movie.runtime)}</div>
+                  </>
+                )}
               </div>
             </div>
             <div className="flex flex-row items-center gap-2">
@@ -87,10 +96,12 @@ const MainMovieInformation: React.FC<MainMovieInformationProps> = ({ movie, crea
               </Button>
             </div>
             <p className="text-sm italic">{movie.tagline}</p>
-            <div>
-              <h1 className="text-md font-bold mb-1">Overview</h1>
-              <p className="text-sm max-w-3xl">{movie.overview}</p>
-            </div>
+            {movie.overview && (
+              <div>
+                <h1 className="text-md font-bold mb-1">Overview</h1>
+                <p className="text-sm max-w-3xl">{movie.overview}</p>
+              </div>
+            )}
             <div className="flex flex-row justify-between w-full">
               {getCrewByJob(creadits.crew, 'Directing', 'Director').length > 0 && (
                 <div>

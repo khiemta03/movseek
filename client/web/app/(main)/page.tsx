@@ -1,13 +1,16 @@
 'use client';
 
-import MovieList from '@/components/main/MovieList';
+import MovieList from '@/components/main/movie-list';
 import { useEffect, useRef, useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 export default function Home() {
   const [activeButton, setActiveButton] = useState<'day' | 'week'>('day');
   const [backgroundStyle, setBackgroundStyle] = useState({});
   const buttonARef = useRef<HTMLButtonElement>(null);
   const buttonBRef = useRef<HTMLButtonElement>(null);
+  const router = useRouter();
+  const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
     const activeRef = activeButton === 'day' ? buttonARef.current : buttonBRef.current;
@@ -19,6 +22,19 @@ export default function Home() {
       });
     }
   }, [activeButton]);
+
+  const handleSearch = () => {
+    const trimmedQuery = searchQuery.trim();
+    if (trimmedQuery) {
+      router.push(`/search?query=${encodeURIComponent(trimmedQuery)}`);
+    }
+  };
+
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      handleSearch();
+    }
+  };
 
   return (
     <div className="text-center italic font-geist-mono">
@@ -37,9 +53,14 @@ export default function Home() {
               <input
                 type="text"
                 placeholder="Search for a movie, tv show, person..."
-                className="w-full py-3 pl-5 pr-20 rounded-full shadow-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 text-lg"
+                onChange={(e) => setSearchQuery(e.target.value)}
+                onKeyDown={handleKeyDown}
+                className="w-full py-3 pl-5 pr-20 rounded-full shadow-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary text-lg"
               />
-              <button className="absolute right-1 top-1/2 transform -translate-y-1/2 px-5 py-3 bg-gradient-to-r from-cyan-400 to-primary text-white font-geist rounded-full shadow-md transition hover:text-black">
+              <button
+                onClick={handleSearch}
+                className="absolute right-1 top-1/2 transform -translate-y-1/2 px-5 py-3 bg-gradient-to-r from-cyan-400 to-primary text-white font-geist rounded-full shadow-md transition hover:text-black"
+              >
                 Search
               </button>
             </div>

@@ -1,8 +1,8 @@
 import { Credits } from '@/models/movie-detail-types';
-import CastCard from '@/components/movie/CastCard';
+import CastCard from '@/components/movie/cast-card';
 import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext } from '@/components/ui/carousel';
 import Autoplay from 'embla-carousel-autoplay';
-import FullCaseAndCrew from '@/components/movie/FullCaseAndCrew';
+import FullCaseAndCrew from '@/components/movie/full-cast-and-crew';
 
 interface CastListProps {
   credits: Credits;
@@ -12,7 +12,7 @@ interface CastListProps {
 const CastList: React.FC<CastListProps> = ({ credits, isfull }) => {
   return (
     <>
-      {isfull ? (
+      {isfull || credits.cast.length < 6 ? (
         <FullCaseAndCrew credits={credits} />
       ) : (
         <Carousel

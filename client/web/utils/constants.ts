@@ -4,6 +4,8 @@ export const TMDB_API = {
   MOVIE_DETAILS: (movieId: number) => `/movie/${movieId}`,
   MOVIE_CREDITS: (movieId: number) => `/movie/${movieId}/credits`,
   MOVIE_KEYWORDS: (movieId: number) => `/movie/${movieId}/keywords`,
-  SEARCH_MOVIE: (query: string) => `/search/movie?query=${query}`,
+  SEARCH_MOVIE: (query: string, page: number) => `/search/movie?query=${query}&page=${page}`,
+  SEARCH_TV: (query: string, page: number) => `/search/tv?query=${query}&page=${page}`,
+  SEARCH_PERSON: (query: string, page: number) => `/search/person?query=${query}&page=${page}`,
   POSTER: (poster: string) => `https://image.tmdb.org/t/p/original/${poster}`,
 };
