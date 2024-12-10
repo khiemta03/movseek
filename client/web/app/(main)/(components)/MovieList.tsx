@@ -33,7 +33,7 @@ const MovieList = ({ mediaType, timeWindow }: MovieListProps) => {
   const buttonARef = useRef<HTMLButtonElement>(null);
   const buttonBRef = useRef<HTMLButtonElement>(null);
   const [movies, setMovies] = useState<Movie[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const fetchTrendingMovies = async () => {
@@ -52,11 +52,16 @@ const MovieList = ({ mediaType, timeWindow }: MovieListProps) => {
       } catch (err) {
         console.log(err);
       } finally {
-        setLoading(false);
+        setTransitioning(true);
+        setTimeout(() => {
+          setLoading(false);
+          setTransitioning(false);
+        }, 500);
       }
     };
 
     fetchTrendingMovies();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mediaType, timeWindow]);
 
   useEffect(() => {
@@ -69,15 +74,6 @@ const MovieList = ({ mediaType, timeWindow }: MovieListProps) => {
       });
     }
   }, [viewMode]);
-
-  useEffect(() => {
-    if (loading === true) {
-      setTransitioning(true);
-      setTimeout(() => {
-        setTransitioning(false);
-      }, 500);
-    }
-  }, [loading]);
 
   const handleModeChange = (mode: 'carousel' | 'grid') => {
     if (mode !== viewMode) {
@@ -96,7 +92,7 @@ const MovieList = ({ mediaType, timeWindow }: MovieListProps) => {
       <div className="flex justify-end">
         <div className="relative items-center bg-white border-2 border-blue-500 mb-6 rounded-full w-fit">
           <div
-            className="absolute h-9 w-[165.33px] z-0 top-0 left-0 right-0 bg-blue-500 rounded-full border-white border transition-all duration-300 ease-in-out"
+            className="absolute h-9 w-[165.33px] z-0 top-0 left-0 bg-blue-500 rounded-full border-white border transition-all duration-300 ease-in-out"
             style={backgroundStyle}
           ></div>
           <button
@@ -147,23 +143,17 @@ const MovieList = ({ mediaType, timeWindow }: MovieListProps) => {
                         />
                       </CarouselItem>
                     ))}
-                {/* {movies.map((movie) => (
-                  <CarouselItem key={movie.id} className="basis-44 h-80">
-                    <MovieCard
-                      title={movie.title}
-                      poster={movie.poster}
-                      releaseDate={movie.releaseDate}
-                      rating={movie.rating}
-                    />
-                  </CarouselItem>
-                ))} */}
               </CarouselContent>
-              <div className="absolute top-1/2 left-8 transform -translate-y-1/2">
-                <CarouselPrevious className="p-2 bg-gray-800 text-white rounded-full" />
-              </div>
-              <div className="absolute top-1/2 right-16 transform -translate-y-1/2">
-                <CarouselNext className="p-2 bg-gray-800 text-white rounded-full" />
-              </div>
+              {!loading && (
+                <>
+                  <div className="absolute top-1/2 left-8 transform -translate-y-1/2">
+                    <CarouselPrevious className="p-2 bg-gray-800 text-white rounded-full" />
+                  </div>
+                  <div className="absolute top-1/2 right-16 transform -translate-y-1/2">
+                    <CarouselNext className="p-2 bg-gray-800 text-white rounded-full" />
+                  </div>
+                </>
+              )}
             </div>
           </Carousel>
         ) : (

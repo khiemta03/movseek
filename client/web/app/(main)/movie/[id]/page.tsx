@@ -17,6 +17,7 @@ const MovieDetail = () => {
   const { id } = params;
   const [imageSrc, setImageSrc] = useState('/poster-default.svg');
   const [transitioning, setTransitioning] = useState(false);
+  const [transitioningCast, setTransitioningCast] = useState(false);
   const [idMovie, setIdMovie] = useState<number>(0);
   const [movie, setMovie] = useState<Movie | null>(null);
   const [creadits, setCredits] = useState<Credits | null>(null);
@@ -50,7 +51,11 @@ const MovieDetail = () => {
         setError('Failed to fetch movie detail');
         console.log(err);
       } finally {
-        setLoading(false);
+        setTransitioning(true);
+        setTimeout(() => {
+          setLoading(false);
+          setTransitioning(false);
+        }, 500);
       }
     };
 
@@ -59,19 +64,21 @@ const MovieDetail = () => {
     }
   }, [idMovie]);
 
-  useEffect(() => {
-    if (loading === true) {
-      setTransitioning(true);
-      setTimeout(() => {
-        setTransitioning(false);
-      }, 300);
-    }
-  }, [loading]);
+  // useEffect(() => {
+  //   if (loading === true) {
+  //     setTransitioning(true);
+  //     setTimeout(() => {
+  //       setTransitioning(false);
+  //     }, 300);
+  //   }
+  // }, [loading]);
 
   const handleModeChange = (mode: boolean) => {
     if (mode !== isDisplayFullCastAndCrew) {
+      setTransitioningCast(true);
       setTimeout(() => {
         setIsDisplayFullCastAndCrew(mode);
+        setTransitioningCast(false);
       }, 500);
     }
   };
@@ -79,13 +86,18 @@ const MovieDetail = () => {
   if (error) return <div>{error}</div>;
 
   return (
-    <div className={`relative transition-opacity duration-300 ${transitioning ? 'opacity-0' : 'opacity-100'}`}>
+    <div className={`relative transition-opacity duration-500 ${transitioning ? 'opacity-0' : 'opacity-100'}`}>
       {movie !== null && creadits != null && !loading && imageSrc != '/poster-default.svg' ? (
         <div className="font-geist-mono">
           <MainMovieInformation movie={movie} creadits={creadits} />
 
           <div className="flex gap-6 container mx-auto mt-5 p-10 min-h-screen">
-            <div className="w-4/5">
+            <div
+              className={`relative w-4/5 transition-opacity duration-500 ${
+                transitioningCast ? 'opacity-0' : 'opacity-100'
+              }`}
+            >
+              {/* <div className="w-4/5"> */}
               <div className="flex justify-between">
                 {!isDisplayFullCastAndCrew && <h2 className="text-2xl font-bold mb-4">Top Billed Cast</h2>}
                 <div></div>
@@ -93,9 +105,14 @@ const MovieDetail = () => {
                   {isDisplayFullCastAndCrew ? 'View less' : 'View Full Cast & Crew'}
                 </Button>
               </div>
-              <CastList credits={creadits} isfull={isDisplayFullCastAndCrew} />
+              <CastList
+                credits={creadits}
+                isfull={isDisplayFullCastAndCrew}
+                transitioning={transitioningCast}
+                setTransitioning={setTransitioningCast}
+              />
+              {/* </div> */}
             </div>
-
             <div className="w-1/5">
               <AltMovieInformation movie={movie} keywords={keywords} />
             </div>

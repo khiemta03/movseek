@@ -81,10 +81,6 @@ export default function Home() {
             </div>
             <MovieList mediaType="movie" timeWindow={activeButton} />
           </section>
-          {/* <section className="container py-6">
-            <h1 className="text-4xl font-bold mb-6">Xu Hướng</h1>
-            <MovieList category="trending" />
-          </section> */}
         </main>
       </div>
     </div>

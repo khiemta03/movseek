@@ -23,7 +23,7 @@ const AltMovieInformation: React.FC<AltMovieInformationProps> = ({ movie, keywor
                 </div>
               </Link>
             </TooltipTrigger>
-            <TooltipContent>Visit Netflix</TooltipContent>
+            <TooltipContent>Visit Homepage</TooltipContent>
           </Tooltip>
         </TooltipProvider>
       )}

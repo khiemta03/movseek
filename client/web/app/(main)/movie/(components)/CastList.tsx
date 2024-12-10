@@ -3,7 +3,6 @@ import CastCard from './CastCard';
 import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext } from '@/components/ui/carousel';
 import Autoplay from 'embla-carousel-autoplay';
 import FullCaseAndCrew from './FullCaseAndCrew';
-import { useEffect, useState } from 'react';
 
 interface CastListProps {
   credits: Credits;
@@ -11,17 +10,8 @@ interface CastListProps {
 }
 
 const CastList: React.FC<CastListProps> = ({ credits, isfull }) => {
-  const [transitioning, setTransitioning] = useState(false);
-
-  useEffect(() => {
-    setTransitioning(true);
-    setTimeout(() => {
-      setTransitioning(false);
-    }, 500);
-  }, [isfull]);
-
   return (
-    <div className={`relative transition-opacity duration-500 ${transitioning ? 'opacity-0' : 'opacity-100'}`}>
+    <>
       {isfull ? (
         <FullCaseAndCrew credits={credits} />
       ) : (
@@ -49,7 +39,7 @@ const CastList: React.FC<CastListProps> = ({ credits, isfull }) => {
           </div>
         </Carousel>
       )}
-    </div>
+    </>
   );
 };
 
