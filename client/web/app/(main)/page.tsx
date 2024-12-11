@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation';
 export default function Home() {
   const [activeButton, setActiveButton] = useState<'day' | 'week'>('day');
   const [backgroundStyle, setBackgroundStyle] = useState({});
+  const [numberBackground] = useState<number>(Math.floor(Math.random() * 10) + 1);
   const buttonARef = useRef<HTMLButtonElement>(null);
   const buttonBRef = useRef<HTMLButtonElement>(null);
   const router = useRouter();
@@ -41,7 +42,7 @@ export default function Home() {
       <div
         className="relative py-10 px-5 shadow-lg text-center"
         style={{
-          backgroundImage: `url(/background-${Math.floor(Math.random() * 10) + 1}.jpg)`,
+          backgroundImage: `url(/background-${numberBackground}.jpg)`,
           backgroundSize: '100%',
           backgroundRepeat: 'no-repeat',
           backgroundPosition: 'top',

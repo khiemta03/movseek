@@ -64,4 +64,22 @@ interface Keyword {
   name: string;
 }
 
-export type { Genre, Movie, Cast, Crew, CrewGroupedByDepartment, Credits, Keyword };
+interface Video {
+  iso_639_1: string;
+  iso_3166_1: string;
+  name: string;
+  key: string;
+  site: string;
+  size: number;
+  type: string;
+  official: boolean;
+  published_at: string;
+  id: string;
+}
+
+interface VideoResponses {
+  id: number;
+  results: Video[];
+}
+
+export type { Genre, Movie, Cast, Crew, CrewGroupedByDepartment, Credits, Keyword, Video, VideoResponses };

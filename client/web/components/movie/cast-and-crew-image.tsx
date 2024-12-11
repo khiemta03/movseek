@@ -15,7 +15,7 @@ const CastAndCrewImage: React.FC<CastAndCrewImageProps> = ({ image, name, gender
     <div className="relative w-20 h-20 rounded-full overflow-hidden shadow-md">
       <Image
         className=" hover:cursor-pointer"
-        src={imageSrc}
+        src={image ? imageSrc : gender == 1 ? '/default-female-avatar.svg' : '/default-male-avatar.svg'}
         alt={name}
         layout="fill"
         objectFit="cover"
