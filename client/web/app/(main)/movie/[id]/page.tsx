@@ -3,14 +3,14 @@
 import { useParams } from 'next/navigation';
 import { TMDB_API } from '@/utils/constants';
 import { useEffect, useState } from 'react';
-import { fetchMovieCredits, fetchMovieDetail, fetchMovieKeywords } from '@/utils/apis/movie';
-import type { Movie, Credits, Keyword } from '@/utils/types';
+import { fetchMovieCredits, fetchMovieDetail, fetchMovieKeywords } from '@/apis/movie';
+import type { Movie, Credits, Keyword } from '@/models/movie-detail-types';
 import { pickMovieFields, handleMovieCredits } from '@/utils/util-functions/detail-page';
-import CastList from '../(components)/CastList';
-import MainMovieInformation from '../(components)/MainMovieInformation';
-import MainMovieInformationDummy from '../(components)/MainMovieInformationDummy';
-import AltMovieInformation from '../(components)/AltMocieInformation';
 import { Button } from '@/components/ui/button';
+import MainMovieInformation from '@/components/movie/main-movie-information';
+import CastList from '@/components/movie/cast-list';
+import AltMovieInformation from '@/components/movie/alt-movie-information';
+import MainMovieInformationDummy from '@/components/movie/main-movie-information-dummy';
 
 const MovieDetail = () => {
   const params = useParams();
@@ -70,7 +70,7 @@ const MovieDetail = () => {
       setTimeout(() => {
         setIsDisplayFullCastAndCrew(mode);
         setTransitioningCast(false);
-      }, 500);
+      }, 300);
     }
   };
 
@@ -82,19 +82,25 @@ const MovieDetail = () => {
         <div className="font-geist-mono">
           <MainMovieInformation movie={movie} creadits={creadits} />
 
-          <div className="flex gap-6 container mx-auto mt-5 p-10 min-h-screen">
+          <div className="flex gap-6 container mx-auto mt-5 py-10 min-h-screen">
             <div
-              className={`relative w-4/5 transition-opacity duration-500 ${
+              className={`relative w-4/5 transition-opacity duration-300 ${
                 transitioningCast ? 'opacity-0' : 'opacity-100'
               }`}
             >
-              <div className="flex justify-between">
-                {!isDisplayFullCastAndCrew && <h2 className="text-2xl font-bold mb-4">Top Billed Cast</h2>}
-                <div></div>
-                <Button onClick={() => handleModeChange(!isDisplayFullCastAndCrew)} className="text-xl" variant="ghost">
-                  {isDisplayFullCastAndCrew ? 'View less' : 'View Full Cast & Crew'}
-                </Button>
-              </div>
+              {creadits.cast.length >= 6 && (
+                <div className="flex justify-between">
+                  {!isDisplayFullCastAndCrew && <h2 className="text-2xl font-bold mb-4">Top Billed Cast</h2>}
+                  <div></div>
+                  <Button
+                    onClick={() => handleModeChange(!isDisplayFullCastAndCrew)}
+                    className="text-xl border border-gray-400"
+                    variant="outline"
+                  >
+                    {isDisplayFullCastAndCrew ? 'View less' : 'View Full Cast & Crew'}
+                  </Button>
+                </div>
+              )}
               <CastList credits={creadits} isfull={isDisplayFullCastAndCrew} />
             </div>
             <div className="w-1/5">

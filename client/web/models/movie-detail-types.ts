@@ -28,6 +28,7 @@ interface Movie {
 interface Cast {
   id: number;
   name: string;
+  gender: number;
   original_name: string;
   popularity: number;
   profile_path: string;
@@ -40,6 +41,7 @@ interface Cast {
 interface Crew {
   id: number;
   name: string;
+  gender: number;
   original_name: string;
   popularity: number;
   profile_path: string;

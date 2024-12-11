@@ -1,4 +1,4 @@
-import type { Keyword, Movie } from '@/utils/types';
+import type { Keyword, Movie } from '@/models/movie-detail-types';
 import { formatCurrency } from '@/utils/util-functions/detail-page';
 import { Link2 } from 'lucide-react';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';

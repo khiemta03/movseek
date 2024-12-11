@@ -1,13 +1,13 @@
 import Image from 'next/image';
-import Rating from '../(components)/Rating';
 import { TMDB_API } from '@/utils/constants';
 import { formatDate } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Heart, List } from 'lucide-react';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
-import type { Cast, Credits, Crew, Movie } from '@/utils/types';
+import type { Cast, Credits, Crew, Movie } from '@/models/movie-detail-types';
 import { convertMinutes, getCrewByJob } from '@/utils/util-functions/detail-page';
 import { useState } from 'react';
+import Rating from '@/components/movie/rating';
 
 interface MainMovieInformationProps {
   movie: Movie;
@@ -29,26 +29,35 @@ const MainMovieInformation: React.FC<MainMovieInformationProps> = ({ movie, crea
     >
       <div className="absolute z-0 inset-0 bg-black/70"></div>
       <div className="relative z-10 container mx-auto text-white">
-        <div className="flex flex-row px-20 gap-4">
+        <div className="flex flex-row gap-4">
           <div className="relative h-[450px] aspect-[2/3] rounded-lg overflow-hidden">
             <Image
               src={imageSrc}
               alt={movie.title}
               layout="fill"
               objectFit="contain"
-              onError={() => setImageSrc('poster-default.svg')}
+              onError={() => setImageSrc('/poster-default.svg')}
             />
           </div>
 
-          <div className="flex flex-col justify-around items-start ml-5">
+          <div className="flex flex-col justify-around items-start ml-10">
             <div>
               <h1 className="text-3xl font-bold">{movie.original_title}</h1>
               <div className="flex flex-row gap-6 text-sm">
-                <div>{formatDate(movie.release_date)}</div>
-                <div>●</div>
-                <div>{movie.genres.map((genre) => genre.name).join(', ')}</div>
-                <div>●</div>
-                <div>{convertMinutes(movie.runtime)}</div>
+                {movie.release_date && <div>{formatDate(movie.release_date)}</div>}
+                {movie.genres.length > 0 && (
+                  <>
+                    <div>●</div>
+                    <div>{movie.genres.map((genre) => genre.name).join(', ')}</div>
+                  </>
+                )}
+                {movie.runtime != null && movie.runtime > 0 && (
+                  <>
+                    {''}
+                    <div>●</div>
+                    <div>{convertMinutes(movie.runtime)}</div>
+                  </>
+                )}
               </div>
             </div>
             <div className="flex flex-row items-center gap-2">
@@ -87,10 +96,12 @@ const MainMovieInformation: React.FC<MainMovieInformationProps> = ({ movie, crea
               </Button>
             </div>
             <p className="text-sm italic">{movie.tagline}</p>
-            <div>
-              <h1 className="text-md font-bold mb-1">Overview</h1>
-              <p className="text-sm max-w-3xl">{movie.overview}</p>
-            </div>
+            {movie.overview && (
+              <div>
+                <h1 className="text-md font-bold mb-1">Overview</h1>
+                <p className="text-sm max-w-3xl">{movie.overview}</p>
+              </div>
+            )}
             <div className="flex flex-row justify-between w-full">
               {getCrewByJob(creadits.crew, 'Directing', 'Director').length > 0 && (
                 <div>

@@ -1,13 +1,16 @@
 'use client';
 
-import MovieList from '@/app/(main)/(components)/MovieList';
+import MovieList from '@/components/main/movie-list';
 import { useEffect, useRef, useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 export default function Home() {
   const [activeButton, setActiveButton] = useState<'day' | 'week'>('day');
   const [backgroundStyle, setBackgroundStyle] = useState({});
   const buttonARef = useRef<HTMLButtonElement>(null);
   const buttonBRef = useRef<HTMLButtonElement>(null);
+  const router = useRouter();
+  const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
     const activeRef = activeButton === 'day' ? buttonARef.current : buttonBRef.current;
@@ -20,10 +23,34 @@ export default function Home() {
     }
   }, [activeButton]);
 
+  const handleSearch = () => {
+    const trimmedQuery = searchQuery.trim();
+    if (trimmedQuery) {
+      router.push(`/search?query=${encodeURIComponent(trimmedQuery)}`);
+    }
+  };
+
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      handleSearch();
+    }
+  };
+
   return (
     <div className="text-center italic font-geist-mono">
-      <div className="bg-gradient-to-r from-purple-500 via-cyan-500 to-purple-500 py-10 px-5 shadow-lg text-center">
-        <div className="container mx-auto">
+      <div
+        className="relative py-10 px-5 shadow-lg text-center"
+        style={{
+          backgroundImage: `url(/background-${Math.floor(Math.random() * 10) + 1}.jpg)`,
+          backgroundSize: '100%',
+          backgroundRepeat: 'no-repeat',
+          backgroundPosition: 'top',
+        }}
+        suppressHydrationWarning
+      >
+        <div className="absolute z-0 inset-0 bg-black/70"></div>
+
+        <div className="relative z-10 container mx-auto">
           <h1 className="text-5xl font-bold bg-gradient-to-l from-red-500 via-primary to-red-500 text-transparent bg-clip-text mb-4">
             Welcome to MovSeek!
           </h1>
@@ -37,9 +64,14 @@ export default function Home() {
               <input
                 type="text"
                 placeholder="Search for a movie, tv show, person..."
-                className="w-full py-3 pl-5 pr-20 rounded-full shadow-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 text-lg"
+                onChange={(e) => setSearchQuery(e.target.value)}
+                onKeyDown={handleKeyDown}
+                className="w-full py-3 pl-5 pr-20 rounded-full shadow-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary text-lg"
               />
-              <button className="absolute right-1 top-1/2 transform -translate-y-1/2 px-5 py-3 bg-gradient-to-r from-cyan-400 to-primary text-white font-geist rounded-full shadow-md transition hover:text-black">
+              <button
+                onClick={handleSearch}
+                className="absolute right-1 top-1/2 transform -translate-y-1/2 px-5 py-3 bg-gradient-to-r from-cyan-400 to-primary text-white font-geist rounded-full shadow-md transition hover:text-black"
+              >
                 Search
               </button>
             </div>
@@ -47,7 +79,7 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="container mx-auto px-10 min-h-screen">
+      <div className="container mx-auto">
         <main className="flex-grow text-black">
           <section className="container py-6">
             <div className="flex items-center content-center">

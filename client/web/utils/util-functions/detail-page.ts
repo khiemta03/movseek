@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Crew, CrewGroupedByDepartment } from '../types';
+import { Crew, CrewGroupedByDepartment } from '@/models/movie-detail-types';
 
 function convertMinutes(minutes: number): string {
   const hours = Math.floor(minutes / 60);
@@ -42,6 +42,7 @@ function handleMovieCredits(data: any) {
   const cast = data.cast.map((member: any) => ({
     id: member.id,
     name: member.name,
+    gender: member.gender,
     original_name: member.original_name,
     popularity: member.popularity,
     profile_path: member.profile_path,
@@ -58,6 +59,7 @@ function handleMovieCredits(data: any) {
     grouped[member.department].push({
       id: member.id,
       name: member.name,
+      gender: member.gender,
       original_name: member.original_name,
       popularity: member.popularity,
       profile_path: member.profile_path,

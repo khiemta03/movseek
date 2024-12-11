@@ -5,9 +5,10 @@ import { TMDB_API } from '@/utils/constants';
 interface CastAndCrewImageProps {
   image: string;
   name: string;
+  gender: number;
 }
 
-const CastAndCrewImage: React.FC<CastAndCrewImageProps> = ({ image, name }) => {
+const CastAndCrewImage: React.FC<CastAndCrewImageProps> = ({ image, name, gender }) => {
   const [imageSrc, setImageSrc] = useState(TMDB_API.POSTER(image));
 
   return (
@@ -18,7 +19,7 @@ const CastAndCrewImage: React.FC<CastAndCrewImageProps> = ({ image, name }) => {
         alt={name}
         layout="fill"
         objectFit="cover"
-        onError={() => setImageSrc('/poster-default.svg')}
+        onError={() => setImageSrc(gender == 1 ? '/default-female-avatar.svg' : '/default-male-avatar.svg')}
       />
     </div>
   );

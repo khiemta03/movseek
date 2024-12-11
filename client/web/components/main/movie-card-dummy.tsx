@@ -7,13 +7,13 @@ const MovieCardDummpy: React.FC = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setTransitioning((prev) => !prev);
-    }, 1000);
+    }, 500);
     return () => clearInterval(interval);
   }, []);
 
   return (
     <div
-      className={`relative w-full h-full bg-white font-geist shadow-lg rounded-lg transition-opacity duration-1000 ${
+      className={`relative w-full h-full bg-white font-geist shadow-lg rounded-lg transition-opacity duration-500 ${
         transitioning ? 'opacity-40' : 'opacity-70'
       } overflow-hidden hover:shadow-xl`}
     >
