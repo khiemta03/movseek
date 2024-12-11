@@ -12,9 +12,11 @@ import Rating from '@/components/movie/rating';
 interface MainMovieInformationProps {
   movie: Movie;
   creadits: Credits;
+  toggleVideo: () => void;
+  hasTrailer: boolean;
 }
 
-const MainMovieInformation: React.FC<MainMovieInformationProps> = ({ movie, creadits }) => {
+const MainMovieInformation: React.FC<MainMovieInformationProps> = ({ movie, creadits, toggleVideo, hasTrailer }) => {
   const [imageSrc, setImageSrc] = useState(TMDB_API.POSTER(movie.poster_path));
 
   return (
@@ -91,9 +93,11 @@ const MainMovieInformation: React.FC<MainMovieInformationProps> = ({ movie, crea
                 </Tooltip>
               </TooltipProvider>
 
-              <Button className="border" variant="ghost">
-                ▶ Play trailer
-              </Button>
+              {hasTrailer && (
+                <Button onClick={toggleVideo} className="border" variant="ghost">
+                  ▶ Play trailer
+                </Button>
+              )}
             </div>
             <p className="text-sm italic">{movie.tagline}</p>
             {movie.overview && (

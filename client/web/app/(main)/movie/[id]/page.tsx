@@ -3,14 +3,15 @@
 import { useParams } from 'next/navigation';
 import { TMDB_API } from '@/utils/constants';
 import { useEffect, useState } from 'react';
-import { fetchMovieCredits, fetchMovieDetail, fetchMovieKeywords } from '@/apis/movie';
-import type { Movie, Credits, Keyword } from '@/models/movie-detail-types';
-import { pickMovieFields, handleMovieCredits } from '@/utils/util-functions/detail-page';
+import { fetchMovieCredits, fetchMovieDetail, fetchMovieKeywords, fetchMovieVideos } from '@/apis/movie';
+import type { Movie, Credits, Keyword, Video } from '@/models/movie-detail-types';
+import { pickMovieFields, handleMovieCredits, selectPreferredVideo } from '@/utils/util-functions/detail-page';
 import { Button } from '@/components/ui/button';
 import MainMovieInformation from '@/components/movie/main-movie-information';
 import CastList from '@/components/movie/cast-list';
 import AltMovieInformation from '@/components/movie/alt-movie-information';
 import MainMovieInformationDummy from '@/components/movie/main-movie-information-dummy';
+import Trailer from '@/components/movie/trailer';
 
 const MovieDetail = () => {
   const params = useParams();
@@ -22,9 +23,13 @@ const MovieDetail = () => {
   const [movie, setMovie] = useState<Movie | null>(null);
   const [creadits, setCredits] = useState<Credits | null>(null);
   const [keywords, setKeywords] = useState<Keyword[]>([]);
+  const [videos, setVideos] = useState<Video[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [isDisplayFullCastAndCrew, setIsDisplayFullCastAndCrew] = useState<boolean>(false);
+  const [isVisible, setIsVisible] = useState(false);
+
+  const toggleVideo = () => setIsVisible(!isVisible);
 
   useEffect(() => {
     if (id) {
@@ -47,6 +52,9 @@ const MovieDetail = () => {
 
         const keywordsResponde = await fetchMovieKeywords(idMovie);
         setKeywords(keywordsResponde.data.keywords);
+
+        const videoResponse = await fetchMovieVideos(idMovie);
+        setVideos(videoResponse.data.results);
       } catch (err) {
         setError('Failed to fetch movie detail');
         console.log(err);
@@ -64,6 +72,17 @@ const MovieDetail = () => {
     }
   }, [idMovie]);
 
+  useEffect(() => {
+    if (isVisible) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isVisible]);
+
   const handleModeChange = (mode: boolean) => {
     if (mode !== isDisplayFullCastAndCrew) {
       setTransitioningCast(true);
@@ -78,9 +97,15 @@ const MovieDetail = () => {
 
   return (
     <div className={`relative transition-opacity duration-500 ${transitioning ? 'opacity-0' : 'opacity-100'}`}>
+      {isVisible && <Trailer videoId={selectPreferredVideo(videos).key} toggleVideo={toggleVideo} />}
       {movie !== null && creadits != null && !loading && imageSrc != '/poster-default.svg' ? (
         <div className="font-geist-mono">
-          <MainMovieInformation movie={movie} creadits={creadits} />
+          <MainMovieInformation
+            movie={movie}
+            creadits={creadits}
+            hasTrailer={videos.length > 0}
+            toggleVideo={toggleVideo}
+          />
 
           <div className="flex gap-6 container mx-auto mt-5 py-10 min-h-screen">
             <div

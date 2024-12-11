@@ -4,6 +4,7 @@ export const TMDB_API = {
   MOVIE_DETAILS: (movieId: number) => `/movie/${movieId}`,
   MOVIE_CREDITS: (movieId: number) => `/movie/${movieId}/credits`,
   MOVIE_KEYWORDS: (movieId: number) => `/movie/${movieId}/keywords`,
+  MOVIE_VIDEOS: (movieId: number) => `/movie/${movieId}/videos`,
   SEARCH_MOVIE: (query: string, page: number) => `/search/movie?query=${query}&page=${page}`,
   SEARCH_TV: (query: string, page: number) => `/search/tv?query=${query}&page=${page}`,
   SEARCH_PERSON: (query: string, page: number) => `/search/person?query=${query}&page=${page}`,

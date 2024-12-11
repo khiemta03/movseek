@@ -12,3 +12,7 @@ export const fetchMovieCredits = (id: number) => {
 export const fetchMovieKeywords = (id: number) => {
   return axiosInstance.get(TMDB_API.MOVIE_KEYWORDS(id));
 };
+
+export const fetchMovieVideos = (id: number) => {
+  return axiosInstance.get(TMDB_API.MOVIE_VIDEOS(id));
+};
