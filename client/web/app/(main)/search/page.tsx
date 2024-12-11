@@ -17,7 +17,7 @@ import type {
 } from '@/models/search-types';
 import MovieSearchCard from '@/components/search/movie-search-card';
 import PaginationCustom from '@/components/search/pagination';
-import Loading from '../loading';
+import Loading from '@/app/(main)/search/loading';
 // import TVSearchCard from '@/components/search/tv-search-card';
 // import PersonSearchCard from '@/components/search/person-search-card';
 
