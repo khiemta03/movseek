@@ -1,29 +1,18 @@
-import Image from 'next/image';
-import { TMDB_API } from '@/utils/constants';
-import Loading from '@/app/(main)/loading';
+import { Skeleton } from '@/components/ui/skeleton';
 
 const MainMovieInformationDummy = () => {
   return (
-    <div className="font-geist-mono">
-      <div
-        className="relative py-10 px-5 shadow-lg"
-        style={{
-          backgroundImage: `url(${TMDB_API.POSTER('/poster-default.svg')})`,
-          backgroundSize: '100%',
-          backgroundRepeat: 'no-repeat',
-          backgroundPosition: 'center top',
-        }}
-      >
-        <div className="absolute z-0 inset-0 bg-black/70"></div>
-        <div className="relative z-10 container mx-auto text-white">
-          <div className="flex flex-row gap-4">
-            <div className="relative w-96 h-[450px] aspect-[2/3] rounded-lg overflow-hidden">
-              <Image src="/poster-default.svg" alt={'loading...'} layout="fill" objectFit="contain" />
-            </div>
-            <div className="flex flex-col justify-center items-center ml-10">
-              <Loading />
-            </div>
-          </div>
+    <div className="container mx-auto mt-4 xl:mt-6">
+      <div className="flex gap-4 xl:gap-8">
+        <div>
+          <Skeleton className="w-80 xl:w-96 h-96 rounded-xl" />
+        </div>
+        <div className="flex-1 flex flex-col gap-4 xl:gap-8">
+          <Skeleton className="h-28 w-full rounded-xl" />
+          <Skeleton className="h-20 w-4/5 rounded-xl" />
+          <Skeleton className="h-6 w-4/5 rounded-xl" />
+          <Skeleton className="h-6 w-4/5 rounded-xl" />
+          <Skeleton className="h-4 w-3/5 rounded-xl" />
         </div>
       </div>
     </div>

@@ -115,45 +115,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             showHeader ? 'translate-y-0' : '-translate-y-full'
           }`}
         >
-          {/* <div className="relative container mx-auto py-2 flex items-center gap-4">
-              <Button
-                variant="ghost"
-                size="icon"
-                className="absolute left-2 rounded-3xl top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
-              >
-                <Search />
-              </Button>
-              <input
-                type="text"
-                placeholder="Search movies..."
-                value={newQuery}
-                onChange={(e) => setNewQuery(e.target.value)}
-                onKeyDown={handleKeyDown}
-                className="flex-1 pl-12 pr-14 py-2 border-2 rounded-full focus:outline-none focus:ring-2 focus:ring-primary"
-              />
-              {newQuery && (
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  onClick={() => setNewQuery('')}
-                  className="absolute right-28 rounded-3xl top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
-                >
-                  <X />
-                </Button>
-              )}
-              <button
-                onClick={handleSearch}
-                className="px-4 py-2 bg-gradient-to-r from-cyan-400 to-primary text-white font-geist rounded-full shadow-md transition hover:text-black"
-              >
-                Search
-              </button>
-            </div> */}
           <Suspense>
             <SearchParamsWrapper />
           </Suspense>
         </div>
       )}
-      <main className="mx-auto">{children}</main>
+      <main className="min-h-[80vh] xl:min-h-[88vh]">{children}</main>
       <Footer />
     </div>
   );

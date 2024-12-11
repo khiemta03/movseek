@@ -107,7 +107,7 @@ const MovieDetail = () => {
             toggleVideo={toggleVideo}
           />
 
-          <div className="flex gap-6 container mx-auto mt-5 py-10 min-h-screen">
+          <div className="flex gap-6 container mx-auto mt-5 py-10">
             <div
               className={`relative w-4/5 transition-opacity duration-300 ${
                 transitioningCast ? 'opacity-0' : 'opacity-100'
