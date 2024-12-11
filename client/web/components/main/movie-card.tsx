@@ -52,12 +52,12 @@ const MovieCard: React.FC<MovieCardProps> = ({ id, title, releaseDate, poster, r
           <TooltipTrigger>
             <Link href={`/movie/${id}`}>
               <Image
-                src={imageSrc}
+                src={poster ? imageSrc : '/poster-default.svg'}
                 alt={title}
                 className="w-full h-60 object-cover hover:cursor-pointer"
                 width={400}
                 height={400 * 1.618}
-                onError={() => setImageSrc('poster-default.svg')}
+                onError={() => setImageSrc('/poster-default.svg')}
                 priority
               />
             </Link>

@@ -13,7 +13,9 @@ const CastCard: React.FC<CastCardProps> = ({ actor }) => {
   return (
     <div className="relative w-full h-full bg-white font-geist shadow-lg rounded-lg overflow-hidden hover:shadow-xl transition-shadow">
       <Image
-        src={imageSrc}
+        src={
+          actor.profile_path ? imageSrc : actor.gender == 1 ? '/default-female-avatar.svg' : '/default-male-avatar.svg'
+        }
         alt={actor.name}
         className="w-full h-60 object-cover hover:cursor-pointer"
         width={400}

@@ -4,8 +4,15 @@ import { SignedIn, SignedOut, UserButton } from '@clerk/nextjs';
 import { Button } from '@/components/ui/button';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { Search, X } from 'lucide-react';
 
-const Header = () => {
+interface HeaderProps {
+  showSearch: boolean;
+  setShowSearch: (showSearch: boolean) => void;
+  isSearchPage: boolean;
+}
+
+const Header = ({ showSearch, setShowSearch, isSearchPage }: HeaderProps) => {
   const router = useRouter();
 
   return (
@@ -26,14 +33,28 @@ const Header = () => {
           </Link>
         </nav>
 
-        <SignedOut>
-          <Button variant="outline" onClick={() => router.push('/sign-in')}>
-            Sign In
-          </Button>
-        </SignedOut>
-        <SignedIn>
-          <UserButton />
-        </SignedIn>
+        <div className="flex items-center gap-6">
+          <SignedOut>
+            <Button variant="outline" onClick={() => router.push('/sign-in')}>
+              Sign In
+            </Button>
+          </SignedOut>
+          <SignedIn>
+            <UserButton />
+          </SignedIn>
+          {isSearchPage ? (
+            <div className="rounded-full text-white hover:text-gray-300 hover:cursor-pointer w-fit p-2">
+              <Search />
+            </div>
+          ) : (
+            <div
+              onClick={() => setShowSearch(!showSearch)}
+              className="rounded-full text-white hover:text-gray-300 hover:cursor-pointer w-fit p-2"
+            >
+              {showSearch ? <X /> : <Search />}
+            </div>
+          )}
+        </div>
       </div>
     </header>
   );

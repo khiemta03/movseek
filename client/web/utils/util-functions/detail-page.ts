@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Crew, CrewGroupedByDepartment } from '@/models/movie-detail-types';
+import { Crew, CrewGroupedByDepartment, Video } from '@/models/movie-detail-types';
 
 function convertMinutes(minutes: number): string {
   const hours = Math.floor(minutes / 60);
@@ -81,4 +81,24 @@ function getSizeOfCrew(crewGrouped: CrewGroupedByDepartment): number {
   return Object.values(crewGrouped).reduce((total, crewArray) => total + crewArray.length, 0);
 }
 
-export { getSizeOfCrew, formatCurrency, convertMinutes, getCrewByJob, pickMovieFields, handleMovieCredits };
+function selectPreferredVideo(results: Video[]) {
+  const youtubeVideos = results.filter((video) => video.site === 'YouTube');
+
+  const trailerVideo = youtubeVideos.find((video) => video.type === 'Trailer');
+  if (trailerVideo) return trailerVideo;
+
+  const teaserVideo = youtubeVideos.find((video) => video.type === 'Teaser');
+  if (teaserVideo) return teaserVideo;
+
+  return results[0];
+}
+
+export {
+  getSizeOfCrew,
+  formatCurrency,
+  convertMinutes,
+  getCrewByJob,
+  pickMovieFields,
+  handleMovieCredits,
+  selectPreferredVideo,
+};

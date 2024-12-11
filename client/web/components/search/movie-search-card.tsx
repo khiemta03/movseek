@@ -24,13 +24,13 @@ const MovieSearchCard: React.FC<MovieSearchCardProps> = ({ movie }) => {
           <TooltipTrigger>
             <Link href={`/movie/${movie.id}`}>
               <Image
-                src={imageSrc}
+                src={movie.poster_path ? imageSrc : '/poster-default.svg'}
                 alt={movie.title}
                 className="h-60 object-cover hover:cursor-pointer"
                 objectFit="cover"
                 width={400}
                 height={400 * 1.618}
-                onError={() => setImageSrc('poster-default.svg')}
+                onError={() => setImageSrc('/poster-default.svg')}
                 priority
               />
             </Link>
