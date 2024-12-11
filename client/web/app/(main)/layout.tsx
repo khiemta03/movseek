@@ -3,10 +3,19 @@
 import Footer from '@/components/main/footer';
 import Header from '@/components/main/header';
 import React, { useState, useEffect } from 'react';
+import { X, Search } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { useRouter, usePathname, useSearchParams } from 'next/navigation';
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const [showHeader, setShowHeader] = useState(true);
+  const [showSearch, setShowSearch] = useState(false);
   const [lastScrollY, setLastScrollY] = useState(0);
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const query = searchParams.get('query');
+  const [newQuery, setNewQuery] = useState<string>(query != null ? query : '');
 
   useEffect(() => {
     const handleScroll = () => {
@@ -19,6 +28,36 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     return () => window.removeEventListener('scroll', handleScroll);
   }, [lastScrollY]);
 
+  useEffect(() => {
+    if (pathname === '/search') {
+      setShowSearch(true);
+    } else {
+      setShowSearch(false);
+    }
+  }, [pathname]);
+
+  useEffect(() => {
+    if (query && query.trim() && pathname === '/search') {
+      setNewQuery(query);
+    } else {
+      setNewQuery('');
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [query]);
+
+  const handleSearch = () => {
+    const trimmedQuery = newQuery.trim();
+    if (trimmedQuery) {
+      router.push(`/search?query=${encodeURIComponent(trimmedQuery)}`);
+    }
+  };
+
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      handleSearch();
+    }
+  };
+
   return (
     <div>
       <div
@@ -26,9 +65,51 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           showHeader ? 'translate-y-0' : '-translate-y-full'
         }`}
       >
-        <Header />
+        <Header showSearch={showSearch} setShowSearch={setShowSearch} isSearchPage={pathname === '/search'} />
       </div>
-      <div className="h-[56px] bg-primary"></div>
+      <div className={`h-[64px] bg-primary`}></div>
+
+      {showSearch && (
+        <div
+          className={`sticky h-[64px] top-[64px] z-50 flex items-center bg-white shadow-md transition-transform duration-300 ${
+            showHeader ? 'translate-y-0' : '-translate-y-full'
+          }`}
+        >
+          <div className="relative container mx-auto py-2 flex items-center gap-4">
+            <Button
+              variant="ghost"
+              size="icon"
+              className="absolute left-2 rounded-3xl top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
+            >
+              <Search />
+            </Button>
+            <input
+              type="text"
+              placeholder="Search movies..."
+              value={newQuery}
+              onChange={(e) => setNewQuery(e.target.value)}
+              onKeyDown={handleKeyDown}
+              className="flex-1 pl-12 pr-14 py-2 border-2 rounded-full focus:outline-none focus:ring-2 focus:ring-primary"
+            />
+            {newQuery && (
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => setNewQuery('')}
+                className="absolute right-28 rounded-3xl top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
+              >
+                <X />
+              </Button>
+            )}
+            <button
+              onClick={handleSearch}
+              className="px-4 py-2 bg-gradient-to-r from-cyan-400 to-primary text-white font-geist rounded-full shadow-md transition hover:text-black"
+            >
+              Search
+            </button>
+          </div>
+        </div>
+      )}
       <main className="mx-auto">{children}</main>
       <Footer />
     </div>

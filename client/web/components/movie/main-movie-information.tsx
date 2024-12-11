@@ -32,7 +32,7 @@ const MainMovieInformation: React.FC<MainMovieInformationProps> = ({ movie, crea
         <div className="flex flex-row gap-4">
           <div className="relative h-[450px] aspect-[2/3] rounded-lg overflow-hidden">
             <Image
-              src={imageSrc}
+              src={movie.poster_path ? imageSrc : '/poster-default.svg'}
               alt={movie.title}
               layout="fill"
               objectFit="contain"
