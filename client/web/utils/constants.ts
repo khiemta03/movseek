@@ -9,4 +9,7 @@ export const TMDB_API = {
   SEARCH_TV: (query: string, page: number) => `/search/tv?query=${query}&page=${page}`,
   SEARCH_PERSON: (query: string, page: number) => `/search/person?query=${query}&page=${page}`,
   POSTER: (poster: string) => `https://image.tmdb.org/t/p/original/${poster}`,
+
+  PEOPLE_POPULAR: (page: number) => `/person/popular?page=${page}`,
+  PEOPLE_DETAIL: (id: number) => `/person/${id}`,
 };

@@ -12,26 +12,70 @@ interface HeaderProps {
   isSearchPage: boolean;
 }
 
+function DropdownItem({ href, label }: { href: string; label: string }) {
+  return (
+    <Link href={href} className="block px-4 py-2 text-sm rounded-lg hover:bg-gray-200 hover:text-gray-900">
+      {label}
+    </Link>
+  );
+}
+
 const Header = ({ showSearch, setShowSearch, isSearchPage }: HeaderProps) => {
   const router = useRouter();
 
   return (
     <header className="px-4 py-3 bg-primary">
       <div className="container flex items-center justify-between mx-auto">
-        <div
-          className="text-2xl font-bold cursor-pointer select-none bg-gradient-to-l from-white via-indigo-300 to-red-200 text-transparent bg-clip-text"
-          onClick={() => router.push('/')}
-        >
-          MovSeek
+        <div className="flex items-end gap-20">
+          <div
+            className="text-2xl font-bold cursor-pointer select-none bg-gradient-to-l from-white via-indigo-300 to-red-200 text-transparent bg-clip-text"
+            onClick={() => router.push('/')}
+          >
+            MovSeek
+          </div>
+
+          <nav className="flex space-x-5 text-white text-lg font-medium">
+            <div className="relative group">
+              <Link href="/" className="hover:underline">
+                Movies
+              </Link>
+              <div className="absolute left-0 -translate-x-10 hidden w-48 bg-white text-gray-800 rounded-lg shadow-lg group-hover:block">
+                <DropdownItem href="/movies/popular" label="Popular" />
+                <DropdownItem href="/movies/now-playing" label="Now Playing" />
+                <DropdownItem href="/movies/upcoming" label="Upcoming" />
+                <DropdownItem href="/movies/top-rated" label="Top Rated" />
+              </div>
+            </div>
+
+            <div className="relative group">
+              <Link href="/" className="hover:underline">
+                TV Shows
+              </Link>
+              <div className="absolute left-0 -translate-x-10 hidden w-48 bg-white text-gray-800 rounded-lg shadow-lg group-hover:block">
+                <DropdownItem href="/tv-shows/popular" label="Popular" />
+                <DropdownItem href="/tv-shows/now-playing" label="Now Playing" />
+                <DropdownItem href="/tv-shows/upcoming" label="Upcoming" />
+                <DropdownItem href="/tv-shows/top-rated" label="Top Rated" />
+              </div>
+            </div>
+
+            <div className="relative group">
+              <Link href="/person" className="hover:underline">
+                People
+              </Link>
+            </div>
+
+            <div className="relative group">
+              <Link href="/" className="hover:underline">
+                More
+              </Link>
+              <div className="absolute left-0 -translate-x-10 hidden w-48 bg-white text-gray-800 rounded-lg shadow-lg group-hover:block">
+                <DropdownItem href="/favorites" label="Favorites" />
+                <DropdownItem href="/favorites" label="Watchlist" />
+              </div>
+            </div>
+          </nav>
         </div>
-        <nav className="flex space-x-5 text-white text-lg font-medium">
-          <Link href="/" className="">
-            Home
-          </Link>
-          <Link href="/favorites" className="">
-            Favorites
-          </Link>
-        </nav>
 
         <div className="flex items-center gap-6">
           <SignedOut>
