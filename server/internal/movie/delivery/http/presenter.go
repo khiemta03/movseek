@@ -1,7 +1,19 @@
 package http
 
-import "context"
+import (
+	"github.com/tmplam/movseek/internal/movie"
+)
 
-func (h *handler) presentResponse(ctx context.Context, res interface{}) (interface{}, error) {
-	return nil, nil
+type searchMoviesRequest struct {
+	Query   string `form:"query"`
+	Page    int    `form:"page"`
+	PerPage int    `form:"per_page"`
+}
+
+func (req searchMoviesRequest) toInput() movie.ListMoviesInput {
+	return movie.ListMoviesInput{
+		Query:   req.Query,
+		Page:    req.Page,
+		PerPage: req.PerPage,
+	}
 }

@@ -16,5 +16,5 @@ func (srv HTTPServer) mapHandlers() {
 	movieHandler := http.NewHandler(movieUsecase)
 
 	api := srv.gin.Group("/api/v1")
-	movieHandler.MapRoutes(api.Group("/movies"))
+	movieHandler.MapRoutes(api.Group("/"))
 }

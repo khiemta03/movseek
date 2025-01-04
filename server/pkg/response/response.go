@@ -48,6 +48,13 @@ func NewForbiddenResp() Resp {
 	}
 }
 
+func NewBadRequestResp() Resp {
+	return Resp{
+		ErrorCode: 400,
+		Message:   "Bad Request",
+	}
+}
+
 // Ok returns a new OK response with the given data.
 func OK(c *gin.Context, data any) {
 	c.JSON(http.StatusOK, NewOKResp(data))
@@ -60,6 +67,10 @@ func Unauthorized(c *gin.Context) {
 
 func Forbidden(c *gin.Context) {
 	c.JSON(http.StatusForbidden, NewForbiddenResp())
+}
+
+func BadRequest(c *gin.Context) {
+	c.JSON(http.StatusBadRequest, NewBadRequestResp())
 }
 
 func parseError(err error) (int, Resp) {

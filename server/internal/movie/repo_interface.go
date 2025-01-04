@@ -8,4 +8,5 @@ import (
 
 type Repository interface {
 	GetOneMovie(ctx context.Context, movieID string) (models.Movie, error)
+	ListMovies(ctx context.Context, input ListMoviesOptions) ([]models.Movie, error)
 }
