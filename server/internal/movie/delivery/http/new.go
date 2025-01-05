@@ -7,9 +7,6 @@ import (
 
 type handler interface {
 	MapRoutes(r *gin.RouterGroup)
-	getOneMovie(c *gin.Context)
-	getMovieCredits(c *gin.Context)
-	searchMovies(c *gin.Context)
 }
 
 type handlerImpl struct {
