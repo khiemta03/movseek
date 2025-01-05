@@ -1,8 +1,6 @@
 package http
 
 import (
-	"fmt"
-
 	"github.com/gin-gonic/gin"
 	"github.com/tmplam/movseek/pkg/response"
 )
@@ -16,7 +14,6 @@ func (h handlerImpl) getOneMovie(c *gin.Context) {
 
 	movie, err := h.uc.GetOneMovie(c.Request.Context(), id)
 	if err != nil {
-		fmt.Println(err)
 		response.BadRequest(c)
 		return
 	}

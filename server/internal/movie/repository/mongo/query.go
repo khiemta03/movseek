@@ -36,6 +36,5 @@ func (repo implRepository) buildGetMovieFindOptions(input movie.GetMovieFilter) 
 	findOptions.SetLimit(int64(input.PerPage))
 	findOptions.SetSkip(int64((input.Page - 1) * input.PerPage))
 	findOptions.SetSort(bson.M{"release_date": -1})
-
 	return findOptions
 }

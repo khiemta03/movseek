@@ -1,8 +1,6 @@
 package models
 
 import (
-	"time"
-
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
@@ -19,7 +17,7 @@ type Movie struct {
 	Overview         string             `json:"overview" bson:"overview"`
 	Popularity       float64            `json:"popularity" bson:"popularity"`
 	PosterPath       string             `json:"poster_path" bson:"poster_path"`
-	ReleaseDate      time.Time          `json:"release_date" bson:"release_date"`
+	ReleaseDate      string             `json:"release_date" bson:"release_date"`
 	Revenue          int64              `json:"revenue" bson:"revenue"`
 	Runtime          int64              `json:"runtime" bson:"runtime"`
 	Status           string             `json:"status" bson:"status"`
@@ -68,7 +66,7 @@ type MovieSummary struct {
 	Overview         string             `json:"overview" bson:"overview"`
 	Popularity       float64            `json:"popularity" bson:"popularity"`
 	PosterPath       string             `json:"poster_path" bson:"poster_path"`
-	ReleaseDate      time.Time          `json:"release_date" bson:"release_date"`
+	ReleaseDate      string             `json:"release_date" bson:"release_date"`
 	Title            string             `json:"title" bson:"title"`
 	Video            bool               `json:"video" bson:"video"`
 	VoteAverage      float64            `json:"vote_average" bson:"vote_average"`

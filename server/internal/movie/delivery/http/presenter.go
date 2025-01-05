@@ -7,21 +7,21 @@ import (
 )
 
 type filter struct {
-	page    int `form:"page"`
-	perPage int `form:"per_page"`
+	Page    int `form:"page" binding:"required"`
+	PerPage int `form:"per_page" binding:"required"`
 }
 
 type searchMoviesRequest struct {
-	query string `form:"query"`
-	filter
+	Query  string `form:"query"`
+	Filter filter `form:"filter"`
 }
 
 func (req searchMoviesRequest) toInput() movie.ListMoviesInput {
 	return movie.ListMoviesInput{
-		Query: req.query,
+		Query: req.Query,
 		Filter: movie.GetMovieFilter{
-			Page:    req.page,
-			PerPage: req.perPage,
+			Page:    req.Filter.Page,
+			PerPage: req.Filter.PerPage,
 		},
 	}
 }
@@ -33,19 +33,19 @@ type getUpcomingMoviesRequest struct {
 func (req getUpcomingMoviesRequest) toInput() movie.GetUpcomingMoviesInput {
 	return movie.GetUpcomingMoviesInput{
 		Filter: movie.GetMovieFilter{
-			Page:    req.page,
-			PerPage: req.perPage,
+			Page:    req.Page,
+			PerPage: req.PerPage,
 		},
 	}
 }
 
 type getTrendingMoviesRequest struct {
-	t string `uri:"type"`
+	Type string `uri:"type"`
 	filter
 }
 
 func (req getTrendingMoviesRequest) validate() error {
-	if req.t != "week" && req.t != "day" {
+	if req.Type != "week" && req.Type != "day" {
 		return errors.New("invalid type")
 	}
 
@@ -54,10 +54,10 @@ func (req getTrendingMoviesRequest) validate() error {
 
 func (req getTrendingMoviesRequest) toInput() movie.GetTrendingMoviesInput {
 	return movie.GetTrendingMoviesInput{
-		Type: req.t,
+		Type: req.Type,
 		Filter: movie.GetMovieFilter{
-			Page:    req.page,
-			PerPage: req.perPage,
+			Page:    req.Page,
+			PerPage: req.PerPage,
 		},
 	}
 }
@@ -69,21 +69,21 @@ type getTopRatedMoviesRequest struct {
 func (req getTopRatedMoviesRequest) toInput() movie.GetTopRatedMoviesInput {
 	return movie.GetTopRatedMoviesInput{
 		Filter: movie.GetMovieFilter{
-			Page:    req.page,
-			PerPage: req.perPage,
+			Page:    req.Page,
+			PerPage: req.PerPage,
 		},
 	}
 }
 
 type getPopularMoviesRequest struct {
-	filter
+	filter `form:"filter"`
 }
 
 func (req getPopularMoviesRequest) toInput() movie.GetPopularMoviesInput {
 	return movie.GetPopularMoviesInput{
 		Filter: movie.GetMovieFilter{
-			Page:    req.page,
-			PerPage: req.perPage,
+			Page:    req.Page,
+			PerPage: req.PerPage,
 		},
 	}
 }
