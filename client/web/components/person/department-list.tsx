@@ -1,8 +1,8 @@
 import type { Credits, MovieCast, MovieCrew, TVCast, TVCrew } from '@/models/people-types';
-import { ChevronDown } from 'lucide-react';
+import { ChevronDown, XIcon } from 'lucide-react';
 import Department from './department';
 import { useState } from 'react';
-// import { Button } from '@/components/ui/button';
+import { Button } from '@/components/ui/button';
 
 interface DepartmentListProps {
   credits: Credits;
@@ -131,9 +131,20 @@ const DepartmentList: React.FC<DepartmentListProps> = ({ credits, knownForDepart
       <div className="container mx-auto text-black">
         <div className="flex flex-col justify-between items-start ml-10 gap-5">
           <div className="flex items-center justify-end w-full">
-            <div className="flex space-x-5 text-black text-lg font-medium gap-5">
+            <div className="flex items-center space-x-5 text-black text-lg font-medium gap-5">
+              {(selectedType != undefined || selectedDepartment != undefined) && (
+                <Button
+                  size={'icon'}
+                  variant={'outline'}
+                  onClick={() => {
+                    handleDepartmentSelect(undefined);
+                    handleTypeSelect(undefined);
+                  }}
+                >
+                  <XIcon></XIcon>
+                </Button>
+              )}
               <div className="relative group hover:cursor-pointer">
-                {/* <Button */}
                 <span className="flex items-center gap-2">
                   All <ChevronDown />
                 </span>
