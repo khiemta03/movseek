@@ -55,7 +55,7 @@ interface PeoplePopularResults {
   total_results: number;
 }
 
-interface Cast {
+interface MovieCast {
   adult: boolean;
   backdrop_path: string | null;
   genre_ids: number[];
@@ -75,7 +75,27 @@ interface Cast {
   order: number;
 }
 
-interface Crew {
+interface TVCast {
+  adult: boolean;
+  backdrop_path: string | null;
+  genre_ids: number[];
+  id: number;
+  original_language: string;
+  overview: string;
+  popularity: number;
+  poster_path: string;
+  vote_average: number;
+  vote_count: number;
+  character: string;
+  credit_id: string;
+  origin_country: string[];
+  original_name: string;
+  first_air_date: string;
+  name: string;
+  episode_count: number;
+}
+
+interface MovieCrew {
   adult: boolean;
   backdrop_path: string | null;
   genre_ids: number[];
@@ -95,6 +115,41 @@ interface Crew {
   job: string;
 }
 
+interface TVCrew {
+  adult: boolean;
+  backdrop_path: string | null;
+  genre_ids: number[];
+  id: number;
+  original_language: string;
+  overview: string;
+  popularity: number;
+  poster_path: string;
+  vote_average: number;
+  vote_count: number;
+  credit_id: string;
+  department: string;
+  job: string;
+  origin_country: string[];
+  original_name: string;
+  first_air_date: string;
+  name: string;
+  episode_count: number;
+}
+
+interface MovieCredits {
+  cast: MovieCast[];
+  crew: MovieCrew[];
+  id: number;
+}
+
+interface TVCredits {
+  cast: TVCast[];
+  crew: TVCrew[];
+  id: number;
+}
+
+type PeopleCredit = MovieCast | MovieCrew | TVCast | TVCrew;
+
 interface PeopleDetail {
   adult: boolean;
   also_known_as: string[];
@@ -110,11 +165,27 @@ interface PeopleDetail {
   place_of_birth: string;
   popularity: number;
   profile_path: string;
-  movie_credits: {
-    cast: Cast[];
-    crew: Crew[];
-    id: number;
-  };
+  movie_credits: MovieCredits;
+  tv_credits: TVCredits;
 }
 
-export type { PeoplePopularResults, MovieKnownFor, PeoplePopular, PeopleDetail };
+interface Credits {
+  movie_credits: MovieCredits;
+  tv_credits: TVCredits;
+}
+
+export type {
+  PeoplePopularResults,
+  MovieKnownFor,
+  KnownFor,
+  PeoplePopular,
+  PeopleDetail,
+  PeopleCredit,
+  MovieCast,
+  MovieCrew,
+  MovieCredits,
+  TVCredits,
+  TVCast,
+  TVCrew,
+  Credits,
+};

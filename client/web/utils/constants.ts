@@ -12,4 +12,6 @@ export const TMDB_API = {
 
   PEOPLE_POPULAR: (page: number) => `/person/popular?page=${page}`,
   PEOPLE_DETAIL: (id: number) => `/person/${id}`,
+  PEOPLE_MOVIE_CREDITS: (id: number) => `/person/${id}/movie_credits`,
+  PEOPLE_TV_CREDITS: (id: number) => `/person/${id}/tv_credits`,
 };
