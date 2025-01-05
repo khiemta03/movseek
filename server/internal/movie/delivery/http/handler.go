@@ -55,3 +55,35 @@ func (h handlerImpl) searchMovies(c *gin.Context) {
 
 	response.OK(c, movies)
 }
+
+func (h handlerImpl) getUpcomingMovies(c *gin.Context) {
+	req, err := h.processGetUpcomingMoviesRequest(c)
+	if err != nil {
+		response.BadRequest(c)
+		return
+	}
+
+	movies, err := h.uc.GetUpcomingMovies(c.Request.Context(), req.toInput())
+	if err != nil {
+		response.BadRequest(c)
+		return
+	}
+
+	response.OK(c, movies)
+}
+
+func (h handlerImpl) getTrendingMovies(c *gin.Context) {
+	req, err := h.processGetTrendingMoviesRequest(c)
+	if err != nil {
+		response.BadRequest(c)
+		return
+	}
+
+	movies, err := h.uc.GetTrendingMovies(c.Request.Context(), req.toInput())
+	if err != nil {
+		response.BadRequest(c)
+		return
+	}
+
+	response.OK(c, movies)
+}

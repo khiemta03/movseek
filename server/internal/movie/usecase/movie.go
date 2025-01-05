@@ -22,13 +22,35 @@ func (uc implUsecase) GetMovieCredits(ctx context.Context, movieID string) (mode
 
 func (uc implUsecase) ListMovies(ctx context.Context, input movie.ListMoviesInput) (movie.ListMoviesOutput, error) {
 	movies, err := uc.repo.ListMovies(ctx, movie.ListMoviesOptions{
-		Query:   input.Query,
-		Page:    input.Page,
-		PerPage: input.PerPage,
+		Query:  input.Query,
+		Filter: input.Filter,
 	})
 	if err != nil {
 		return movie.ListMoviesOutput{}, err
 	}
 
 	return movie.ListMoviesOutput{Movies: movies}, nil
+}
+
+func (uc implUsecase) GetUpcomingMovies(ctx context.Context, input movie.GetUpcomingMoviesInput) (movie.GetUpcomingMoviesOutput, error) {
+	movies, err := uc.repo.GetUpcomingMovies(ctx, movie.GetUpcomingMoviesOptions{
+		Filter: input.Filter,
+	})
+	if err != nil {
+		return movie.GetUpcomingMoviesOutput{}, err
+	}
+
+	return movie.GetUpcomingMoviesOutput{Movies: movies}, nil
+}
+
+func (uc implUsecase) GetTrendingMovies(ctx context.Context, input movie.GetTrendingMoviesInput) (movie.GetTrendingMoviesOutput, error) {
+	movies, err := uc.repo.GetTrendingMovies(ctx, movie.GetTrendingMoviesOptions{
+		Filter: input.Filter,
+		Type:   input.Type,
+	})
+	if err != nil {
+		return movie.GetTrendingMoviesOutput{}, err
+	}
+
+	return movie.GetTrendingMoviesOutput{Movies: movies}, nil
 }
