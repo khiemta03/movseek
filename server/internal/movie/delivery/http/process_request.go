@@ -50,3 +50,21 @@ func (h handlerImpl) processGetTrendingMoviesRequest(c *gin.Context) (getTrendin
 
 	return req, nil
 }
+
+func (h handlerImpl) processGetTopRatedMoviesRequest(c *gin.Context) (getTopRatedMoviesRequest, error) {
+	var req getTopRatedMoviesRequest
+	if err := c.ShouldBindQuery(&req); err != nil {
+		return getTopRatedMoviesRequest{}, err
+	}
+
+	return req, nil
+}
+
+func (h handlerImpl) processGetPopularMoviesRequest(c *gin.Context) (getPopularMoviesRequest, error) {
+	var req getPopularMoviesRequest
+	if err := c.ShouldBindQuery(&req); err != nil {
+		return getPopularMoviesRequest{}, err
+	}
+
+	return req, nil
+}

@@ -61,3 +61,29 @@ func (req getTrendingMoviesRequest) toInput() movie.GetTrendingMoviesInput {
 		},
 	}
 }
+
+type getTopRatedMoviesRequest struct {
+	filter
+}
+
+func (req getTopRatedMoviesRequest) toInput() movie.GetTopRatedMoviesInput {
+	return movie.GetTopRatedMoviesInput{
+		Filter: movie.GetMovieFilter{
+			Page:    req.page,
+			PerPage: req.perPage,
+		},
+	}
+}
+
+type getPopularMoviesRequest struct {
+	filter
+}
+
+func (req getPopularMoviesRequest) toInput() movie.GetPopularMoviesInput {
+	return movie.GetPopularMoviesInput{
+		Filter: movie.GetMovieFilter{
+			Page:    req.page,
+			PerPage: req.perPage,
+		},
+	}
+}

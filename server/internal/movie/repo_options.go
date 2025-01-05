@@ -13,3 +13,11 @@ type GetTrendingMoviesOptions struct {
 	Filter GetMovieFilter
 	Type   string
 }
+
+type GetTopRatedMoviesOptions struct {
+	Filter GetMovieFilter
+}
+
+type GetPopularMoviesOptions struct {
+	Filter GetMovieFilter
+}

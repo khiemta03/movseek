@@ -87,3 +87,35 @@ func (h handlerImpl) getTrendingMovies(c *gin.Context) {
 
 	response.OK(c, movies)
 }
+
+func (h handlerImpl) getTopRatedMovies(c *gin.Context) {
+	req, err := h.processGetTopRatedMoviesRequest(c)
+	if err != nil {
+		response.BadRequest(c)
+		return
+	}
+
+	movies, err := h.uc.GetTopRatedMovies(c.Request.Context(), req.toInput())
+	if err != nil {
+		response.BadRequest(c)
+		return
+	}
+
+	response.OK(c, movies)
+}
+
+func (h handlerImpl) getPopularMovies(c *gin.Context) {
+	req, err := h.processGetPopularMoviesRequest(c)
+	if err != nil {
+		response.BadRequest(c)
+		return
+	}
+
+	movies, err := h.uc.GetPopularMovies(c.Request.Context(), req.toInput())
+	if err != nil {
+		response.BadRequest(c)
+		return
+	}
+
+	response.OK(c, movies)
+}

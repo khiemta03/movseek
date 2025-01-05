@@ -54,3 +54,25 @@ func (uc implUsecase) GetTrendingMovies(ctx context.Context, input movie.GetTren
 
 	return movie.GetTrendingMoviesOutput{Movies: movies}, nil
 }
+
+func (uc implUsecase) GetTopRatedMovies(ctx context.Context, input movie.GetTopRatedMoviesInput) (movie.GetTopRatedMoviesOutput, error) {
+	movies, err := uc.repo.GetTopRatedMovies(ctx, movie.GetTopRatedMoviesOptions{
+		Filter: input.Filter,
+	})
+	if err != nil {
+		return movie.GetTopRatedMoviesOutput{}, err
+	}
+
+	return movie.GetTopRatedMoviesOutput{Movies: movies}, nil
+}
+
+func (uc implUsecase) GetPopularMovies(ctx context.Context, input movie.GetPopularMoviesInput) (movie.GetPopularMoviesOutput, error) {
+	movies, err := uc.repo.GetPopularMovies(ctx, movie.GetPopularMoviesOptions{
+		Filter: input.Filter,
+	})
+	if err != nil {
+		return movie.GetPopularMoviesOutput{}, err
+	}
+
+	return movie.GetPopularMoviesOutput{Movies: movies}, nil
+}

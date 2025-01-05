@@ -32,3 +32,19 @@ type GetTrendingMoviesInput struct {
 type GetTrendingMoviesOutput struct {
 	Movies []models.MovieSummary `json:"movies"`
 }
+
+type GetTopRatedMoviesInput struct {
+	Filter GetMovieFilter
+}
+
+type GetTopRatedMoviesOutput struct {
+	Movies []models.MovieSummary `json:"movies"`
+}
+
+type GetPopularMoviesInput struct {
+	Filter GetMovieFilter
+}
+
+type GetPopularMoviesOutput struct {
+	Movies []models.MovieSummary `json:"movies"`
+}

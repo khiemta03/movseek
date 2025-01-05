@@ -16,6 +16,8 @@ const (
 	upcomingCollection     = "movies_upcoming"
 	weekTrendingCollection = "movies_trending_week"
 	dayTrendingCollection  = "movies_trending_day"
+	topRatedCollection     = "movies_top_rated"
+	popularCollection      = "movies_popular"
 )
 
 func (repo implRepository) getMovieCollection() mongo.Collection {
@@ -28,6 +30,14 @@ func (repo implRepository) getUpcomingCollection() mongo.Collection {
 
 func (repo implRepository) getTrendingCollection(t string) mongo.Collection {
 	return repo.db.Collection(fmt.Sprintf("movies_trending_%s", t))
+}
+
+func (repo implRepository) getTopRatedCollection() mongo.Collection {
+	return repo.db.Collection(topRatedCollection)
+}
+
+func (repo implRepository) getPopularCollection() mongo.Collection {
+	return repo.db.Collection(popularCollection)
 }
 
 func (repo implRepository) GetOneMovie(ctx context.Context, movieID string) (models.Movie, error) {
@@ -89,6 +99,44 @@ func (repo implRepository) GetUpcomingMovies(ctx context.Context, input movie.Ge
 
 func (repo implRepository) GetTrendingMovies(ctx context.Context, input movie.GetTrendingMoviesOptions) ([]models.MovieSummary, error) {
 	col := repo.getTrendingCollection(input.Type)
+
+	findOptions := repo.buildGetMovieFindOptions(input.Filter)
+
+	cursor, err := col.Find(ctx, bson.M{}, findOptions)
+	if err != nil {
+		return []models.MovieSummary{}, err
+	}
+
+	var movies []models.MovieSummary
+	err = cursor.All(ctx, &movies)
+	if err != nil {
+		return []models.MovieSummary{}, err
+	}
+
+	return movies, nil
+}
+
+func (repo implRepository) GetTopRatedMovies(ctx context.Context, input movie.GetTopRatedMoviesOptions) ([]models.MovieSummary, error) {
+	col := repo.getTopRatedCollection()
+
+	findOptions := repo.buildGetMovieFindOptions(input.Filter)
+
+	cursor, err := col.Find(ctx, bson.M{}, findOptions)
+	if err != nil {
+		return []models.MovieSummary{}, err
+	}
+
+	var movies []models.MovieSummary
+	err = cursor.All(ctx, &movies)
+	if err != nil {
+		return []models.MovieSummary{}, err
+	}
+
+	return movies, nil
+}
+
+func (repo implRepository) GetPopularMovies(ctx context.Context, input movie.GetPopularMoviesOptions) ([]models.MovieSummary, error) {
+	col := repo.getPopularCollection()
 
 	findOptions := repo.buildGetMovieFindOptions(input.Filter)
 
