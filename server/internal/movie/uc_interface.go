@@ -9,6 +9,7 @@ import (
 type Usecase interface {
 	GetOneMovie(ctx context.Context, movieID int64) (models.Movie, error)
 	GetMovieCredits(ctx context.Context, movieID int64) (models.MovieCredits, error)
+	GetMovieVideos(ctx context.Context, movieID int64) ([]models.Trailer, error)
 	ListMovies(ctx context.Context, input ListMoviesInput) (ListMoviesOutput, error)
 	GetUpcomingMovies(ctx context.Context, input GetUpcomingMoviesInput) (GetUpcomingMoviesOutput, error)
 	GetTrendingMovies(ctx context.Context, input GetTrendingMoviesInput) (GetTrendingMoviesOutput, error)

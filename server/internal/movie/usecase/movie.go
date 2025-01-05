@@ -20,6 +20,15 @@ func (uc implUsecase) GetMovieCredits(ctx context.Context, movieID int64) (model
 	return m.Credits, nil
 }
 
+func (uc implUsecase) GetMovieVideos(ctx context.Context, movieID int64) ([]models.Trailer, error) {
+	m, err := uc.repo.GetOneMovie(ctx, movieID)
+	if err != nil {
+		return []models.Trailer{}, err
+	}
+
+	return m.Trailers, nil
+}
+
 func (uc implUsecase) ListMovies(ctx context.Context, input movie.ListMoviesInput) (movie.ListMoviesOutput, error) {
 	movies, err := uc.repo.ListMovies(ctx, movie.ListMoviesOptions{
 		Query:  input.Query,

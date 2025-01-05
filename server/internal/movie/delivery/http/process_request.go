@@ -24,6 +24,15 @@ func (h handlerImpl) processGetMovieCreditsRequest(c *gin.Context) (int64, error
 	return id, nil
 }
 
+func (h handlerImpl) processGetMovieVideosRequest(c *gin.Context) (int64, error) {
+	id, err := strconv.ParseInt(c.Param("id"), 10, 64)
+	if err != nil {
+		return 0, err
+	}
+
+	return id, nil
+}
+
 func (h handlerImpl) processSearchMoviesRequest(c *gin.Context) (searchMoviesRequest, error) {
 	var req searchMoviesRequest
 	if err := c.ShouldBindQuery(&req); err != nil {

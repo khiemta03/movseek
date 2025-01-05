@@ -37,6 +37,22 @@ func (h handlerImpl) getMovieCredits(c *gin.Context) {
 	response.OK(c, credits)
 }
 
+func (h handlerImpl) getMovieVideos(c *gin.Context) {
+	id, err := h.processGetMovieVideosRequest(c)
+	if err != nil {
+		response.BadRequest(c)
+		return
+	}
+
+	videos, err := h.uc.GetMovieVideos(c.Request.Context(), id)
+	if err != nil {
+		response.BadRequest(c)
+		return
+	}
+
+	response.OK(c, videos)
+}
+
 func (h handlerImpl) searchMovies(c *gin.Context) {
 	req, err := h.processSearchMoviesRequest(c)
 	if err != nil {
