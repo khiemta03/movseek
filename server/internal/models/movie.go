@@ -1,6 +1,8 @@
 package models
 
-import "go.mongodb.org/mongo-driver/bson/primitive"
+import (
+	"go.mongodb.org/mongo-driver/bson/primitive"
+)
 
 type Movie struct {
 	MovieID          primitive.ObjectID `json:"_id" bson:"_id"`
@@ -51,4 +53,22 @@ type MovieCrew struct {
 	Character          string  `json:"character" bson:"character"`
 	CreditID           string  `json:"credit_id" bson:"credit_id"`
 	Order              int64   `json:"order" bson:"order"`
+}
+
+type MovieSummary struct {
+	MovieID          primitive.ObjectID `json:"_id" bson:"_id"`
+	TMDBID           int64              `json:"tmdb_id" bson:"tmdb_id"`
+	Adult            bool               `json:"adult" bson:"adult"`
+	BackdropPath     string             `json:"backdrop_path" bson:"backdrop_path"`
+	GenreIDs         []int64            `json:"genre_ids" bson:"genre_ids"`
+	OriginalLanguage string             `json:"original_language" bson:"original_language"`
+	OriginalTitle    string             `json:"original_title" bson:"original_title"`
+	Overview         string             `json:"overview" bson:"overview"`
+	Popularity       float64            `json:"popularity" bson:"popularity"`
+	PosterPath       string             `json:"poster_path" bson:"poster_path"`
+	ReleaseDate      string             `json:"release_date" bson:"release_date"`
+	Title            string             `json:"title" bson:"title"`
+	Video            bool               `json:"video" bson:"video"`
+	VoteAverage      float64            `json:"vote_average" bson:"vote_average"`
+	VoteCount        int64              `json:"vote_count" bson:"vote_count"`
 }
