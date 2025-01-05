@@ -119,3 +119,13 @@ func (h handlerImpl) getPopularMovies(c *gin.Context) {
 
 	response.OK(c, movies)
 }
+
+func (h handlerImpl) getMovieGenres(c *gin.Context) {
+	genres, err := h.uc.GetMovieGenres(c.Request.Context())
+	if err != nil {
+		response.BadRequest(c)
+		return
+	}
+
+	response.OK(c, genres)
+}

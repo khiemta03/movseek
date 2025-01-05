@@ -13,4 +13,5 @@ type Repository interface {
 	GetTrendingMovies(ctx context.Context, input GetTrendingMoviesOptions) ([]models.MovieSummary, error)
 	GetTopRatedMovies(ctx context.Context, input GetTopRatedMoviesOptions) ([]models.MovieSummary, error)
 	GetPopularMovies(ctx context.Context, input GetPopularMoviesOptions) ([]models.MovieSummary, error)
+	GetMovieGenres(ctx context.Context) ([]models.MovieGenre, error)
 }

@@ -18,6 +18,7 @@ const (
 	dayTrendingCollection  = "movies_trending_day"
 	topRatedCollection     = "movies_top_rated"
 	popularCollection      = "movies_popular"
+	genresCollection       = "movie_genres"
 )
 
 func (repo implRepository) getMovieCollection() mongo.Collection {
@@ -38,6 +39,10 @@ func (repo implRepository) getTopRatedCollection() mongo.Collection {
 
 func (repo implRepository) getPopularCollection() mongo.Collection {
 	return repo.db.Collection(popularCollection)
+}
+
+func (repo implRepository) getGenresCollection() mongo.Collection {
+	return repo.db.Collection(genresCollection)
 }
 
 func (repo implRepository) GetOneMovie(ctx context.Context, movieID string) (models.Movie, error) {
@@ -152,4 +157,21 @@ func (repo implRepository) GetPopularMovies(ctx context.Context, input movie.Get
 	}
 
 	return movies, nil
+}
+
+func (repo implRepository) GetMovieGenres(ctx context.Context) ([]models.MovieGenre, error) {
+	col := repo.getGenresCollection()
+
+	cursor, err := col.Find(ctx, bson.M{})
+	if err != nil {
+		return []models.MovieGenre{}, err
+	}
+
+	var genres []models.MovieGenre
+	err = cursor.All(ctx, &genres)
+	if err != nil {
+		return []models.MovieGenre{}, err
+	}
+
+	return genres, nil
 }

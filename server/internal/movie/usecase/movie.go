@@ -76,3 +76,12 @@ func (uc implUsecase) GetPopularMovies(ctx context.Context, input movie.GetPopul
 
 	return movie.GetPopularMoviesOutput{Movies: movies}, nil
 }
+
+func (uc implUsecase) GetMovieGenres(ctx context.Context) (movie.GetMovieGenresOutput, error) {
+	genres, err := uc.repo.GetMovieGenres(ctx)
+	if err != nil {
+		return movie.GetMovieGenresOutput{}, err
+	}
+
+	return movie.GetMovieGenresOutput{Genres: genres}, nil
+}
