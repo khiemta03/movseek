@@ -45,7 +45,7 @@ func (repo implRepository) getGenresCollection() mongo.Collection {
 	return repo.db.Collection(genresCollection)
 }
 
-func (repo implRepository) GetOneMovie(ctx context.Context, movieID string) (models.Movie, error) {
+func (repo implRepository) GetOneMovie(ctx context.Context, movieID int64) (models.Movie, error) {
 	col := repo.getMovieCollection()
 
 	queryFilter, err := repo.buildMovieQuery(movieID)

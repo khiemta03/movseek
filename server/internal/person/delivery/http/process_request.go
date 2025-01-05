@@ -1,13 +1,19 @@
 package http
 
 import (
+	"strconv"
+
 	"github.com/gin-gonic/gin"
 )
 
-func (h handlerImpl) processGetOnePersonRequest(c *gin.Context) (string, error) {
+func (h handlerImpl) processGetOnePersonRequest(c *gin.Context) (int64, error) {
 	id := c.Param("id")
+	idInt, err := strconv.ParseInt(id, 10, 64)
+	if err != nil {
+		return 0, err
+	}
 
-	return id, nil
+	return idInt, nil
 }
 
 func (h handlerImpl) processSearchPeopleRequest(c *gin.Context) (searchPeopleRequest, error) {

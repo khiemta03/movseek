@@ -7,7 +7,7 @@ import (
 )
 
 type Repository interface {
-	GetOneMovie(ctx context.Context, movieID string) (models.Movie, error)
+	GetOneMovie(ctx context.Context, movieID int64) (models.Movie, error)
 	ListMovies(ctx context.Context, input ListMoviesOptions) ([]models.Movie, error)
 	GetUpcomingMovies(ctx context.Context, input GetUpcomingMoviesOptions) ([]models.MovieSummary, error)
 	GetTrendingMovies(ctx context.Context, input GetTrendingMoviesOptions) ([]models.MovieSummary, error)

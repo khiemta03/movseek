@@ -7,11 +7,11 @@ import (
 	"github.com/tmplam/movseek/internal/movie"
 )
 
-func (uc implUsecase) GetOneMovie(ctx context.Context, movieID string) (models.Movie, error) {
+func (uc implUsecase) GetOneMovie(ctx context.Context, movieID int64) (models.Movie, error) {
 	return uc.repo.GetOneMovie(ctx, movieID)
 }
 
-func (uc implUsecase) GetMovieCredits(ctx context.Context, movieID string) (models.MovieCredits, error) {
+func (uc implUsecase) GetMovieCredits(ctx context.Context, movieID int64) (models.MovieCredits, error) {
 	m, err := uc.repo.GetOneMovie(ctx, movieID)
 	if err != nil {
 		return models.MovieCredits{}, err

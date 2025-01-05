@@ -3,18 +3,12 @@ package mongo
 import (
 	"github.com/tmplam/movseek/internal/movie"
 	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-func (repo implRepository) buildMovieQuery(movieID string) (bson.M, error) {
-	id, err := primitive.ObjectIDFromHex(movieID)
-	if err != nil {
-		return bson.M{}, err
-	}
-
+func (repo implRepository) buildMovieQuery(movieID int64) (bson.M, error) {
 	queryFilter := bson.M{
-		"_id": id,
+		"id": movieID,
 	}
 
 	return queryFilter, nil

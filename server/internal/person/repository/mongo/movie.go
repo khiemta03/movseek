@@ -30,16 +30,13 @@ func (repo implRepository) getPopularCollection() mongo.Collection {
 	return repo.db.Collection(popularCollection)
 }
 
-func (repo implRepository) GetOnePerson(ctx context.Context, personID string) (models.Person, error) {
+func (repo implRepository) GetOnePerson(ctx context.Context, personID int64) (models.Person, error) {
 	col := repo.getPeopleCollection()
 
-	queryFilter, err := repo.buildPersonQuery(personID)
-	if err != nil {
-		return models.Person{}, err
-	}
+	queryFilter := repo.buildPersonQuery(personID)
 
 	var p = models.Person{}
-	err = col.FindOne(ctx, queryFilter).Decode(&p)
+	err := col.FindOne(ctx, queryFilter).Decode(&p)
 	if err != nil {
 		return models.Person{}, repository.MapError(err)
 	}
