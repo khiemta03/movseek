@@ -2,21 +2,22 @@
 
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import MovieSearchCard from '@/components/search/movie-search-card';
 import Loading from '@/components/search/search-loading';
-import { fetchGenresMovie, fetchMoviePopular } from '@/apis/movie-list';
 import PaginationCustom from '@/components/person/pagination';
-import { FilterSortState, GenresMovieResults, MovieListResults } from '@/models/movie-list-types';
+import { FilterSortState } from '@/models/movie-list-types';
 import { Button } from '@/components/ui/button';
 import { deepEqual } from '@/utils/util-functions/movie-list-page';
 import SortSection from '@/components/movie-list/sort-section';
 import FiltersSection from '@/components/movie-list/filters-section';
+import { fetchGenresTV, fetchTVPopular } from '@/apis/tv-list';
+import TVSearchCard from '@/components/search/tv-search-card';
+import { GenresTVResults, TVListResults } from '@/models/tv-list-types';
 
-export default function MoviePopularPage() {
+export default function TVPopularPage() {
   const searchParams = useSearchParams();
   const page = searchParams.get('page');
-  const [movieResults, setMovieResults] = useState<MovieListResults | null>(null);
-  const [genreListResults, setGenreListResults] = useState<GenresMovieResults | null>(null);
+  const [tvResults, setTVResults] = useState<TVListResults | null>(null);
+  const [genreListResults, setGenreListResults] = useState<GenresTVResults | null>(null);
   const [loading, setLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const [isOpenSort, setIsOpenSort] = useState(false);
@@ -43,9 +44,9 @@ export default function MoviePopularPage() {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const movieResponse = await fetchMoviePopular(page != null ? parseInt(page) : 1);
-        setMovieResults(movieResponse.data);
-        const genreResponse = await fetchGenresMovie();
+        const tvResponse = await fetchTVPopular(page != null ? parseInt(page) : 1);
+        setTVResults(tvResponse.data);
+        const genreResponse = await fetchGenresTV();
         setGenreListResults(genreResponse.data);
       } catch (err) {
         console.log(err);
@@ -133,7 +134,7 @@ export default function MoviePopularPage() {
   return (
     <div className="flex flex-col min-h-screen font-geist-mono">
       <main className="container mx-auto py-10">
-        <h2 className="mb-5 text-2xl font-bold ">Popular Movies</h2>
+        <h2 className="mb-5 text-2xl font-bold ">Popular TV Series</h2>
         <div className="flex gap-6">
           <div className="w-1/5 text-2xl">
             <div className="flex flex-col gap-8">
@@ -157,25 +158,25 @@ export default function MoviePopularPage() {
               <Button disabled={deepEqual(initFilterSortState, filterSortState)}>Search</Button>
             </div>
           </div>
-          {movieResults != null && !loading ? (
+          {tvResults != null && !loading ? (
             <>
-              {movieResults.total_results > 0 ? (
+              {tvResults.total_results > 0 ? (
                 <div className="w-4/5">
                   <div className="mb-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
-                    {movieResults.results.map((movie, index) => (
-                      <MovieSearchCard key={index} movie={movie} />
+                    {tvResults.results.map((tv, index) => (
+                      <TVSearchCard key={index} tv={tv} />
                     ))}
                   </div>
-                  {movieResults.total_pages > 1 && (
+                  {tvResults.total_pages > 1 && (
                     <PaginationCustom
                       currentPage={page != null ? parseInt(page) : 1}
-                      totalPage={movieResults.total_pages}
-                      endpoint={'/movie/popular'}
+                      totalPage={tvResults.total_pages}
+                      endpoint={'/tv/popular'}
                     />
                   )}
                 </div>
               ) : (
-                <div className="font-bold w-full text-center">There are no movies to display.</div>
+                <div className="font-bold w-full text-center">There are no tv series to display.</div>
               )}
             </>
           ) : (
