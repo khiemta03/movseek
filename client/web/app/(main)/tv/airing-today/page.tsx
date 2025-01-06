@@ -13,7 +13,7 @@ import { GenresTVResults, TVListResults } from '@/models/tv-list-types';
 import TVSearchCard from '@/components/search/tv-search-card';
 import { fetchGenresTV, fetchTVAiringToday } from '@/apis/tv-list';
 
-export default function TVNowPlayingPage() {
+export default function TVAiringTodayPage() {
   const searchParams = useSearchParams();
   const page = searchParams.get('page');
   const [tvResults, setTVResults] = useState<TVListResults | null>(null);
@@ -134,7 +134,7 @@ export default function TVNowPlayingPage() {
   return (
     <div className="flex flex-col min-h-screen font-geist-mono">
       <main className="container mx-auto py-10">
-        <h2 className="mb-5 text-2xl font-bold ">Now Playing TV Series</h2>
+        <h2 className="mb-5 text-2xl font-bold ">Airing Today TV Series</h2>
         <div className="flex gap-6">
           <div className="w-1/5 text-2xl">
             <div className="flex flex-col gap-8">
@@ -171,7 +171,7 @@ export default function TVNowPlayingPage() {
                     <PaginationCustom
                       currentPage={page != null ? parseInt(page) : 1}
                       totalPage={tvResults.total_pages}
-                      endpoint={'/tv/now-playing'}
+                      endpoint={'/tv/airing-today'}
                     />
                   )}
                 </div>
