@@ -7,7 +7,7 @@ interface DepartmentProps {
 
 const Department: React.FC<DepartmentProps> = ({ props }) => {
   return (
-    <div className="flex flex-col items-start justify-center px-5 w-full shadow-lg">
+    <div className="flex flex-col items-start justify-center px-5 w-full rounded-lg border shadow-lg">
       <h1 className="font-bold text-2xl my-2">{props.department}</h1>
       <div className="flex flex-col w-full text-black text-lg font-medium">
         {Object.entries(
