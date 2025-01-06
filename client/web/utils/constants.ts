@@ -1,10 +1,12 @@
 export const TMDB_API = {
   TRENDING: (mediaType: 'all' | 'movie' | 'tv' | 'person', timeWindow: 'day' | 'week') =>
     `/trending/${mediaType}/${timeWindow}`,
+
   MOVIE_DETAILS: (movieId: number) => `/movie/${movieId}`,
   MOVIE_CREDITS: (movieId: number) => `/movie/${movieId}/credits`,
   MOVIE_KEYWORDS: (movieId: number) => `/movie/${movieId}/keywords`,
   MOVIE_VIDEOS: (movieId: number) => `/movie/${movieId}/videos`,
+
   SEARCH_MOVIE: (query: string, page: number) => `/search/movie?query=${query}&page=${page}`,
   SEARCH_TV: (query: string, page: number) => `/search/tv?query=${query}&page=${page}`,
   SEARCH_PERSON: (query: string, page: number) => `/search/person?query=${query}&page=${page}`,
@@ -20,4 +22,10 @@ export const TMDB_API = {
   MOVIE_TOP_RATED: (page: number) => `/movie/top_rated?page=${page}`,
   MOVIE_NOW_PLAYING: (page: number) => `/movie/now_playing?page=${page}`,
   MOVIE_UPCOMING: (page: number) => `/movie/upcoming?page=${page}`,
+
+  GENRES_TV: () => `/genre/tv/list`,
+  TV_POPULAR: (page: number) => `/tv/popular?page=${page}`,
+  TV_TOP_RATED: (page: number) => `/tv/top_rated?page=${page}`,
+  TV_NOW_PLAYING: (page: number) => `/tv/now_playing?page=${page}`,
+  TV_UPCOMING: (page: number) => `/tv/upcoming?page=${page}`,
 };

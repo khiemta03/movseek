@@ -29,7 +29,7 @@ const SortSection: React.FC<SortSectionProps> = ({ isOpenSort, setIsOpenSort, fi
             <div className="text-base">Sort Results By</div>
             <Select value={filterSortState.sort} onValueChange={(value) => updateFilterSort('sort', value)}>
               <SelectTrigger className="w-full text-xs bg-white">
-                <SelectValue placeholder="Select a fruit" />
+                <SelectValue placeholder="Select an order" />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
