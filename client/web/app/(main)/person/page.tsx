@@ -21,7 +21,6 @@ export default function PersonPage() {
         setLoading(true);
         const peopleResponse = await fetchPeoplePopular(page != null ? parseInt(page) : 1);
         setPeopleResults(peopleResponse.data);
-        console.log(peopleResponse.data);
       } catch (err) {
         console.log(err);
         setIsError(true);
@@ -33,10 +32,6 @@ export default function PersonPage() {
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page]);
-
-  useEffect(() => {
-    console.log('>>>', peopleResults?.results);
-  }, [peopleResults]);
 
   if (isError)
     return (
@@ -61,6 +56,7 @@ export default function PersonPage() {
                   <PaginationCustom
                     currentPage={page != null ? parseInt(page) : 1}
                     totalPage={peopleResults.total_pages}
+                    endpoint={'/person'}
                   />
                 )}
               </div>

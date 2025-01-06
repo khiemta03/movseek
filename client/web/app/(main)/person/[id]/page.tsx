@@ -32,14 +32,12 @@ const MovieDetail = () => {
       try {
         setLoading(true);
         const personResponse = await fetchPeopleDetail(idPerson);
-        console.log(personResponse.data);
         const data: PeopleDetail = personResponse.data;
         setImageSrc(TMDB_API.POSTER(data.profile_path));
         setPerson(data);
 
         const creditsResponse = await fetchPeopleCredits(idPerson);
         setCredits(creditsResponse);
-        console.log(creditsResponse);
       } catch (err) {
         setError('Failed to fetch movie detail');
         console.log(err);

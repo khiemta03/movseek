@@ -12,9 +12,10 @@ import {
 interface PaginationProps {
   currentPage: number;
   totalPage: number;
+  endpoint: string;
 }
 
-const PaginationCustom = ({ currentPage, totalPage }: PaginationProps) => {
+const PaginationCustom = ({ currentPage, totalPage, endpoint }: PaginationProps) => {
   return (
     <div>
       {totalPage <= 10 ? (
@@ -23,7 +24,7 @@ const PaginationCustom = ({ currentPage, totalPage }: PaginationProps) => {
             <PaginationItem>
               <PaginationPrevious
                 className={`${currentPage === 1 ? 'opacity-50 pointer-events-none' : ''}`}
-                href={`/person?page=${currentPage - 1}`}
+                href={`${endpoint}?page=${currentPage - 1}`}
               />
             </PaginationItem>
             {[...Array(totalPage)].map((_, index) => (
@@ -31,7 +32,7 @@ const PaginationCustom = ({ currentPage, totalPage }: PaginationProps) => {
                 <PaginationLink
                   className={`${currentPage == index + 1 ? 'bg-gray-100' : ''}`}
                   isActive={currentPage == index + 1}
-                  href={`/person?page=${index + 1}`}
+                  href={`${endpoint}?page=${index + 1}`}
                 >
                   {index + 1}
                 </PaginationLink>
@@ -40,7 +41,7 @@ const PaginationCustom = ({ currentPage, totalPage }: PaginationProps) => {
             <PaginationItem>
               <PaginationNext
                 className={`${currentPage === totalPage ? 'opacity-50 pointer-events-none' : ''}`}
-                href={`/person?page=${currentPage + 1}`}
+                href={`${endpoint}?page=${currentPage + 1}`}
               />
             </PaginationItem>
           </PaginationContent>
@@ -51,14 +52,14 @@ const PaginationCustom = ({ currentPage, totalPage }: PaginationProps) => {
             <PaginationItem>
               <PaginationPrevious
                 className={`${currentPage === 1 ? 'opacity-50 pointer-events-none' : ''}`}
-                href={`/person?page=${currentPage - 1}`}
+                href={`${endpoint}?page=${currentPage - 1}`}
               />
             </PaginationItem>
             <PaginationItem>
               <PaginationLink
                 className={`${currentPage == 1 ? 'bg-gray-100' : ''}`}
                 isActive={currentPage == 1}
-                href={`/person?page=1`}
+                href={`${endpoint}?page=1`}
               >
                 1
               </PaginationLink>
@@ -67,7 +68,7 @@ const PaginationCustom = ({ currentPage, totalPage }: PaginationProps) => {
               <PaginationLink
                 className={`${currentPage == 2 ? 'bg-gray-100' : ''}`}
                 isActive={currentPage == 2}
-                href={`/person?page=2`}
+                href={`${endpoint}?page=2`}
               >
                 2
               </PaginationLink>
@@ -76,7 +77,7 @@ const PaginationCustom = ({ currentPage, totalPage }: PaginationProps) => {
               <PaginationLink
                 className={`${currentPage == 3 ? 'bg-gray-100' : ''}`}
                 isActive={currentPage == 3}
-                href={`/person?page=3`}
+                href={`${endpoint}?page=3`}
               >
                 3
               </PaginationLink>
@@ -85,7 +86,7 @@ const PaginationCustom = ({ currentPage, totalPage }: PaginationProps) => {
               <PaginationLink
                 className={`${currentPage == 4 ? 'bg-gray-100' : ''}`}
                 isActive={currentPage == 4}
-                href={`/person?page=4`}
+                href={`${endpoint}?page=4`}
               >
                 4
               </PaginationLink>
@@ -94,7 +95,7 @@ const PaginationCustom = ({ currentPage, totalPage }: PaginationProps) => {
               <PaginationLink
                 className={`${currentPage == 5 ? 'bg-gray-100' : ''}`}
                 isActive={currentPage == 5}
-                href={`/person?page=5`}
+                href={`${endpoint}?page=5`}
               >
                 5
               </PaginationLink>
@@ -106,7 +107,7 @@ const PaginationCustom = ({ currentPage, totalPage }: PaginationProps) => {
               <PaginationLink
                 className={`${currentPage == totalPage ? 'bg-gray-100' : ''}`}
                 isActive={currentPage == totalPage}
-                href={`/person?page=${totalPage}`}
+                href={`${endpoint}?page=${totalPage}`}
               >
                 {totalPage}
               </PaginationLink>
@@ -114,7 +115,7 @@ const PaginationCustom = ({ currentPage, totalPage }: PaginationProps) => {
             <PaginationItem>
               <PaginationNext
                 className={`${currentPage === totalPage ? 'opacity-50 pointer-events-none' : ''}`}
-                href={`/person?page=${currentPage + 1}`}
+                href={`${endpoint}?page=${currentPage + 1}`}
               />
             </PaginationItem>
           </PaginationContent>
@@ -125,14 +126,14 @@ const PaginationCustom = ({ currentPage, totalPage }: PaginationProps) => {
             <PaginationItem>
               <PaginationPrevious
                 className={`${currentPage === 1 ? 'opacity-50 pointer-events-none' : ''}`}
-                href={`/person?page=${currentPage - 1}`}
+                href={`${endpoint}?page=${currentPage - 1}`}
               />
             </PaginationItem>
             <PaginationItem>
               <PaginationLink
                 className={`${currentPage == 1 ? 'bg-gray-100' : ''}`}
                 isActive={currentPage == 1}
-                href={`/person?page=1`}
+                href={`${endpoint}?page=1`}
               >
                 1
               </PaginationLink>
@@ -144,7 +145,7 @@ const PaginationCustom = ({ currentPage, totalPage }: PaginationProps) => {
               <PaginationLink
                 className={`${currentPage == totalPage - 4 ? 'bg-gray-100' : ''}`}
                 isActive={currentPage == totalPage - 4}
-                href={`/person?page=${totalPage - 4}`}
+                href={`${endpoint}?page=${totalPage - 4}`}
               >
                 {totalPage - 4}
               </PaginationLink>
@@ -153,7 +154,7 @@ const PaginationCustom = ({ currentPage, totalPage }: PaginationProps) => {
               <PaginationLink
                 className={`${currentPage == totalPage - 3 ? 'bg-gray-100' : ''}`}
                 isActive={currentPage == totalPage - 3}
-                href={`/person?page=${totalPage - 3}`}
+                href={`${endpoint}?page=${totalPage - 3}`}
               >
                 {totalPage - 3}
               </PaginationLink>
@@ -162,7 +163,7 @@ const PaginationCustom = ({ currentPage, totalPage }: PaginationProps) => {
               <PaginationLink
                 className={`${currentPage == totalPage - 2 ? 'bg-gray-100' : ''}`}
                 isActive={currentPage == totalPage - 2}
-                href={`/person?page=${totalPage - 2}`}
+                href={`${endpoint}?page=${totalPage - 2}`}
               >
                 {totalPage - 2}
               </PaginationLink>
@@ -171,7 +172,7 @@ const PaginationCustom = ({ currentPage, totalPage }: PaginationProps) => {
               <PaginationLink
                 className={`${currentPage == totalPage - 1 ? 'bg-gray-100' : ''}`}
                 isActive={currentPage == totalPage - 1}
-                href={`/person?page=${totalPage - 1}`}
+                href={`${endpoint}?page=${totalPage - 1}`}
               >
                 {totalPage - 1}
               </PaginationLink>
@@ -180,7 +181,7 @@ const PaginationCustom = ({ currentPage, totalPage }: PaginationProps) => {
               <PaginationLink
                 className={`${currentPage == totalPage ? 'bg-gray-100' : ''}`}
                 isActive={currentPage == totalPage}
-                href={`/person?page=${totalPage}`}
+                href={`${endpoint}?page=${totalPage}`}
               >
                 {totalPage}
               </PaginationLink>
@@ -188,7 +189,7 @@ const PaginationCustom = ({ currentPage, totalPage }: PaginationProps) => {
             <PaginationItem>
               <PaginationNext
                 className={`${currentPage === totalPage ? 'opacity-50 pointer-events-none' : ''}`}
-                href={`/person?page=${currentPage + 1}`}
+                href={`${endpoint}?page=${currentPage + 1}`}
               />
             </PaginationItem>
           </PaginationContent>
@@ -199,14 +200,14 @@ const PaginationCustom = ({ currentPage, totalPage }: PaginationProps) => {
             <PaginationItem>
               <PaginationPrevious
                 className={`${currentPage === totalPage ? 'opacity-50 pointer-events-none' : ''}`}
-                href={`/person?page=${currentPage - 1}`}
+                href={`${endpoint}?page=${currentPage - 1}`}
               />
             </PaginationItem>
             <PaginationItem>
               <PaginationLink
                 className={`${currentPage == 1 ? 'bg-gray-100' : ''}`}
                 isActive={currentPage == 1}
-                href={`/person?page=1`}
+                href={`${endpoint}?page=1`}
               >
                 1
               </PaginationLink>
@@ -218,7 +219,7 @@ const PaginationCustom = ({ currentPage, totalPage }: PaginationProps) => {
               <PaginationLink
                 className={`${currentPage == currentPage - 1 ? 'bg-gray-100' : ''}`}
                 isActive={currentPage == currentPage - 1}
-                href={`/person?page=${currentPage - 1}`}
+                href={`${endpoint}?page=${currentPage - 1}`}
               >
                 {currentPage - 1}
               </PaginationLink>
@@ -232,7 +233,7 @@ const PaginationCustom = ({ currentPage, totalPage }: PaginationProps) => {
               <PaginationLink
                 className={`${currentPage == currentPage + 1 ? 'bg-gray-100' : ''}`}
                 isActive={currentPage == currentPage + 1}
-                href={`/person?page=${currentPage + 1}`}
+                href={`${endpoint}?page=${currentPage + 1}`}
               >
                 {currentPage + 1}
               </PaginationLink>
@@ -244,7 +245,7 @@ const PaginationCustom = ({ currentPage, totalPage }: PaginationProps) => {
               <PaginationLink
                 className={`${currentPage == totalPage ? 'bg-gray-100' : ''}`}
                 isActive={currentPage == totalPage}
-                href={`/person?page=${totalPage}`}
+                href={`${endpoint}?page=${totalPage}`}
               >
                 {totalPage}
               </PaginationLink>
@@ -252,7 +253,7 @@ const PaginationCustom = ({ currentPage, totalPage }: PaginationProps) => {
             <PaginationItem>
               <PaginationNext
                 className={`${currentPage === totalPage ? 'opacity-50 pointer-events-none' : ''}`}
-                href={`/person?page=${currentPage + 1}`}
+                href={`${endpoint}?page=${currentPage + 1}`}
               />
             </PaginationItem>
           </PaginationContent>

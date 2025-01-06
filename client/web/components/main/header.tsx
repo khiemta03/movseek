@@ -40,10 +40,10 @@ const Header = ({ showSearch, setShowSearch, isSearchPage }: HeaderProps) => {
                 Movies
               </Link>
               <div className="absolute left-0 -translate-x-10 hidden w-48 bg-white text-gray-800 rounded-lg shadow-lg group-hover:block">
-                <DropdownItem href="/movies/popular" label="Popular" />
-                <DropdownItem href="/movies/now-playing" label="Now Playing" />
-                <DropdownItem href="/movies/upcoming" label="Upcoming" />
-                <DropdownItem href="/movies/top-rated" label="Top Rated" />
+                <DropdownItem href="/movie/popular" label="Popular" />
+                <DropdownItem href="/movie/now-playing" label="Now Playing" />
+                <DropdownItem href="/movie/upcoming" label="Upcoming" />
+                <DropdownItem href="/movie/top-rated" label="Top Rated" />
               </div>
             </div>
 
@@ -52,10 +52,10 @@ const Header = ({ showSearch, setShowSearch, isSearchPage }: HeaderProps) => {
                 TV Shows
               </Link>
               <div className="absolute left-0 -translate-x-10 hidden w-48 bg-white text-gray-800 rounded-lg shadow-lg group-hover:block">
-                <DropdownItem href="/tv-shows/popular" label="Popular" />
-                <DropdownItem href="/tv-shows/now-playing" label="Now Playing" />
-                <DropdownItem href="/tv-shows/upcoming" label="Upcoming" />
-                <DropdownItem href="/tv-shows/top-rated" label="Top Rated" />
+                <DropdownItem href="/tv/popular" label="Popular" />
+                <DropdownItem href="/tv/now-playing" label="Now Playing" />
+                <DropdownItem href="/tv/upcoming" label="Upcoming" />
+                <DropdownItem href="/tv/top-rated" label="Top Rated" />
               </div>
             </div>
 
@@ -70,8 +70,8 @@ const Header = ({ showSearch, setShowSearch, isSearchPage }: HeaderProps) => {
                 More
               </Link>
               <div className="absolute left-0 -translate-x-10 hidden w-48 bg-white text-gray-800 rounded-lg shadow-lg group-hover:block">
-                <DropdownItem href="/favorites" label="Favorites" />
-                <DropdownItem href="/favorites" label="Watchlist" />
+                <DropdownItem href="/favorite" label="Favorites" />
+                <DropdownItem href="/watchlist" label="Watchlist" />
               </div>
             </div>
           </nav>
