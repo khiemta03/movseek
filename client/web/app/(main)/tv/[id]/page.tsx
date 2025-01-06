@@ -3,24 +3,25 @@
 import { useParams } from 'next/navigation';
 import { TMDB_API } from '@/utils/constants';
 import { useEffect, useState } from 'react';
-import { fetchMovieCredits, fetchMovieDetail, fetchMovieKeywords, fetchMovieVideos } from '@/apis/movie';
-import type { Movie, Credits, Keyword, Video } from '@/models/movie-detail-types';
-import { pickMovieFields, handleMovieCredits, selectPreferredVideo } from '@/utils/util-functions/detail-page';
+import type { Credits, Keyword, Video } from '@/models/movie-detail-types';
+import { handleMovieCredits, selectPreferredVideo } from '@/utils/util-functions/detail-page';
 import { Button } from '@/components/ui/button';
-import MainMovieInformation from '@/components/movie/main-movie-information';
 import CastList from '@/components/movie/cast-list';
-import AltMovieInformation from '@/components/movie/alt-movie-information';
 import MainMovieInformationDummy from '@/components/movie/main-movie-information-dummy';
 import Trailer from '@/components/movie/trailer';
+import { TV } from '@/models/tv-detail-types';
+import AltTVInformation from '@/components/tv/alt-tv-information';
+import MainTVInformation from '@/components/tv/main-tv-information';
+import { fetchTVDetail, fetchTVCredits, fetchTVKeywords, fetchTVVideos } from '@/apis/tv';
 
-const MovieDetail = () => {
+export default function TVDetail() {
   const params = useParams();
   const { id } = params;
   const [imageSrc, setImageSrc] = useState('/poster-default.svg');
   const [transitioning, setTransitioning] = useState(false);
   const [transitioningCast, setTransitioningCast] = useState(false);
-  const [idMovie, setIdMovie] = useState<number>(0);
-  const [movie, setMovie] = useState<Movie | null>(null);
+  const [idTV, setIdTV] = useState<number>(0);
+  const [tv, setTV] = useState<TV | null>(null);
   const [creadits, setCredits] = useState<Credits | null>(null);
   const [keywords, setKeywords] = useState<Keyword[]>([]);
   const [videos, setVideos] = useState<Video[]>([]);
@@ -34,7 +35,7 @@ const MovieDetail = () => {
   useEffect(() => {
     if (id) {
       const numericId = +id;
-      setIdMovie(numericId);
+      setIdTV(numericId);
     }
   }, [id]);
 
@@ -42,18 +43,18 @@ const MovieDetail = () => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const movieResponse = await fetchMovieDetail(idMovie);
-        const data = pickMovieFields(movieResponse.data);
+        const tvResponse = await fetchTVDetail(idTV);
+        const data = tvResponse.data;
         setImageSrc(TMDB_API.POSTER(data.poster_path));
-        setMovie(data);
+        setTV(data);
 
-        const creditsResponse = await fetchMovieCredits(idMovie);
+        const creditsResponse = await fetchTVCredits(idTV);
         setCredits(handleMovieCredits(creditsResponse.data));
 
-        const keywordsResponde = await fetchMovieKeywords(idMovie);
-        setKeywords(keywordsResponde.data.keywords);
+        const keywordsResponde = await fetchTVKeywords(idTV);
+        setKeywords(keywordsResponde.data.results);
 
-        const videoResponse = await fetchMovieVideos(idMovie);
+        const videoResponse = await fetchTVVideos(idTV);
         setVideos(videoResponse.data.results);
       } catch (err) {
         setError('Failed to fetch movie detail');
@@ -67,10 +68,10 @@ const MovieDetail = () => {
       }
     };
 
-    if (idMovie > 0) {
+    if (idTV > 0) {
       fetchData();
     }
-  }, [idMovie]);
+  }, [idTV]);
 
   useEffect(() => {
     if (isVisible) {
@@ -100,11 +101,16 @@ const MovieDetail = () => {
 
   return (
     <div className={`relative transition-opacity duration-500 ${transitioning ? 'opacity-0' : 'opacity-100'}`}>
-      {isVisible && <Trailer videoId={selectPreferredVideo(videos).key} toggleVideo={toggleVideo} />}
-      {movie !== null && creadits != null && !loading && imageSrc != '/poster-default.svg' ? (
+      {isVisible && (
+        <Trailer
+          videoId={selectPreferredVideo(videos).key}
+          toggleVideo={toggleVideo}
+        />
+      )}
+      {tv !== null && creadits != null && !loading && imageSrc != '/poster-default.svg' ? (
         <div className="font-geist-mono">
-          <MainMovieInformation
-            movie={movie}
+          <MainTVInformation
+            tv={tv}
             creadits={creadits}
             hasTrailer={videos.length > 0}
             toggleVideo={toggleVideo}
@@ -129,10 +135,16 @@ const MovieDetail = () => {
                   </Button>
                 </div>
               )}
-              <CastList credits={creadits} isfull={isDisplayFullCastAndCrew} />
+              <CastList
+                credits={creadits}
+                isfull={isDisplayFullCastAndCrew}
+              />
             </div>
             <div className="w-1/5">
-              <AltMovieInformation movie={movie} keywords={keywords} />
+              <AltTVInformation
+                tv={tv}
+                keywords={keywords}
+              />
             </div>
           </div>
         </div>
@@ -141,6 +153,4 @@ const MovieDetail = () => {
       )}
     </div>
   );
-};
-
-export default MovieDetail;
+}
