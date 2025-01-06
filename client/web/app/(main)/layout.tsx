@@ -111,7 +111,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
       {showSearch && (
         <div
-          className={`sticky h-[64px] top-[64px] z-50 flex items-center bg-white shadow-md transition-transform duration-300 ${
+          className={`sticky h-[64px] top-[64px] z-10 flex items-center bg-white shadow-md transition-transform duration-300 ${
             showHeader ? 'translate-y-0' : '-translate-y-full'
           }`}
         >

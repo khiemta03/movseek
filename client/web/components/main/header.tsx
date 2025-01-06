@@ -39,7 +39,7 @@ const Header = ({ showSearch, setShowSearch, isSearchPage }: HeaderProps) => {
               <Link href="/" className="hover:underline">
                 Movies
               </Link>
-              <div className="absolute left-0 -translate-x-10 hidden w-48 bg-white text-gray-800 rounded-lg shadow-lg group-hover:block">
+              <div className="absolute z-20 left-0 -translate-x-10 hidden w-48 bg-white text-gray-800 rounded-lg shadow-lg group-hover:block">
                 <DropdownItem href="/movie/popular" label="Popular" />
                 <DropdownItem href="/movie/now-playing" label="Now Playing" />
                 <DropdownItem href="/movie/upcoming" label="Upcoming" />
@@ -51,7 +51,7 @@ const Header = ({ showSearch, setShowSearch, isSearchPage }: HeaderProps) => {
               <Link href="/" className="hover:underline">
                 TV Shows
               </Link>
-              <div className="absolute left-0 -translate-x-10 hidden w-48 bg-white text-gray-800 rounded-lg shadow-lg group-hover:block">
+              <div className="absolute z-20 left-0 -translate-x-10 hidden w-48 bg-white text-gray-800 rounded-lg shadow-lg group-hover:block">
                 <DropdownItem href="/tv/popular" label="Popular" />
                 <DropdownItem href="/tv/now-playing" label="Now Playing" />
                 <DropdownItem href="/tv/upcoming" label="Upcoming" />
@@ -69,7 +69,7 @@ const Header = ({ showSearch, setShowSearch, isSearchPage }: HeaderProps) => {
               <Link href="/" className="hover:underline">
                 More
               </Link>
-              <div className="absolute left-0 -translate-x-10 hidden w-48 bg-white text-gray-800 rounded-lg shadow-lg group-hover:block">
+              <div className="absolute z-20 left-0 -translate-x-10 hidden w-48 bg-white text-gray-800 rounded-lg shadow-lg group-hover:block">
                 <DropdownItem href="/favorite" label="Favorites" />
                 <DropdownItem href="/watchlist" label="Watchlist" />
               </div>
