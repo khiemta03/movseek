@@ -22,7 +22,7 @@ const PersonSearchCard: React.FC<PersonSearchCardProps> = ({ person }) => {
       <TooltipProvider>
         <Tooltip>
           <TooltipTrigger>
-            <Link href={`/movie/${person.id}`}>
+            <Link href={`/person/${person.id}`}>
               <Image
                 src={imageSrc}
                 alt={person.name}
@@ -44,7 +44,7 @@ const PersonSearchCard: React.FC<PersonSearchCardProps> = ({ person }) => {
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger>
-              <Link href={`/movie/${person.id}`}>
+              <Link href={`/person/${person.id}`}>
                 <h3 className="text-sm text-white font-bold line-clamp-1 hover:text-primary hover:cursor-pointer">
                   {person.name}
                 </h3>

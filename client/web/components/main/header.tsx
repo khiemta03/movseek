@@ -14,7 +14,10 @@ interface HeaderProps {
 
 function DropdownItem({ href, label }: { href: string; label: string }) {
   return (
-    <Link href={href} className="block px-4 py-2 text-sm rounded-lg hover:bg-gray-200 hover:text-gray-900">
+    <Link
+      href={href}
+      className="block px-4 py-2 text-sm rounded-lg hover:bg-gray-200 hover:text-gray-900"
+    >
       {label}
     </Link>
   );
@@ -36,42 +39,84 @@ const Header = ({ showSearch, setShowSearch, isSearchPage }: HeaderProps) => {
 
           <nav className="flex space-x-5 text-white text-lg font-medium">
             <div className="relative group">
-              <Link href="/" className="hover:underline">
+              <Link
+                href="#"
+                className="hover:underline"
+              >
                 Movies
               </Link>
-              <div className="absolute z-20 left-0 -translate-x-10 hidden w-48 bg-white text-gray-800 rounded-lg shadow-lg group-hover:block">
-                <DropdownItem href="/movie/popular" label="Popular" />
-                <DropdownItem href="/movie/now-playing" label="Now Playing" />
-                <DropdownItem href="/movie/upcoming" label="Upcoming" />
-                <DropdownItem href="/movie/top-rated" label="Top Rated" />
+              <div className="absolute z-30 left-0 -translate-x-10 hidden w-48 bg-white text-gray-800 rounded-lg shadow-lg group-hover:block">
+                <DropdownItem
+                  href="/movie/popular"
+                  label="Popular"
+                />
+                <DropdownItem
+                  href="/movie/now-playing"
+                  label="Now Playing"
+                />
+                <DropdownItem
+                  href="/movie/upcoming"
+                  label="Upcoming"
+                />
+                <DropdownItem
+                  href="/movie/top-rated"
+                  label="Top Rated"
+                />
               </div>
             </div>
 
             <div className="relative group">
-              <Link href="/" className="hover:underline">
+              <Link
+                href="#"
+                className="hover:underline"
+              >
                 TV Shows
               </Link>
-              <div className="absolute z-20 left-0 -translate-x-10 hidden w-48 bg-white text-gray-800 rounded-lg shadow-lg group-hover:block">
-                <DropdownItem href="/tv/popular" label="Popular" />
-                <DropdownItem href="/tv/airing-today" label="Airing Today" />
-                <DropdownItem href="/tv/on-the-air" label="On TV" />
-                <DropdownItem href="/tv/top-rated" label="Top Rated" />
+              <div className="absolute z-30 left-0 -translate-x-10 hidden w-48 bg-white text-gray-800 rounded-lg shadow-lg group-hover:block">
+                <DropdownItem
+                  href="/tv/popular"
+                  label="Popular"
+                />
+                <DropdownItem
+                  href="/tv/airing-today"
+                  label="Airing Today"
+                />
+                <DropdownItem
+                  href="/tv/on-the-air"
+                  label="On TV"
+                />
+                <DropdownItem
+                  href="/tv/top-rated"
+                  label="Top Rated"
+                />
               </div>
             </div>
 
             <div className="relative group">
-              <Link href="/person" className="hover:underline">
+              <Link
+                href="/person"
+                className="hover:underline"
+              >
                 People
               </Link>
             </div>
 
             <div className="relative group">
-              <Link href="/" className="hover:underline">
+              <Link
+                href="#"
+                className="hover:underline"
+              >
                 More
               </Link>
-              <div className="absolute z-20 left-0 -translate-x-10 hidden w-48 bg-white text-gray-800 rounded-lg shadow-lg group-hover:block">
-                <DropdownItem href="/favorite" label="Favorites" />
-                <DropdownItem href="/watchlist" label="Watchlist" />
+              <div className="absolute z-30 left-0 -translate-x-10 hidden w-48 bg-white text-gray-800 rounded-lg shadow-lg group-hover:block">
+                <DropdownItem
+                  href="/favorite"
+                  label="Favorites"
+                />
+                <DropdownItem
+                  href="/watchlist"
+                  label="Watchlist"
+                />
               </div>
             </div>
           </nav>
@@ -79,7 +124,10 @@ const Header = ({ showSearch, setShowSearch, isSearchPage }: HeaderProps) => {
 
         <div className="flex items-center gap-6">
           <SignedOut>
-            <Button variant="outline" onClick={() => router.push('/sign-in')}>
+            <Button
+              variant="outline"
+              onClick={() => router.push('/sign-in')}
+            >
               Sign In
             </Button>
           </SignedOut>

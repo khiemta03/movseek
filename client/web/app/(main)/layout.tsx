@@ -25,8 +25,9 @@ const SearchParamsWrapper = () => {
 
   const handleSearch = () => {
     const trimmedQuery = newQuery.trim();
+    const type = searchParams.get('type');
     if (trimmedQuery) {
-      router.push(`/search?query=${encodeURIComponent(trimmedQuery)}`);
+      router.push(`/search?query=${encodeURIComponent(trimmedQuery)}&type=${type}`);
     }
   };
 
@@ -105,13 +106,17 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           showHeader ? 'translate-y-0' : '-translate-y-full'
         }`}
       >
-        <Header showSearch={showSearch} setShowSearch={setShowSearch} isSearchPage={pathname === '/search'} />
+        <Header
+          showSearch={showSearch}
+          setShowSearch={setShowSearch}
+          isSearchPage={pathname === '/search'}
+        />
       </div>
       <div className={`h-[64px] bg-primary`}></div>
 
       {showSearch && (
         <div
-          className={`sticky h-[64px] top-[64px] z-10 flex items-center bg-white shadow-md transition-transform duration-300 ${
+          className={`sticky h-[64px] top-[64px] z-20 flex items-center bg-white shadow-md transition-transform duration-300 ${
             showHeader ? 'translate-y-0' : '-translate-y-full'
           }`}
         >

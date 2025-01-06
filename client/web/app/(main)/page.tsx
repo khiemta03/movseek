@@ -30,7 +30,7 @@ export default function Home() {
   const handleSearch = () => {
     const trimmedQuery = searchQuery.trim();
     if (trimmedQuery) {
-      router.push(`/search?query=${encodeURIComponent(trimmedQuery)}`);
+      router.push(`/search?query=${encodeURIComponent(trimmedQuery)}&type=movie`);
     }
   };
 
@@ -115,14 +115,20 @@ export default function Home() {
                 </button>
               </div>
             </div>
-            <MovieList mediaType="movie" timeWindow={activeButton} />
+            <MovieList
+              mediaType="movie"
+              timeWindow={activeButton}
+            />
           </section>
 
           <section className="container py-6">
             <div className="flex items-center content-center gap-7">
-              <h1 className="text-4xl text-start font-bold">{`What\'s Popular`}</h1>
-              <Select value={popularType} onValueChange={(value: 'tv-series' | 'theaters') => setPopularType(value)}>
-                <SelectTrigger className="w-fit border border-black text-2xl p-5 bg-sky-600 rounded-full text-white">
+              <h1 className="text-2xl text-start font-bold">{`What\'s Popular`}</h1>
+              <Select
+                value={popularType}
+                onValueChange={(value: 'tv-series' | 'theaters') => setPopularType(value)}
+              >
+                <SelectTrigger className="w-fit border border-black text-lg p-3 bg-sky-600 rounded-full text-white">
                   <SelectValue placeholder="Select a place" />
                 </SelectTrigger>
                 <SelectContent>
