@@ -9,6 +9,7 @@ import Image from 'next/image';
 import AltPersonInformation from '@/components/person/alt-person-information';
 import MainPersonInformation from '@/components/person/main-person-information';
 import DepartmentList from '@/components/person/department-list';
+import MainMovieInformationDummy from '@/components/movie/main-movie-information-dummy';
 
 const MovieDetail = () => {
   const params = useParams();
@@ -58,7 +59,7 @@ const MovieDetail = () => {
 
   return (
     <div className={``}>
-      {person !== null && creadits !== null && !loading && imageSrc != '/default-male-avatar.svg' && (
+      {person !== null && creadits !== null && !loading && imageSrc != '/default-male-avatar.svg' ? (
         <div className="font-geist-mono">
           <div className="flex gap-6 container mx-auto mt-5 py-10">
             <div className="w-1/5">
@@ -87,6 +88,8 @@ const MovieDetail = () => {
             </div>
           </div>
         </div>
+      ) : (
+        <MainMovieInformationDummy />
       )}
     </div>
   );

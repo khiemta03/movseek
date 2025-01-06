@@ -9,12 +9,12 @@ export const fetchTVTopRated = (page: number) => {
   return axiosInstance.get(TMDB_API.TV_TOP_RATED(page));
 };
 
-export const fetchTVNowPlaying = (page: number) => {
-  return axiosInstance.get(TMDB_API.TV_NOW_PLAYING(page));
+export const fetchTVOnTheAir = (page: number) => {
+  return axiosInstance.get(TMDB_API.TV_ON_THE_AIR(page));
 };
 
-export const fetchTVUpcoming = (page: number) => {
-  return axiosInstance.get(TMDB_API.TV_UPCOMING(page));
+export const fetchTVAiringToday = (page: number) => {
+  return axiosInstance.get(TMDB_API.TV_AIRING_TODAY(page));
 };
 
 export const fetchGenresTV = () => {

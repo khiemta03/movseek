@@ -53,8 +53,8 @@ const Header = ({ showSearch, setShowSearch, isSearchPage }: HeaderProps) => {
               </Link>
               <div className="absolute z-20 left-0 -translate-x-10 hidden w-48 bg-white text-gray-800 rounded-lg shadow-lg group-hover:block">
                 <DropdownItem href="/tv/popular" label="Popular" />
-                <DropdownItem href="/tv/now-playing" label="Now Playing" />
-                <DropdownItem href="/tv/upcoming" label="Upcoming" />
+                <DropdownItem href="/tv/airing-today" label="Airing Today" />
+                <DropdownItem href="/tv/on-the-air" label="On TV" />
                 <DropdownItem href="/tv/top-rated" label="Top Rated" />
               </div>
             </div>
