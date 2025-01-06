@@ -4,7 +4,7 @@ import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import MovieSearchCard from '@/components/search/movie-search-card';
 import Loading from '@/components/search/search-loading';
-import { fetchGenresMovie, fetchMoviePopular } from '@/apis/movie-list';
+import { fetchGenresMovie, fetchMovieNowPlaying } from '@/apis/movie-list';
 import PaginationCustom from '@/components/person/pagination';
 import { FilterSortState, GenresMovieResults, MovieListResults } from '@/models/movie-list-types';
 import { Button } from '@/components/ui/button';
@@ -12,7 +12,7 @@ import { deepEqual } from '@/utils/util-functions/movie-list-page';
 import SortSection from '@/components/movie-list/sort-section';
 import FiltersSection from '@/components/movie-list/filters-section';
 
-export default function MoviePopularPage() {
+export default function MovieNowPlayingPage() {
   const searchParams = useSearchParams();
   const page = searchParams.get('page');
   const [movieResults, setMovieResults] = useState<MovieListResults | null>(null);
@@ -43,7 +43,7 @@ export default function MoviePopularPage() {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const movieResponse = await fetchMoviePopular(page != null ? parseInt(page) : 1);
+        const movieResponse = await fetchMovieNowPlaying(page != null ? parseInt(page) : 1);
         setMovieResults(movieResponse.data);
         const genreResponse = await fetchGenresMovie();
         setGenreListResults(genreResponse.data);
@@ -133,7 +133,7 @@ export default function MoviePopularPage() {
   return (
     <div className="flex flex-col min-h-screen font-geist-mono">
       <main className="container mx-auto py-10">
-        <h2 className="mb-5 text-2xl font-bold ">Popular Movies</h2>
+        <h2 className="mb-5 text-2xl font-bold ">Now Playing Movies</h2>
         <div className="flex gap-6">
           <div className="w-1/5 text-2xl">
             <div className="flex flex-col gap-8">
@@ -170,7 +170,7 @@ export default function MoviePopularPage() {
                     <PaginationCustom
                       currentPage={page != null ? parseInt(page) : 1}
                       totalPage={movieResults.total_pages}
-                      endpoint={'/movie/popular'}
+                      endpoint={'/movie/now-playing'}
                     />
                   )}
                 </div>

@@ -17,4 +17,7 @@ export const TMDB_API = {
 
   GENRES_MOVIE: () => `/genre/movie/list`,
   MOVIE_POPULAR: (page: number) => `/movie/popular?page=${page}`,
+  MOVIE_TOP_RATED: (page: number) => `/movie/top_rated?page=${page}`,
+  MOVIE_NOW_PLAYING: (page: number) => `/movie/now_playing?page=${page}`,
+  MOVIE_UPCOMING: (page: number) => `/movie/upcoming?page=${page}`,
 };
