@@ -24,8 +24,8 @@ const CastList: React.FC<CastListProps> = ({ credits, isfull }) => {
         >
           <div className="flex space-x-8">
             <CarouselContent>
-              {credits.cast.map((actor) => (
-                <CarouselItem key={actor.id} className="basis-44 h-80">
+              {credits.cast.map((actor, index) => (
+                <CarouselItem key={index} className="basis-44 h-80">
                   <CastCard actor={actor} />
                 </CarouselItem>
               ))}

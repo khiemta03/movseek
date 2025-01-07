@@ -93,7 +93,10 @@ const MovieDetail = () => {
     }
   };
 
-  if (error) return <div>{error}</div>;
+  if (error)
+    return (
+      <h1 className="container mx-auto mt-5 font-bold text-2xl">Uh-oh! Something went wrong. Please try later!!!</h1>
+    );
 
   return (
     <div className={`relative transition-opacity duration-500 ${transitioning ? 'opacity-0' : 'opacity-100'}`}>

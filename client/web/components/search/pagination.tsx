@@ -13,9 +13,10 @@ interface PaginationProps {
   currentPage: number;
   totalPage: number;
   query: string;
+  type: 'movie' | 'person' | 'tv';
 }
 
-const PaginationCustom = ({ currentPage, totalPage, query }: PaginationProps) => {
+const PaginationCustom = ({ currentPage, totalPage, query, type }: PaginationProps) => {
   return (
     <div>
       {totalPage <= 10 ? (
@@ -24,7 +25,7 @@ const PaginationCustom = ({ currentPage, totalPage, query }: PaginationProps) =>
             <PaginationItem>
               <PaginationPrevious
                 className={`${currentPage === 1 ? 'opacity-50 pointer-events-none' : ''}`}
-                href={`/search?query=${query}&page=${currentPage - 1}`}
+                href={`/search?query=${query}&type=${type}&page=${currentPage - 1}`}
               />
             </PaginationItem>
             {[...Array(totalPage)].map((_, index) => (
@@ -32,7 +33,7 @@ const PaginationCustom = ({ currentPage, totalPage, query }: PaginationProps) =>
                 <PaginationLink
                   className={`${currentPage == index + 1 ? 'bg-gray-100' : ''}`}
                   isActive={currentPage == index + 1}
-                  href={`/search?query=${query}&page=${index + 1}`}
+                  href={`/search?query=${query}&type=${type}&page=${index + 1}`}
                 >
                   {index + 1}
                 </PaginationLink>
@@ -41,7 +42,7 @@ const PaginationCustom = ({ currentPage, totalPage, query }: PaginationProps) =>
             <PaginationItem>
               <PaginationNext
                 className={`${currentPage === totalPage ? 'opacity-50 pointer-events-none' : ''}`}
-                href={`/search?query=${query}&page=${currentPage + 1}`}
+                href={`/search?query=${query}&type=${type}&page=${currentPage + 1}`}
               />
             </PaginationItem>
           </PaginationContent>
@@ -52,14 +53,14 @@ const PaginationCustom = ({ currentPage, totalPage, query }: PaginationProps) =>
             <PaginationItem>
               <PaginationPrevious
                 className={`${currentPage === 1 ? 'opacity-50 pointer-events-none' : ''}`}
-                href={`/search?query=${query}&page=${currentPage - 1}`}
+                href={`/search?query=${query}&type=${type}&page=${currentPage - 1}`}
               />
             </PaginationItem>
             <PaginationItem>
               <PaginationLink
                 className={`${currentPage == 1 ? 'bg-gray-100' : ''}`}
                 isActive={currentPage == 1}
-                href={`/search?query=${query}&page=1`}
+                href={`/search?query=${query}&type=${type}&page=1`}
               >
                 1
               </PaginationLink>
@@ -68,7 +69,7 @@ const PaginationCustom = ({ currentPage, totalPage, query }: PaginationProps) =>
               <PaginationLink
                 className={`${currentPage == 2 ? 'bg-gray-100' : ''}`}
                 isActive={currentPage == 2}
-                href={`/search?query=${query}&page=2`}
+                href={`/search?query=${query}&type=${type}&page=2`}
               >
                 2
               </PaginationLink>
@@ -77,7 +78,7 @@ const PaginationCustom = ({ currentPage, totalPage, query }: PaginationProps) =>
               <PaginationLink
                 className={`${currentPage == 3 ? 'bg-gray-100' : ''}`}
                 isActive={currentPage == 3}
-                href={`/search?query=${query}&page=3`}
+                href={`/search?query=${query}&type=${type}&page=3`}
               >
                 3
               </PaginationLink>
@@ -86,7 +87,7 @@ const PaginationCustom = ({ currentPage, totalPage, query }: PaginationProps) =>
               <PaginationLink
                 className={`${currentPage == 4 ? 'bg-gray-100' : ''}`}
                 isActive={currentPage == 4}
-                href={`/search?query=${query}&page=4`}
+                href={`/search?query=${query}&type=${type}&page=4`}
               >
                 4
               </PaginationLink>
@@ -95,7 +96,7 @@ const PaginationCustom = ({ currentPage, totalPage, query }: PaginationProps) =>
               <PaginationLink
                 className={`${currentPage == 5 ? 'bg-gray-100' : ''}`}
                 isActive={currentPage == 5}
-                href={`/search?query=${query}&page=5`}
+                href={`/search?query=${query}&type=${type}&page=5`}
               >
                 5
               </PaginationLink>
@@ -107,7 +108,7 @@ const PaginationCustom = ({ currentPage, totalPage, query }: PaginationProps) =>
               <PaginationLink
                 className={`${currentPage == totalPage ? 'bg-gray-100' : ''}`}
                 isActive={currentPage == totalPage}
-                href={`/search?query=${query}&page=${totalPage}`}
+                href={`/search?query=${query}&type=${type}&page=${totalPage}`}
               >
                 {totalPage}
               </PaginationLink>
@@ -115,7 +116,7 @@ const PaginationCustom = ({ currentPage, totalPage, query }: PaginationProps) =>
             <PaginationItem>
               <PaginationNext
                 className={`${currentPage === totalPage ? 'opacity-50 pointer-events-none' : ''}`}
-                href={`/search?query=${query}&page=${currentPage + 1}`}
+                href={`/search?query=${query}&type=${type}&page=${currentPage + 1}`}
               />
             </PaginationItem>
           </PaginationContent>
@@ -126,14 +127,14 @@ const PaginationCustom = ({ currentPage, totalPage, query }: PaginationProps) =>
             <PaginationItem>
               <PaginationPrevious
                 className={`${currentPage === 1 ? 'opacity-50 pointer-events-none' : ''}`}
-                href={`/search?query=${query}&page=${currentPage - 1}`}
+                href={`/search?query=${query}&type=${type}&page=${currentPage - 1}`}
               />
             </PaginationItem>
             <PaginationItem>
               <PaginationLink
                 className={`${currentPage == 1 ? 'bg-gray-100' : ''}`}
                 isActive={currentPage == 1}
-                href={`/search?query=${query}&page=1`}
+                href={`/search?query=${query}&type=${type}&page=1`}
               >
                 1
               </PaginationLink>
@@ -145,7 +146,7 @@ const PaginationCustom = ({ currentPage, totalPage, query }: PaginationProps) =>
               <PaginationLink
                 className={`${currentPage == totalPage - 4 ? 'bg-gray-100' : ''}`}
                 isActive={currentPage == totalPage - 4}
-                href={`/search?query=${query}&page=${totalPage - 4}`}
+                href={`/search?query=${query}&type=${type}&page=${totalPage - 4}`}
               >
                 {totalPage - 4}
               </PaginationLink>
@@ -154,7 +155,7 @@ const PaginationCustom = ({ currentPage, totalPage, query }: PaginationProps) =>
               <PaginationLink
                 className={`${currentPage == totalPage - 3 ? 'bg-gray-100' : ''}`}
                 isActive={currentPage == totalPage - 3}
-                href={`/search?query=${query}&page=${totalPage - 3}`}
+                href={`/search?query=${query}&type=${type}&page=${totalPage - 3}`}
               >
                 {totalPage - 3}
               </PaginationLink>
@@ -163,7 +164,7 @@ const PaginationCustom = ({ currentPage, totalPage, query }: PaginationProps) =>
               <PaginationLink
                 className={`${currentPage == totalPage - 2 ? 'bg-gray-100' : ''}`}
                 isActive={currentPage == totalPage - 2}
-                href={`/search?query=${query}&page=${totalPage - 2}`}
+                href={`/search?query=${query}&type=${type}&page=${totalPage - 2}`}
               >
                 {totalPage - 2}
               </PaginationLink>
@@ -172,7 +173,7 @@ const PaginationCustom = ({ currentPage, totalPage, query }: PaginationProps) =>
               <PaginationLink
                 className={`${currentPage == totalPage - 1 ? 'bg-gray-100' : ''}`}
                 isActive={currentPage == totalPage - 1}
-                href={`/search?query=${query}&page=${totalPage - 1}`}
+                href={`/search?query=${query}&type=${type}&page=${totalPage - 1}`}
               >
                 {totalPage - 1}
               </PaginationLink>
@@ -181,7 +182,7 @@ const PaginationCustom = ({ currentPage, totalPage, query }: PaginationProps) =>
               <PaginationLink
                 className={`${currentPage == totalPage ? 'bg-gray-100' : ''}`}
                 isActive={currentPage == totalPage}
-                href={`/search?query=${query}&page=${totalPage}`}
+                href={`/search?query=${query}&type=${type}&page=${totalPage}`}
               >
                 {totalPage}
               </PaginationLink>
@@ -189,7 +190,7 @@ const PaginationCustom = ({ currentPage, totalPage, query }: PaginationProps) =>
             <PaginationItem>
               <PaginationNext
                 className={`${currentPage === totalPage ? 'opacity-50 pointer-events-none' : ''}`}
-                href={`/search?query=${query}&page=${currentPage + 1}`}
+                href={`/search?query=${query}&type=${type}&page=${currentPage + 1}`}
               />
             </PaginationItem>
           </PaginationContent>
@@ -200,14 +201,14 @@ const PaginationCustom = ({ currentPage, totalPage, query }: PaginationProps) =>
             <PaginationItem>
               <PaginationPrevious
                 className={`${currentPage === totalPage ? 'opacity-50 pointer-events-none' : ''}`}
-                href={`/search?query=${query}&page=${currentPage - 1}`}
+                href={`/search?query=${query}&type=${type}&page=${currentPage - 1}`}
               />
             </PaginationItem>
             <PaginationItem>
               <PaginationLink
                 className={`${currentPage == 1 ? 'bg-gray-100' : ''}`}
                 isActive={currentPage == 1}
-                href={`/search?query=${query}&page=1`}
+                href={`/search?query=${query}&type=${type}&page=1`}
               >
                 1
               </PaginationLink>
@@ -219,13 +220,16 @@ const PaginationCustom = ({ currentPage, totalPage, query }: PaginationProps) =>
               <PaginationLink
                 className={`${currentPage == currentPage - 1 ? 'bg-gray-100' : ''}`}
                 isActive={currentPage == currentPage - 1}
-                href={`/search?query=${query}&page=${currentPage - 1}`}
+                href={`/search?query=${query}&type=${type}&page=${currentPage - 1}`}
               >
                 {currentPage - 1}
               </PaginationLink>
             </PaginationItem>
             <PaginationItem>
-              <PaginationLink isActive href="#">
+              <PaginationLink
+                isActive
+                href="#"
+              >
                 {currentPage}
               </PaginationLink>
             </PaginationItem>
@@ -233,7 +237,7 @@ const PaginationCustom = ({ currentPage, totalPage, query }: PaginationProps) =>
               <PaginationLink
                 className={`${currentPage == currentPage + 1 ? 'bg-gray-100' : ''}`}
                 isActive={currentPage == currentPage + 1}
-                href={`/search?query=${query}&page=${currentPage + 1}`}
+                href={`/search?query=${query}&type=${type}&page=${currentPage + 1}`}
               >
                 {currentPage + 1}
               </PaginationLink>
@@ -245,7 +249,7 @@ const PaginationCustom = ({ currentPage, totalPage, query }: PaginationProps) =>
               <PaginationLink
                 className={`${currentPage == totalPage ? 'bg-gray-100' : ''}`}
                 isActive={currentPage == totalPage}
-                href={`/search?query=${query}&page=${totalPage}`}
+                href={`/search?query=${query}&type=${type}&page=${totalPage}`}
               >
                 {totalPage}
               </PaginationLink>
@@ -253,7 +257,7 @@ const PaginationCustom = ({ currentPage, totalPage, query }: PaginationProps) =>
             <PaginationItem>
               <PaginationNext
                 className={`${currentPage === totalPage ? 'opacity-50 pointer-events-none' : ''}`}
-                href={`/search?query=${query}&page=${currentPage + 1}`}
+                href={`/search?query=${query}&type=${type}&page=${currentPage + 1}`}
               />
             </PaginationItem>
           </PaginationContent>

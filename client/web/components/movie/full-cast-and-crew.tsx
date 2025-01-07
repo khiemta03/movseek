@@ -1,6 +1,7 @@
 import { Credits } from '@/models/movie-detail-types';
 import { getSizeOfCrew } from '@/utils/util-functions/detail-page';
 import CastAndCrewImage from '@/components/movie/cast-and-crew-image';
+import Link from 'next/link';
 
 interface FullCaseAndCrewProps {
   credits: Credits;
@@ -15,9 +16,13 @@ const FullCaseAndCrew: React.FC<FullCaseAndCrewProps> = ({ credits }) => {
         </div>
         {credits.cast.map((actor, index) => (
           <div key={index} className="flex flex-row items-center gap-4">
-            <CastAndCrewImage image={actor.profile_path} name={actor.name} gender={actor.gender} />
+            <Link href={`/person/${actor.id}`}>
+              <CastAndCrewImage image={actor.profile_path} name={actor.name} gender={actor.gender} />
+            </Link>
             <div>
-              <h3 className="text-sm font-bold line-clamp-2 hover:text-primary hover:cursor-pointer">{actor.name}</h3>
+              <Link href={`/person/${actor.id}`}>
+                <h3 className="text-sm font-bold line-clamp-2 hover:text-primary hover:cursor-pointer">{actor.name}</h3>
+              </Link>
               <p className="text-sm italic mt-1">{actor.character}</p>
             </div>
           </div>
@@ -35,9 +40,14 @@ const FullCaseAndCrew: React.FC<FullCaseAndCrewProps> = ({ credits }) => {
             <div className="flex flex-col gap-4">
               {crewMembers.map((member, index) => (
                 <div key={index} className="flex flex-row items-center gap-4">
-                  <CastAndCrewImage image={member.profile_path} name={member.name} gender={member.gender} />
+                  <Link href={`/person/${member.id}`}>
+                    <CastAndCrewImage image={member.profile_path} name={member.name} gender={member.gender} />
+                  </Link>
                   <div>
-                    <h3 className="text-sm font-bold hover:text-primary hover:cursor-pointer">{member.name}</h3>
+                    <Link href={`/person/${member.id}`}>
+                      <h3 className="text-sm font-bold hover:text-primary hover:cursor-pointer">{member.name}</h3>
+                    </Link>
+
                     <p className="text-sm italic mt-1">{member.job}</p>
                   </div>
                 </div>

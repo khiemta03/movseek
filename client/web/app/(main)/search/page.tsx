@@ -2,52 +2,77 @@
 
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import {
-  fetchSearchMovie,
-  // fetchSearchPerson,
-  // fetchSearchTV
-} from '@/apis/search';
-import type {
-  SearchMovieResults,
-  // SearchPersonResults,
-  // SearchTVResults
-} from '@/models/search-types';
+import { fetchSearchMovie, fetchSearchPerson, fetchSearchTV } from '@/apis/search';
+import type { SearchMovieResults, SearchPersonResults, SearchTVResults } from '@/models/search-types';
 import MovieSearchCard from '@/components/search/movie-search-card';
 import PaginationCustom from '@/components/search/pagination';
-import Loading from '@/components/search/search-loading';
-// import TVSearchCard from '@/components/search/tv-search-card';
-// import PersonSearchCard from '@/components/search/person-search-card';
+import Loading from '@/components/person/person-loading';
+import TVSearchCard from '@/components/search/tv-search-card';
+import PersonSearchCard from '@/components/search/person-search-card';
+
+const isValidType = (value: string | null): value is 'movie' | 'person' | 'tv' =>
+  ['movie', 'person', 'tv'].includes(value ? value : '');
 
 export default function SearchPage() {
   const searchParams = useSearchParams();
   const query = searchParams.get('query');
   const page = searchParams.get('page');
-  const [mode, setMode] = useState<'movie' | 'person' | 'tv'>('movie');
+  const type = searchParams.get('type');
+  const [mode, setMode] = useState<'movie' | 'person' | 'tv'>(isValidType(type) ? type : 'movie');
+  const [transitioning, setTransitioning] = useState(false);
   const [movieResults, setMovieResults] = useState<SearchMovieResults | null>(null);
-  // const [tvResults, setTVResults] = useState<SearchTVResults | null>(null);
-  // const [personResults, setPersonResults] = useState<SearchPersonResults | null>(null);
+  const [tvResults, setTVResults] = useState<SearchTVResults | null>(null);
+  const [personResults, setPersonResults] = useState<SearchPersonResults | null>(null);
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true);
+  const fetchData = async (page: string | null, isChangeMode: boolean) => {
+    try {
+      setLoading(true);
+      if (mode == 'movie' || !isChangeMode) {
         const movieResponse = await fetchSearchMovie(query != null ? query : '', page != null ? parseInt(page) : 1);
         setMovieResults(movieResponse.data);
-        // const tvResponse = await fetchSearchTV(newQuery, newPage);
-        // setTVResults(tvResponse.data);
-        // const personResponse = await fetchSearchPerson(newQuery, newPage);
-        // setPersonResults(personResponse.data);
-      } catch (err) {
-        console.log(err);
-      } finally {
-        setLoading(false);
       }
-    };
+      if (mode == 'tv' || !isChangeMode) {
+        const tvResponse = await fetchSearchTV(query != null ? query : '', page != null ? parseInt(page) : 1);
+        setTVResults(tvResponse.data);
+      }
+      if (mode == 'person' || !isChangeMode) {
+        const personResponse = await fetchSearchPerson(query != null ? query : '', page != null ? parseInt(page) : 1);
+        setPersonResults(personResponse.data);
+      }
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setTransitioning(true);
+      setTimeout(() => {
+        setLoading(false);
+        setTransitioning(false);
+      }, 500);
+    }
+  };
 
-    fetchData();
+  useEffect(() => {
+    fetchData(page, false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [query, page]);
+
+  const updateUrl = (key: string, value: string | null) => {
+    const url = new URL(window.location.href);
+    if (value) {
+      url.searchParams.set(key, value);
+    } else {
+      url.searchParams.delete(key);
+    }
+    window.history.replaceState({}, '', url);
+  };
+
+  // Gọi hàm khi mode thay đổi
+  useEffect(() => {
+    updateUrl('type', mode);
+    updateUrl('page', null);
+    fetchData('1', true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [mode]);
 
   const handleChangeMode = (newMode: 'movie' | 'person' | 'tv') => {
     if (mode != newMode) {
@@ -72,10 +97,10 @@ export default function SearchPage() {
             >
               <div className="text-sm flex justify-between">
                 <div>Movies</div>
-                <div className="font-normal text-gray-500">{movieResults?.total_results || 0}</div>
+                <div className="font-normal text-gray-500">{movieResults?.total_results || '—'}</div>
               </div>
             </div>
-            {/* <div
+            <div
               className={`p-4 bg-gray-100 ${
                 mode == 'tv' ? 'font-bold border border-primary' : ''
               } rounded-lg shadow hover:shadow-lg transition`}
@@ -83,7 +108,7 @@ export default function SearchPage() {
             >
               <div className="text-sm flex justify-between">
                 <div>TV Shows</div>
-                <div className="font-normal text-gray-500">{tvResults?.total_results || 0}</div>
+                <div className="font-normal text-gray-500">{tvResults?.total_results || '—'}</div>
               </div>
             </div>
             <div
@@ -94,41 +119,112 @@ export default function SearchPage() {
             >
               <div className="text-sm flex justify-between">
                 <div>People</div>
-                <div className="font-normal text-gray-500">{personResults?.total_results || 0}</div>
+                <div className="font-normal text-gray-500">{personResults?.total_results || '—'}</div>
               </div>
-            </div> */}
+            </div>
           </div>
         </div>
-        {movieResults != null && !loading ? (
-          <>
-            {movieResults.total_results > 0 ? (
-              <div className="w-4/5">
-                <div className="mb-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
-                  {movieResults.results.map((movie, index) => (
-                    <MovieSearchCard key={index} movie={movie} />
-                  ))}
-                  {/* {mode == 'movie'
-            ? movieResults?.results.map((movie, index) => <MovieSearchCard key={index} movie={movie} />)
-            : mode == 'tv'
-            ? tvResults?.results.map((tv, index) => <TVSearchCard key={index} tv={tv} />)
-            : personResults?.results.map((person, index) => <PersonSearchCard key={index} person={person} />)} */}
-                </div>
 
-                {movieResults.total_pages > 1 && (
-                  <PaginationCustom
-                    currentPage={page != null ? parseInt(page) : 1}
-                    totalPage={movieResults.total_pages}
-                    query={query != null ? query : ''}
-                  />
-                )}
-              </div>
-            ) : (
-              <div className="font-bold w-full text-center">There are no movies that matched your query.</div>
-            )}
-          </>
-        ) : (
-          <Loading />
-        )}
+        <div
+          className={`relative w-4/5 transition-opacity duration-500 ${transitioning ? 'opacity-0' : 'opacity-100'}`}
+        >
+          {mode == 'movie' ? (
+            <>
+              {movieResults != null && !loading ? (
+                <>
+                  {movieResults.total_results > 0 ? (
+                    <div className="w-full">
+                      <div className="mb-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
+                        {movieResults.results.map((movie, index) => (
+                          <MovieSearchCard
+                            key={index}
+                            movie={movie}
+                          />
+                        ))}
+                      </div>
+                      {movieResults.total_pages > 1 && (
+                        <PaginationCustom
+                          currentPage={page != null ? parseInt(page) : 1}
+                          totalPage={movieResults.total_pages}
+                          query={query != null ? query : ''}
+                          type={mode}
+                        />
+                      )}
+                    </div>
+                  ) : (
+                    <div className="font-bold w-full text-center">There are no movies that matched your query.</div>
+                  )}
+                </>
+              ) : (
+                <Loading />
+              )}
+            </>
+          ) : mode == 'tv' ? (
+            <>
+              {tvResults != null && !loading ? (
+                <>
+                  {tvResults.total_results > 0 ? (
+                    <div className="w-full">
+                      <div className="mb-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
+                        {tvResults.results.map((tv, index) => (
+                          <TVSearchCard
+                            key={index}
+                            tv={tv}
+                          />
+                        ))}
+                      </div>
+
+                      {tvResults.total_pages > 1 && (
+                        <PaginationCustom
+                          currentPage={page != null ? parseInt(page) : 1}
+                          totalPage={tvResults.total_pages}
+                          query={query != null ? query : ''}
+                          type={mode}
+                        />
+                      )}
+                    </div>
+                  ) : (
+                    <div className="font-bold w-full text-center">There are no tv series that matched your query.</div>
+                  )}
+                </>
+              ) : (
+                <Loading />
+              )}
+            </>
+          ) : (
+            <>
+              {personResults != null && !loading ? (
+                <>
+                  {personResults.total_results > 0 ? (
+                    <div className="w-full">
+                      <div className="mb-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
+                        {personResults.results.map((person, index) => (
+                          <PersonSearchCard
+                            key={index}
+                            person={person}
+                          />
+                        ))}
+                      </div>
+
+                      {personResults.total_pages > 1 && (
+                        <PaginationCustom
+                          currentPage={page != null ? parseInt(page) : 1}
+                          totalPage={personResults.total_pages}
+                          query={query != null ? query : ''}
+                          type={mode}
+                        />
+                      )}
+                    </div>
+                  ) : (
+                    <div className="font-bold w-full text-center">There are no people that matched your query.</div>
+                  )}
+                </>
+              ) : (
+                <Loading />
+              )}
+            </>
+          )}
+        </div>
       </main>
     </div>
   );
