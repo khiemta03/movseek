@@ -31,8 +31,11 @@ type TVShow struct {
 	ProductionCompanies []ProductionCompanies `json:"production_companies" bson:"production_companies"`
 	ProductionCountries []ProductionCountries `json:"production_countries" bson:"production_countries"`
 	SpokenLanguages     []SpokenLanguages     `json:"spoken_languages" bson:"spoken_languages"`
-	ReleaseDate         string                `json:"release_date" bson:"release_date"`
-	Revenue             int64                 `json:"revenue" bson:"revenue"`
+	Status              string                `json:"status" bson:"status"`
+	Tagline             string                `json:"tagline" bson:"tagline"`
+	Type                string                `json:"type" bson:"type"`
+	VoteAverage         float64               `json:"vote_average" bson:"vote_average"`
+	VoteCount           int64                 `json:"vote_count" bson:"vote_count"`
 }
 
 type CreatedBy struct {
@@ -70,4 +73,22 @@ type Networks struct {
 	Name          string `json:"name" bson:"name"`
 	LogoPath      string `json:"logo_path" bson:"logo_path"`
 	OriginCountry string `json:"origin_country" bson:"origin_country"`
+}
+
+type TVSummary struct {
+	MovieID          primitive.ObjectID `json:"_id" bson:"_id"`
+	TMDBID           int64              `json:"tmdb_id" bson:"tmdb_id"`
+	Adult            bool               `json:"adult" bson:"adult"`
+	BackdropPath     string             `json:"backdrop_path" bson:"backdrop_path"`
+	GenreIDs         []int64            `json:"genre_ids" bson:"genre_ids"`
+	OriginalLanguage string             `json:"original_language" bson:"original_language"`
+	OriginalTitle    string             `json:"original_title" bson:"original_title"`
+	Overview         string             `json:"overview" bson:"overview"`
+	Popularity       float64            `json:"popularity" bson:"popularity"`
+	PosterPath       string             `json:"poster_path" bson:"poster_path"`
+	ReleaseDate      string             `json:"release_date" bson:"release_date"`
+	Title            string             `json:"title" bson:"title"`
+	Video            bool               `json:"video" bson:"video"`
+	VoteAverage      float64            `json:"vote_average" bson:"vote_average"`
+	VoteCount        int64              `json:"vote_count" bson:"vote_count"`
 }

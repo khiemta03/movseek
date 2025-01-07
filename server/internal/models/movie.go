@@ -74,6 +74,7 @@ type MovieCredits struct {
 	Crew []MovieCrew `json:"crew" bson:"crew"`
 }
 
+// lastest
 type Trailer struct {
 	ID          string    `json:"id" bson:"id"`
 	ISO6391     string    `json:"iso_639_1" bson:"iso_639_1"`
@@ -85,7 +86,7 @@ type Trailer struct {
 	Type        string    `json:"type" bson:"type"`
 	Official    bool      `json:"official" bson:"official"`
 	PublishedAt time.Time `json:"published_at" bson:"published_at"`
-}
+} 
 
 type MovieCrew struct {
 	Adult              bool    `json:"adult" bson:"adult"`
