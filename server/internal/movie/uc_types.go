@@ -52,3 +52,7 @@ type GetPopularMoviesOutput struct {
 type GetMovieGenresOutput struct {
 	Genres []models.MovieGenre `json:"genres"`
 }
+
+type GetLatestMoviesInput struct {
+	Filter GetMovieFilter
+}
