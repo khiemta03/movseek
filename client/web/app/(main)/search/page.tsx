@@ -24,6 +24,7 @@ export default function SearchPage() {
   const [tvResults, setTVResults] = useState<SearchTVResults | null>(null);
   const [personResults, setPersonResults] = useState<SearchPersonResults | null>(null);
   const [loading, setLoading] = useState(false);
+  const [isNewAcsess, setIsNewAcsess] = useState(true);
 
   const fetchData = async (page: string | null, isChangeMode: boolean) => {
     try {
@@ -68,14 +69,17 @@ export default function SearchPage() {
 
   // Gọi hàm khi mode thay đổi
   useEffect(() => {
-    updateUrl('type', mode);
-    updateUrl('page', null);
-    fetchData('1', true);
+    if (!isNewAcsess) {
+      updateUrl('type', mode);
+      updateUrl('page', null);
+      fetchData('1', true);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mode]);
 
   const handleChangeMode = (newMode: 'movie' | 'person' | 'tv') => {
     if (mode != newMode) {
+      setIsNewAcsess(false);
       setMode(newMode);
     }
   };

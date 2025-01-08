@@ -110,12 +110,12 @@ const Header = ({ showSearch, setShowSearch, isSearchPage }: HeaderProps) => {
               </Link>
               <div className="absolute z-30 left-0 -translate-x-10 hidden w-48 bg-white text-gray-800 rounded-lg shadow-lg group-hover:block">
                 <DropdownItem
-                  href="/favorite"
+                  href="/favorites"
                   label="Favorites"
                 />
                 <DropdownItem
-                  href="/watchlist"
-                  label="Watchlist"
+                  href="/watchlists"
+                  label="Watchlists"
                 />
               </div>
             </div>

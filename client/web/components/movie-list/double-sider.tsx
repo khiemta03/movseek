@@ -29,7 +29,7 @@ const DoubleSlider: React.FC<RangeSliderProps> = ({ values, step, min, max, onCh
                 width: '100%',
                 background: getTrackBackground({
                   values,
-                  colors: ['#ccc', '#007BFF', '#ccc'],
+                  colors: ['#ccc', '#733de4', '#ccc'],
                   min,
                   max,
                 }),
@@ -50,8 +50,8 @@ const DoubleSlider: React.FC<RangeSliderProps> = ({ values, step, min, max, onCh
                 ...style,
                 height: '16px',
                 width: '16px',
-                backgroundColor: isDragged ? '#007BFF' : '#FFF',
-                border: '2px solid #007BFF',
+                backgroundColor: isDragged ? '#733de4' : '#FFF',
+                border: '2px solid #733de4',
                 borderRadius: '50%',
                 outline: 'none',
               }}

@@ -36,7 +36,7 @@ const Rating: React.FC<RatingProps> = ({ rating }) => {
   };
 
   return (
-    <div className="flex items-center justify-center w-16 h-16 rounded-full">
+    <div className="flex items-center justify-center w-10 h-10 rounded-full">
       <div
         className="absolute inset-0 rounded-full"
         style={{
@@ -46,7 +46,9 @@ const Rating: React.FC<RatingProps> = ({ rating }) => {
         }}
       ></div>
       <div className="absolute inset-1 bg-gray-800 rounded-full"></div>
-      <span className="absolute text-white text-lg font-bold">{rating > 0 ? `${Math.round(rating * 10)}%` : 'NR'}</span>
+      <span className="absolute text-white text-[12px] font-bold">
+        {rating > 0 ? `${Math.round(rating * 10)}%` : 'NR'}
+      </span>
     </div>
   );
 };

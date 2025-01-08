@@ -1,14 +1,11 @@
 import React from 'react';
 import { currentUser } from '@clerk/nextjs/server';
+import FavoritesPage from '@/components/favorites/favorites-page';
 
 const Favorites = async () => {
   const user = await currentUser();
 
-  return (
-    <div className="text-2xl text-center font-bold text-primary mt-4">
-      Hello {user?.firstName} {user?.lastName}!
-    </div>
-  );
+  return <FavoritesPage user={JSON.parse(JSON.stringify(user))} />;
 };
 
 export default Favorites;

@@ -7,7 +7,7 @@ import Autoplay from 'embla-carousel-autoplay';
 import MovieCardDummpy from '@/components/main/movie-card-dummy';
 import { fetchMoviePopular } from '@/apis/movie-list';
 import { fetchTVPopular } from '@/apis/tv-list';
-import TVCard from './tv-card';
+import TVCard from '@/components/main/tv-card';
 
 interface PopularListProps {
   popularType: 'theaters' | 'tv-series';
@@ -136,12 +136,18 @@ const PopularList = ({ popularType }: PopularListProps) => {
               <CarouselContent>
                 {loading
                   ? moviesDummy.map((movie, index) => (
-                      <CarouselItem key={index} className="basis-44 h-80">
+                      <CarouselItem
+                        key={index}
+                        className="basis-44 h-80"
+                      >
                         <MovieCardDummpy />
                       </CarouselItem>
                     ))
                   : movies.map((movie, index) => (
-                      <CarouselItem key={index} className="basis-44 h-80">
+                      <CarouselItem
+                        key={index}
+                        className="basis-44 h-80"
+                      >
                         {popularType == 'theaters' ? (
                           <MovieCard
                             id={movie.id}
@@ -177,7 +183,10 @@ const PopularList = ({ popularType }: PopularListProps) => {
         ) : (
           <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-8 gap-4">
             {movies.map((movie, index) => (
-              <div key={index} className="h-80">
+              <div
+                key={index}
+                className="h-80"
+              >
                 {popularType == 'theaters' ? (
                   <MovieCard
                     id={movie.id}

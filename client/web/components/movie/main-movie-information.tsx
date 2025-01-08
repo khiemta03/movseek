@@ -2,7 +2,7 @@ import Image from 'next/image';
 import { TMDB_API } from '@/utils/constants';
 import { formatDate } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
-import { Heart, List } from 'lucide-react';
+import { Heart, Bookmark } from 'lucide-react';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import type { Cast, Credits, Crew, Movie } from '@/models/movie-detail-types';
 import { convertMinutes, getCrewByJob } from '@/utils/util-functions/detail-page';
@@ -74,7 +74,11 @@ const MainMovieInformation: React.FC<MainMovieInformationProps> = ({ movie, crea
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger asChild>
-                    <Button variant="secondary" size="icon" className="rounded-full p-6 mr-4">
+                    <Button
+                      variant="secondary"
+                      size="icon"
+                      className="rounded-full p-6 mr-4"
+                    >
                       <Heart className="text-red-500 font-bold" />
                     </Button>
                   </TooltipTrigger>
@@ -85,8 +89,12 @@ const MainMovieInformation: React.FC<MainMovieInformationProps> = ({ movie, crea
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger asChild>
-                    <Button variant="secondary" size="icon" className="rounded-full p-6 mr-4">
-                      <List />
+                    <Button
+                      variant="secondary"
+                      size="icon"
+                      className="rounded-full p-6 mr-4"
+                    >
+                      <Bookmark className="text-sky-600 font-bold" />
                     </Button>
                   </TooltipTrigger>
                   <TooltipContent>Add to your watchlist</TooltipContent>
@@ -94,7 +102,11 @@ const MainMovieInformation: React.FC<MainMovieInformationProps> = ({ movie, crea
               </TooltipProvider>
 
               {hasTrailer && (
-                <Button onClick={toggleVideo} className="border" variant="ghost">
+                <Button
+                  onClick={toggleVideo}
+                  className="border"
+                  variant="ghost"
+                >
                   ▶ Play trailer
                 </Button>
               )}
@@ -111,7 +123,10 @@ const MainMovieInformation: React.FC<MainMovieInformationProps> = ({ movie, crea
                 <div>
                   <h1 className="text-md font-bold mb-1">Driector</h1>
                   {getCrewByJob(creadits.crew, 'Directing', 'Director').map((crew: Crew) => (
-                    <div key={crew.id} className="text-sm">
+                    <div
+                      key={crew.id}
+                      className="text-sm"
+                    >
                       ● {crew.name}
                     </div>
                   ))}
@@ -121,7 +136,10 @@ const MainMovieInformation: React.FC<MainMovieInformationProps> = ({ movie, crea
                 <div>
                   <h1 className="text-md font-bold mb-1">Writer</h1>
                   {getCrewByJob(creadits.crew, 'Writing', 'Writer').map((crew: Crew) => (
-                    <div key={crew.id} className="text-sm">
+                    <div
+                      key={crew.id}
+                      className="text-sm"
+                    >
                       ● {crew.name}
                     </div>
                   ))}
@@ -131,7 +149,10 @@ const MainMovieInformation: React.FC<MainMovieInformationProps> = ({ movie, crea
                 <div>
                   <h1 className="text-md font-bold mb-1">Top Cast</h1>
                   {creadits.cast.slice(0, 3).map((crew: Cast) => (
-                    <div key={crew.id} className="text-sm">
+                    <div
+                      key={crew.id}
+                      className="text-sm"
+                    >
                       ● {crew.name}
                     </div>
                   ))}
