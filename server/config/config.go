@@ -14,7 +14,7 @@ type Config struct {
 }
 
 type MongoConfig struct {
-	URI    string `env:"MONGO_URI" envDefault:"mongodb+srv://khiemta03:P4SxVY:tf8D4cR5@movseek.kjfyn.mongodb.net"`
+	URI    string `env:"MONGO_URI" envDefault:"mongodb+srv://khiemta03:ahWUapZkjCawUg9m@movseek.kjfyn.mongodb.net"`
 	DBName string `env:"MONGO_DB_NAME" envDefault:"MovSeek"`
 }
 

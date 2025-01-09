@@ -3,6 +3,7 @@ package mongo
 import (
 	"github.com/tmplam/movseek/internal/movie"
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
@@ -14,15 +15,41 @@ func (repo implRepository) buildMovieQuery(movieID int64) (bson.M, error) {
 	return queryFilter, nil
 }
 
-func (repo implRepository) buildListMoviesQuery(input movie.ListMoviesOptions) bson.M {
+func (repo implRepository) buildListMoviesQuery(input movie.ListMoviesOptions) (bson.M, error) {
 	queryFilter := bson.M{
-		"title": bson.M{
-			"$regex":   input.Query,
-			"$options": "i",
+		"$or": []bson.M{
+			{
+				"title": bson.M{
+					"$regex":   input.Query,
+					"$options": "i",
+				},
+			},
+			{
+				"keywords.name": bson.M{
+					"$regex":   input.Query,
+					"$options": "i",
+				},
+			},
 		},
 	}
 
-	return queryFilter
+	if len(input.Filter.IDs) > 0 {
+		queryFilter["id"] = bson.M{"$in": input.Filter.IDs}
+	}
+
+	if len(input.Filter.ObjectIDs) > 0 {
+		objectIDs := make([]primitive.ObjectID, len(input.Filter.ObjectIDs))
+		for i, id := range input.Filter.ObjectIDs {
+			objectID, err := primitive.ObjectIDFromHex(id)
+			if err != nil {
+				return bson.M{}, err
+			}
+			objectIDs[i] = objectID
+		}
+		queryFilter["_id"] = bson.M{"$in": objectIDs}
+	}
+
+	return queryFilter, nil
 }
 
 func (repo implRepository) buildGetMovieFindOptions(input movie.GetMovieFilter) *options.FindOptions {

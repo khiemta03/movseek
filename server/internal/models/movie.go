@@ -36,6 +36,7 @@ type Movie struct {
 	VoteCount           int64                 `json:"vote_count" bson:"vote_count"`
 	Credits             MovieCredits          `json:"credits" bson:"credits"`
 	Trailers            []Trailer             `json:"trailers" bson:"trailers"`
+	Keywords            []KeyWord             `json:"keywords" bson:"keywords"`
 }
 
 type BelongsTo struct {
@@ -86,7 +87,7 @@ type Trailer struct {
 	Type        string    `json:"type" bson:"type"`
 	Official    bool      `json:"official" bson:"official"`
 	PublishedAt time.Time `json:"published_at" bson:"published_at"`
-} 
+}
 
 type MovieCrew struct {
 	Adult              bool    `json:"adult" bson:"adult"`
@@ -119,4 +120,9 @@ type MovieSummary struct {
 	Video            bool               `json:"video" bson:"video"`
 	VoteAverage      float64            `json:"vote_average" bson:"vote_average"`
 	VoteCount        int64              `json:"vote_count" bson:"vote_count"`
+}
+
+type KeyWord struct {
+	ID   int64  `json:"id" bson:"id"`
+	Name string `json:"name" bson:"name"`
 }

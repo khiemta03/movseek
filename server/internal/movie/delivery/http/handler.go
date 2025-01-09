@@ -1,6 +1,8 @@
 package http
 
 import (
+	"fmt"
+
 	"github.com/gin-gonic/gin"
 	"github.com/tmplam/movseek/pkg/response"
 )
@@ -53,20 +55,38 @@ func (h handlerImpl) getMovieVideos(c *gin.Context) {
 	response.OK(c, videos)
 }
 
+func (h handlerImpl) getMovieKeywords(c *gin.Context) {
+	id, err := h.processGetMovieKeywordsRequest(c)
+	if err != nil {
+		response.BadRequest(c)
+		return
+	}
+
+	keywords, err := h.uc.GetMovieKeywords(c.Request.Context(), id)
+	if err != nil {
+		response.BadRequest(c)
+		return
+	}
+
+	response.OK(c, keywords)
+}
+
 func (h handlerImpl) searchMovies(c *gin.Context) {
 	req, err := h.processSearchMoviesRequest(c)
 	if err != nil {
+		fmt.Println(err)
 		response.BadRequest(c)
 		return
 	}
 
 	movies, err := h.uc.ListMovies(c.Request.Context(), req.toInput())
 	if err != nil {
+		fmt.Println(err)
 		response.BadRequest(c)
 		return
 	}
 
-	response.OK(c, movies)
+	response.OK(c, h.buildSearchMoviesResponse(movies))
 }
 
 func (h handlerImpl) getUpcomingMovies(c *gin.Context) {
@@ -82,7 +102,7 @@ func (h handlerImpl) getUpcomingMovies(c *gin.Context) {
 		return
 	}
 
-	response.OK(c, movies)
+	response.OK(c, h.buildGetSummaryMoviesResponse(movies.Movies, movies.Pagination))
 }
 
 func (h handlerImpl) getTrendingMovies(c *gin.Context) {
@@ -98,7 +118,7 @@ func (h handlerImpl) getTrendingMovies(c *gin.Context) {
 		return
 	}
 
-	response.OK(c, movies)
+	response.OK(c, h.buildGetSummaryMoviesResponse(movies.Movies, movies.Pagination))
 }
 
 func (h handlerImpl) getTopRatedMovies(c *gin.Context) {
@@ -114,7 +134,7 @@ func (h handlerImpl) getTopRatedMovies(c *gin.Context) {
 		return
 	}
 
-	response.OK(c, movies)
+	response.OK(c, h.buildGetSummaryMoviesResponse(movies.Movies, movies.Pagination))
 }
 
 func (h handlerImpl) getPopularMovies(c *gin.Context) {
@@ -130,7 +150,7 @@ func (h handlerImpl) getPopularMovies(c *gin.Context) {
 		return
 	}
 
-	response.OK(c, movies)
+	response.OK(c, h.buildGetSummaryMoviesResponse(movies.Movies, movies.Pagination))
 }
 
 func (h handlerImpl) getMovieGenres(c *gin.Context) {
@@ -141,4 +161,20 @@ func (h handlerImpl) getMovieGenres(c *gin.Context) {
 	}
 
 	response.OK(c, genres)
+}
+
+func (h handlerImpl) getLastestTrailer(c *gin.Context) {
+	req, err := h.processGetLastestTrailerRequest(c)
+	if err != nil {
+		response.BadRequest(c)
+		return
+	}
+
+	trailers, err := h.uc.GetLastestTrailer(c.Request.Context(), req.toInput())
+	if err != nil {
+		response.BadRequest(c)
+		return
+	}
+
+	response.OK(c, trailers)
 }
