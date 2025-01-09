@@ -4,7 +4,6 @@ import (
 	"context"
 
 	"github.com/tmplam/movseek/internal/models"
-	"github.com/tmplam/movseek/internal/movie/repository"
 	saved_item "github.com/tmplam/movseek/internal/saved-item"
 	"github.com/tmplam/movseek/pkg/mongo"
 )
@@ -25,7 +24,7 @@ func (repo implRepository) GetSavedItem(ctx context.Context, input saved_item.Ge
 	var s = models.SavedItems{}
 	err := col.FindOne(ctx, queryFilter).Decode(&s)
 	if err != nil {
-		return models.SavedItems{}, repository.MapError(err)
+		return models.SavedItems{}, err
 	}
 
 	return s, err

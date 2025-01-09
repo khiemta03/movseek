@@ -1,21 +1,19 @@
 package saved_item
 
 type GetSavedItemFilter struct {
-	UserID  int64  `json:"user_id"`
-	Type    string `json:"type"`
-	Page    int    `json:"page"`
-	PerPage int    `json:"per_page"`
+	UserID string `json:"user_id"`
+	Type   string `json:"type"`
 }
 
 type AddToSavedItemInput struct {
-	UserID       int64  `json:"user_id"`
-	MediaID      int64  `json:"media_id"`
-	SaveItemType string `json:"type"`
-	MediaType    string `json:"media_type"`
+	UserID        string `json:"user_id"`
+	MediaID       int64  `json:"media_id"`
+	SavedItemType string `json:"type"`
+	MediaType     string `json:"media_type"`
 }
 
 type RemoveFromSavedItemInput struct {
-	UserID    int64  `json:"user_id"`
+	UserID    string `json:"user_id"`
 	MediaID   int64  `json:"media_id"`
 	Type      string `json:"type"`
 	MediaType string `json:"media_type"`

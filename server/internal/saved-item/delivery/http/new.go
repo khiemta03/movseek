@@ -2,7 +2,7 @@ package http
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/tmplam/movseek/internal/person"
+	saved_item "github.com/tmplam/movseek/internal/saved-item"
 )
 
 type handler interface {
@@ -10,9 +10,9 @@ type handler interface {
 }
 
 type handlerImpl struct {
-	uc person.Usecase
+	uc saved_item.Usecase
 }
 
-func NewHandler(uc person.Usecase) handler {
+func NewHandler(uc saved_item.Usecase) handler {
 	return &handlerImpl{uc: uc}
 }

@@ -34,12 +34,12 @@ func (repo implRepository) buildAddSavedItem(input saved_item.AddSavedItemOption
 	var savedItem models.SavedItems
 
 	savedItem.UserID = input.UserID
-	savedItem.Type = input.SaveItemType
+	savedItem.Type = input.SavedItemType
 
 	if input.MediaType == models.MovieType {
-		savedItem.MovieID = append(savedItem.MovieID, input.MediaID)
+		savedItem.MovieID = []int64{input.MediaID}
 	} else if input.MediaType == models.TVShowType {
-		savedItem.TVShowID = append(savedItem.TVShowID, input.MediaID)
+		savedItem.TVShowID = []int64{input.MediaID}
 	}
 
 	return savedItem

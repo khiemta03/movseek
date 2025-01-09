@@ -1,21 +1,21 @@
 package saved_item
 
-type ListSavedItemsOptions struct {
-	Query  string
-	Filter GetSavedItemFilter
+type GetSavedItemsOptions struct {
+	UserID string `json:"user_id"`
+	Type   string `json:"type"`
 }
 
 type AddSavedItemOptions struct {
-	UserID       int64  `json:"user_id"`
-	MediaID      int64  `json:"media_id"`
-	SaveItemType string `json:"type"`
-	MediaType    string `json:"media_type"`
+	UserID        string `json:"user_id"`
+	MediaID       int64  `json:"media_id"`
+	SavedItemType string `json:"type"`
+	MediaType     string `json:"media_type"`
 }
 
 type UpdateSavedItemOptions struct {
-	UserID       int64  `json:"user_id"`
-	MediaID      int64  `json:"media_id"`
-	SaveItemType string `json:"type"`
-	MediaType    string `json:"media_type"`
-	Action       string `json:"action"`
+	UserID        string `json:"user_id"`
+	MediaID       int64  `json:"media_id"`
+	SavedItemType string `json:"type"`
+	MediaType     string `json:"media_type"`
+	Action        string `json:"action"`
 }
