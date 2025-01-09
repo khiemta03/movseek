@@ -3,7 +3,7 @@ package mongo
 import (
 	"time"
 
-	"github.com/tmplam/movseek/internal/person"
+	saved_item "github.com/tmplam/movseek/internal/saved-item"
 	"github.com/tmplam/movseek/pkg/mongo"
 )
 
@@ -12,7 +12,7 @@ type implRepository struct {
 	clock func() time.Time
 }
 
-func NewRepository(db mongo.Database) person.Repository {
+func NewRepository(db mongo.Database) saved_item.Repository {
 	return &implRepository{
 		db:    db,
 		clock: time.Now,

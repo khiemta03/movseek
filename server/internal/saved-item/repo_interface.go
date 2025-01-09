@@ -8,6 +8,6 @@ import (
 
 type Repository interface {
 	GetSavedItem(ctx context.Context, input GetSavedItemFilter) (models.SavedItems, error)
-	AddToSavedItem(ctx context.Context, input AddToSavedItemInput) error
-	RemoveFromSavedItem(ctx context.Context, input RemoveFromSavedItemInput) error
+	AddSavedItem(ctx context.Context, input AddSavedItemOptions) error
+	UpdateSavedItem(ctx context.Context, input UpdateSavedItemOptions) error
 }

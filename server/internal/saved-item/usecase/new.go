@@ -1,14 +1,14 @@
 package movie
 
 import (
-	"github.com/tmplam/movseek/internal/person"
+	saved_item "github.com/tmplam/movseek/internal/saved-item"
 )
 
 type implUsecase struct {
-	repo person.Repository
+	repo saved_item.Repository
 }
 
-func NewUsecase(repo person.Repository) person.Usecase {
+func NewUsecase(repo saved_item.Repository) saved_item.Usecase {
 	return &implUsecase{
 		repo: repo,
 	}

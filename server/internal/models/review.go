@@ -5,12 +5,6 @@ const (
 	TVShowType = "tv_show"
 )
 
-type Watchlist struct {
-	UserID   string  `json:"user_id" bson:"user_id"`
-	MovieID  []int64 `json:"movie_id" bson:"movie_id,omitempty"`
-	TVShowID []int64 `json:"tv_show_id" bson:"tv_show_id,omitempty"`
-}
-
 type Review struct {
 	UserID  string   `json:"user_id" bson:"user_id,omitempty"`
 	MediaID int64    `json:"media_id" bson:"media_id,omitempty"`

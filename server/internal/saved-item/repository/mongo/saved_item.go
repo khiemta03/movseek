@@ -5,10 +5,8 @@ import (
 
 	"github.com/tmplam/movseek/internal/models"
 	"github.com/tmplam/movseek/internal/movie/repository"
-	"github.com/tmplam/movseek/internal/person"
 	saved_item "github.com/tmplam/movseek/internal/saved-item"
 	"github.com/tmplam/movseek/pkg/mongo"
-	"go.mongodb.org/mongo-driver/bson"
 )
 
 const (
@@ -33,42 +31,29 @@ func (repo implRepository) GetSavedItem(ctx context.Context, input saved_item.Ge
 	return s, err
 }
 
-func (repo implRepository) AddToSavedItem(ctx context.Context, input saved_item.AddToSavedItemInput) error {
+func (repo implRepository) AddSavedItem(ctx context.Context, input saved_item.AddSavedItemOptions) error {
 	col := repo.getSavedItemsCollection()
 
-	queryFilter := repo.buildSavedItemQuery(input)
+	model := repo.buildAddSavedItem(input)
 
-	findOptions := repo.buildGetPeopleOptions(input.Filter)
-
-	cursor, err := col.Find(ctx, bson.M{}, findOptions)
+	_, err := col.InsertOne(ctx, model)
 	if err != nil {
-		return []models.PersonSummary{}, err
+		return err
 	}
 
-	var people []models.PersonSummary
-	err = cursor.All(ctx, &people)
-	if err != nil {
-		return []models.PersonSummary{}, err
-	}
-
-	return people, nil
+	return nil
 }
 
-func (repo implRepository) GetPopularPeople(ctx context.Context, input person.GetPopularPeopleOptions) ([]models.PersonSummary, error) {
-	col := repo.getPopularCollection()
+func (repo implRepository) UpdateSavedItem(ctx context.Context, input saved_item.UpdateSavedItemOptions) error {
+	col := repo.getSavedItemsCollection()
 
-	findOptions := repo.buildGetPeopleOptions(input.Filter)
+	queryFilter := repo.buildUpdateSavedItemQuery(input)
+	update := repo.buildUpdateSavedItem(input)
 
-	cursor, err := col.Find(ctx, bson.M{}, findOptions)
+	_, err := col.UpdateOne(ctx, queryFilter, update)
 	if err != nil {
-		return []models.PersonSummary{}, err
+		return err
 	}
 
-	var people []models.PersonSummary
-	err = cursor.All(ctx, &people)
-	if err != nil {
-		return []models.PersonSummary{}, err
-	}
-
-	return people, nil
+	return nil
 }
