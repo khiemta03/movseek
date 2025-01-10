@@ -1094,6 +1094,17 @@ paths:
       consumes:
       - application/json
       description: Get lastest trailer
+      parameters:
+      - description: Page
+        in: query
+        name: page
+        required: true
+        type: integer
+      - description: Per page
+        in: query
+        name: per_page
+        required: true
+        type: integer
       produces:
       - application/json
       responses:

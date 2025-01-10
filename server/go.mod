@@ -4,6 +4,7 @@ go 1.22.7
 
 require (
 	github.com/caarlos0/env/v6 v6.10.1
+	github.com/gin-contrib/cors v1.7.3
 	github.com/gin-gonic/gin v1.10.0
 	github.com/joho/godotenv v1.5.1
 	github.com/swaggo/files v1.0.1
