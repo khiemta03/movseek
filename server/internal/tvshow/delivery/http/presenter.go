@@ -1,8 +1,7 @@
 package http
 
 import (
-	"errors"
-
+	"github.com/tmplam/movseek/internal/models"
 	"github.com/tmplam/movseek/internal/tvshow"
 )
 
@@ -39,22 +38,25 @@ func (req getUpcomingTVShowsRequest) toInput() tvshow.GetUpcomingTVsInput {
 	}
 }
 
-type getTrendingTVShowsRequest struct {
-	Type string `uri:"type"`
+type getOnTheAirTVShowsRequest struct {
 	filter
 }
 
-func (req getTrendingTVShowsRequest) validate() error {
-	if req.Type != "week" && req.Type != "day" {
-		return errors.New("invalid type")
+func (req getOnTheAirTVShowsRequest) toInput() tvshow.GetOnTheAirTVsInput {
+	return tvshow.GetOnTheAirTVsInput{
+		Filter: tvshow.GetTVFilter{
+			Page:    req.Page,
+			PerPage: req.PerPage,
+		},
 	}
-
-	return nil
 }
 
-func (req getTrendingTVShowsRequest) toInput() tvshow.GetTrendingTVsInput {
-	return tvshow.GetTrendingTVsInput{
-		Type: req.Type,
+type getAiringTodayTVShowsRequest struct {
+	filter
+}
+
+func (req getAiringTodayTVShowsRequest) toInput() tvshow.GetAiringTodayTVsInput {
+	return tvshow.GetAiringTodayTVsInput{
 		Filter: tvshow.GetTVFilter{
 			Page:    req.Page,
 			PerPage: req.PerPage,
@@ -85,5 +87,41 @@ func (req getPopularTVShowsRequest) toInput() tvshow.GetPopularTVsInput {
 			Page:    req.Page,
 			PerPage: req.PerPage,
 		},
+	}
+}
+
+type getListTVShowsResponse struct {
+	Results      []models.TVShow `json:"results"`
+	Page         int             `json:"page"`
+	PerPage      int             `json:"per_page"`
+	TotalResults int             `json:"total_results"`
+	TotalPages   int             `json:"total_pages"`
+}
+
+func (h handlerImpl) toResponse(res tvshow.ListTVsOutput) getListTVShowsResponse {
+	return getListTVShowsResponse{
+		Results:      res.TVShows,
+		Page:         res.Pagination.Page,
+		PerPage:      res.Pagination.PerPage,
+		TotalPages:   res.Pagination.TotalPages,
+		TotalResults: res.Pagination.Total,
+	}
+}
+
+type getListTVShowSummaryResponse struct {
+	Results      []models.TVSummary `json:"results"`
+	Page         int                `json:"page"`
+	PerPage      int                `json:"per_page"`
+	TotalResults int                `json:"total_results"`
+	TotalPages   int                `json:"total_pages"`
+}
+
+func (h handlerImpl) toSummaryResponse(tvshows []models.TVSummary, pagination tvshow.Pagination) getListTVShowSummaryResponse {
+	return getListTVShowSummaryResponse{
+		Results:      tvshows,
+		Page:         pagination.Page,
+		PerPage:      pagination.PerPage,
+		TotalPages:   pagination.TotalPages,
+		TotalResults: pagination.Total,
 	}
 }

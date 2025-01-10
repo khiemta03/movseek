@@ -7,13 +7,21 @@ type GetTVFilter struct {
 	PerPage int `json:"per_page"`
 }
 
+type Pagination struct {
+	Page       int `json:"page"`
+	PerPage    int `json:"per_page"`
+	Total      int `json:"total"`
+	TotalPages int `json:"total_pages"`
+}
+
 type ListTVsInput struct {
 	Query  string `json:"query"`
 	Filter GetTVFilter
 }
 
 type ListTVsOutput struct {
-	TVShows []models.TVShow `json:"TVShows"`
+	TVShows    []models.TVShow `json:"TVShows"`
+	Pagination Pagination      `json:"pagination"`
 }
 
 type GetUpcomingTVsInput struct {
@@ -21,16 +29,26 @@ type GetUpcomingTVsInput struct {
 }
 
 type GetUpcomingTVsOutput struct {
-	TVShows []models.TVSummary `json:"TVShows"`
+	TVShows    []models.TVSummary `json:"TVShows"`
+	Pagination Pagination         `json:"pagination"`
 }
 
-type GetTrendingTVsInput struct {
+type GetOnTheAirTVsInput struct {
 	Filter GetTVFilter
-	Type   string
 }
 
-type GetTrendingTVsOutput struct {
-	TVShows []models.TVSummary `json:"TVShows"`
+type GetOnTheAirTVsOutput struct {
+	TVShows    []models.TVSummary `json:"TVShows"`
+	Pagination Pagination         `json:"pagination"`
+}
+
+type GetAiringTodayTVsInput struct {
+	Filter GetTVFilter
+}
+
+type GetAiringTodayTVsOutput struct {
+	TVShows    []models.TVSummary `json:"TVShows"`
+	Pagination Pagination         `json:"pagination"`
 }
 
 type GetTopRatedTVsInput struct {
@@ -38,7 +56,8 @@ type GetTopRatedTVsInput struct {
 }
 
 type GetTopRatedTVsOutput struct {
-	TVShows []models.TVSummary `json:"TVShows"`
+	TVShows    []models.TVSummary `json:"TVShows"`
+	Pagination Pagination         `json:"pagination"`
 }
 
 type GetPopularTVsInput struct {
@@ -46,7 +65,8 @@ type GetPopularTVsInput struct {
 }
 
 type GetPopularTVsOutput struct {
-	TVShows []models.TVSummary `json:"TVShows"`
+	TVShows    []models.TVSummary `json:"TVShows"`
+	Pagination Pagination         `json:"pagination"`
 }
 
 type GetTVGenresOutput struct {

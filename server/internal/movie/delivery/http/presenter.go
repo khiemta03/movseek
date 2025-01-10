@@ -12,13 +12,6 @@ type filter struct {
 	PerPage int `form:"per_page" binding:"required"`
 }
 
-type pagination struct {
-	Page      int `json:"page"`
-	PerPage   int `json:"per_page"`
-	Total     int `json:"total"`
-	TotalPage int `json:"total_page"`
-}
-
 type searchMoviesRequest struct {
 	Query     string   `form:"query"`
 	Filter    filter   `form:"filter"`
@@ -27,8 +20,11 @@ type searchMoviesRequest struct {
 }
 
 type searchMoviesResponse struct {
-	Movies     []models.Movie `json:"movies"`
-	Pagination pagination     `json:"pagination"`
+	Results    []models.Movie `json:"results"`
+	Page       int            `json:"page"`
+	PerPage    int            `json:"per_page"`
+	Total      int            `json:"total_results"`
+	TotalPages int            `json:"total_pages"`
 }
 
 func (req searchMoviesRequest) toInput() movie.ListMoviesInput {
@@ -45,30 +41,29 @@ func (req searchMoviesRequest) toInput() movie.ListMoviesInput {
 
 func (h handlerImpl) buildSearchMoviesResponse(resp movie.ListMoviesOutput) searchMoviesResponse {
 	return searchMoviesResponse{
-		Movies: resp.Movies,
-		Pagination: pagination{
-			Page:      resp.Pagination.Page,
-			PerPage:   resp.Pagination.PerPage,
-			Total:     resp.Pagination.Total,
-			TotalPage: resp.Pagination.TotalPage,
-		},
+		Results:    resp.Movies,
+		Page:       resp.Pagination.Page,
+		PerPage:    resp.Pagination.PerPage,
+		Total:      resp.Pagination.Total,
+		TotalPages: resp.Pagination.TotalPage,
 	}
 }
 
 type getSummaryMoviesResponse struct {
-	Movies     []models.MovieSummary `json:"movies"`
-	Pagination pagination            `json:"pagination"`
+	Results    []models.MovieSummary `json:"results"`
+	Page       int                   `json:"page"`
+	PerPage    int                   `json:"per_page"`
+	Total      int                   `json:"total_results"`
+	TotalPages int                   `json:"total_pages"`
 }
 
 func (h handlerImpl) buildGetSummaryMoviesResponse(movies []models.MovieSummary, pag movie.Pagination) getSummaryMoviesResponse {
 	return getSummaryMoviesResponse{
-		Movies: movies,
-		Pagination: pagination{
-			Page:      pag.Page,
-			PerPage:   pag.PerPage,
-			Total:     pag.Total,
-			TotalPage: pag.TotalPage,
-		},
+		Results:    movies,
+		Page:       pag.Page,
+		PerPage:    pag.PerPage,
+		Total:      pag.Total,
+		TotalPages: pag.TotalPage,
 	}
 }
 
@@ -127,6 +122,19 @@ type getPopularMoviesRequest struct {
 
 func (req getPopularMoviesRequest) toInput() movie.GetPopularMoviesInput {
 	return movie.GetPopularMoviesInput{
+		Filter: movie.GetMovieFilter{
+			Page:    req.Page,
+			PerPage: req.PerPage,
+		},
+	}
+}
+
+type getNowPlayingMoviesRequest struct {
+	filter `form:"filter"`
+}
+
+func (req getNowPlayingMoviesRequest) toInput() movie.GetNowPlayingMoviesInput {
+	return movie.GetNowPlayingMoviesInput{
 		Filter: movie.GetMovieFilter{
 			Page:    req.Page,
 			PerPage: req.PerPage,

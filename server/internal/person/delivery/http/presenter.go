@@ -3,6 +3,7 @@ package http
 import (
 	"errors"
 
+	"github.com/tmplam/movseek/internal/models"
 	"github.com/tmplam/movseek/internal/person"
 )
 
@@ -59,5 +60,41 @@ func (req getPopularPeopleRequest) toInput() person.GetPopularPeopleInput {
 			Page:    req.Page,
 			PerPage: req.PerPage,
 		},
+	}
+}
+
+type getListPeopleResponse struct {
+	Results      []models.Person `json:"results"`
+	Page         int             `json:"page"`
+	PerPage      int             `json:"per_page"`
+	TotalPages   int             `json:"total_pages"`
+	TotalResults int             `json:"total_results"`
+}
+
+func (h handlerImpl) toResponse(resp person.ListPeopleOutput) getListPeopleResponse {
+	return getListPeopleResponse{
+		Results:      resp.People,
+		Page:         resp.Pagination.Page,
+		PerPage:      resp.Pagination.PerPage,
+		TotalPages:   resp.Pagination.TotalPages,
+		TotalResults: resp.Pagination.TotalResults,
+	}
+}
+
+type getListPeopleSummaryResponse struct {
+	Results      []models.PersonSummary `json:"results"`
+	Page         int                    `json:"page"`
+	PerPage      int                    `json:"per_page"`
+	TotalPages   int                    `json:"total_pages"`
+	TotalResults int                    `json:"total_results"`
+}
+
+func (h handlerImpl) toSummaryResponse(people []models.PersonSummary, pagination person.Pagination) getListPeopleSummaryResponse {
+	return getListPeopleSummaryResponse{
+		Results:      people,
+		Page:         pagination.Page,
+		PerPage:      pagination.PerPage,
+		TotalPages:   pagination.TotalPages,
+		TotalResults: pagination.TotalResults,
 	}
 }

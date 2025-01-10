@@ -9,4 +9,6 @@ func (h handlerImpl) MapRoutes(r *gin.RouterGroup) {
 	person.GET("/:id", h.getOnePerson)
 	person.GET("/trending/:type", h.getTrendingPeople)
 	person.GET("/popular", h.getPopularPeople)
+	person.GET("/:id/credits/movie", h.getPersonCredits)
+	person.GET("/:id/credits/tv", h.getTVCredits)
 }

@@ -15,11 +15,12 @@ func (repo implRepository) buildTVShowQuery(tvID int64) (bson.M, error) {
 }
 
 func (repo implRepository) buildListTVShowsQuery(input tvshow.ListTVsOptions) bson.M {
-	queryFilter := bson.M{
-		"title": bson.M{
+	queryFilter := bson.M{}
+	if input.Query != "" {
+		queryFilter["title"] = bson.M{
 			"$regex":   input.Query,
 			"$options": "i",
-		},
+		}
 	}
 
 	return queryFilter

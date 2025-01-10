@@ -108,11 +108,11 @@ func (h handlerImpl) getMovieKeywords(c *gin.Context) {
 // @Tags movie
 // @Accept json
 // @Produce json
-// @Param query query string true "Query"
+// @Param query query string false "Query"
 // @Param page query int true "Page"
 // @Param per_page query int true "Per page"
 // @Success 200 {object} searchMoviesResponse
-// @Router /movie/search [get]
+// @Router /search/movie [get]
 func (h handlerImpl) searchMovies(c *gin.Context) {
 	req, err := h.processSearchMoviesRequest(c)
 	if err != nil {
@@ -224,6 +224,31 @@ func (h handlerImpl) getPopularMovies(c *gin.Context) {
 	}
 
 	movies, err := h.uc.GetPopularMovies(c.Request.Context(), req.toInput())
+	if err != nil {
+		response.BadRequest(c)
+		return
+	}
+
+	response.OK(c, h.buildGetSummaryMoviesResponse(movies.Movies, movies.Pagination))
+}
+
+// @Summary Get now playing movies
+// @Description Get now playing movies
+// @Tags movie
+// @Accept json
+// @Produce json
+// @Param page query int true "Page"
+// @Param per_page query int true "Per page"
+// @Success 200 {object} getSummaryMoviesResponse
+// @Router /movie/now-playing [get]
+func (h handlerImpl) getNowPlayingMovies(c *gin.Context) {
+	req, err := h.processGetNowPlayingMoviesRequest(c)
+	if err != nil {
+		response.BadRequest(c)
+		return
+	}
+
+	movies, err := h.uc.GetNowPlayingMovies(c.Request.Context(), req.toInput())
 	if err != nil {
 		response.BadRequest(c)
 		return

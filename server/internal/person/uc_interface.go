@@ -11,5 +11,6 @@ type Usecase interface {
 	ListPeople(ctx context.Context, input ListPeopleInput) (ListPeopleOutput, error)
 	GetTrendingPeople(ctx context.Context, input GetTrendingPeopleInput) (GetTrendingPeopleOutput, error)
 	GetPopularPeople(ctx context.Context, input GetPopularPeopleInput) (GetPopularPeopleOutput, error)
+	GetMovieCredits(ctx context.Context, personID int64) (models.MovieCredit, error)
+	GetTVCredits(ctx context.Context, personID int64) (models.TVCredit, error)
 }
-

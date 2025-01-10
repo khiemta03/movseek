@@ -65,6 +65,15 @@ type GetPopularMoviesOutput struct {
 	Pagination Pagination            `json:"pagination"`
 }
 
+type GetNowPlayingMoviesInput struct {
+	Filter GetMovieFilter
+}
+
+type GetNowPlayingMoviesOutput struct {
+	Movies     []models.MovieSummary `json:"movies"`
+	Pagination Pagination            `json:"pagination"`
+}
+
 type GetMovieGenresOutput struct {
 	Genres []models.MovieGenre `json:"genres"`
 }
