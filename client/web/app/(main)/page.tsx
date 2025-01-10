@@ -5,16 +5,34 @@ import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import PopularList from '@/components/main/popular-list';
+import LatestTrailerList from '@/components/main/latest-trailer-list';
+import Trailer from '@/components/movie/trailer';
 
 export default function Home() {
   const [activeButton, setActiveButton] = useState<'day' | 'week'>('day');
   const [backgroundStyle, setBackgroundStyle] = useState({});
   const [numberBackground] = useState<number>(Math.floor(Math.random() * 10) + 1);
+  const [thumbnailBackground, setThumbnailBackground] = useState<string>(`/background-${numberBackground}.jpg`);
   const buttonARef = useRef<HTMLButtonElement>(null);
   const buttonBRef = useRef<HTMLButtonElement>(null);
   const router = useRouter();
   const [searchQuery, setSearchQuery] = useState('');
   const [popularType, setPopularType] = useState<'theaters' | 'tv-series'>('tv-series');
+  const [isVisible, setIsVisible] = useState(false);
+  const [videoUrl, setVideoUrl] = useState('');
+
+  const toggleVideo = () => setIsVisible(!isVisible);
+
+  useEffect(() => {
+    if (isVisible) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isVisible]);
 
   useEffect(() => {
     const activeRef = activeButton === 'day' ? buttonARef.current : buttonBRef.current;
@@ -38,6 +56,11 @@ export default function Home() {
     if (event.key === 'Enter') {
       handleSearch();
     }
+  };
+
+  const handlePlayVideo = (url: string) => {
+    setVideoUrl(url);
+    toggleVideo();
   };
 
   return (
@@ -120,7 +143,39 @@ export default function Home() {
               timeWindow={activeButton}
             />
           </section>
+        </main>
+      </div>
 
+      <div
+        className="relative my-10 py-10 px-5 shadow-lg text-center"
+        style={{
+          backgroundImage: `url(${thumbnailBackground})`,
+          backgroundSize: 'cover',
+          backgroundRepeat: 'no-repeat',
+          backgroundPosition: 'top',
+          transition: 'background-image 0.2s ease-in-out',
+        }}
+        suppressHydrationWarning
+      >
+        <div className="absolute z-0 inset-0 bg-black/50"></div>
+
+        <div className="relative z-10 container mx-auto">
+          <h1 className="text-2xl text-start font-bold text-white mb-4">Latest Trailers</h1>
+          <LatestTrailerList
+            changeThumbnail={setThumbnailBackground}
+            onPlayVideo={handlePlayVideo}
+          />
+        </div>
+      </div>
+      {isVisible && (
+        <Trailer
+          videoId={videoUrl}
+          toggleVideo={toggleVideo}
+        />
+      )}
+
+      <div className="container mx-auto">
+        <main className="flex-grow text-black">
           <section className="container py-6">
             <div className="flex items-center content-center gap-7">
               <h1 className="text-2xl text-start font-bold">{`What\'s Popular`}</h1>

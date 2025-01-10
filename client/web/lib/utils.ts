@@ -6,6 +6,8 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export const formatDate = (dateStr: string) => {
+  if (!dateStr) return '';
+
   const date = new Date(dateStr);
 
   return new Intl.DateTimeFormat('en-US', {
