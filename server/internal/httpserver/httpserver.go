@@ -14,17 +14,16 @@ import (
 
 // Run starts the HTTP server.
 func (srv HTTPServer) Run() {
-	srv.mapHandlers()
-	srv.gin.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
-
 	srv.gin.Use(cors.New(cors.Config{
-		AllowOrigins:     []string{"*"},
+		AllowOrigins:     []string{"http://localhost:3000"},
 		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
 		AllowHeaders:     []string{"Origin", "Content-Type", "Authorization"},
 		ExposeHeaders:    []string{"Content-Length", "Authorization"},
 		AllowCredentials: true,
 		MaxAge:           12 * time.Hour,
 	}))
+	srv.mapHandlers()
+	srv.gin.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
 	go func() {
 		srv.gin.Run(fmt.Sprintf(":%d", srv.port))
