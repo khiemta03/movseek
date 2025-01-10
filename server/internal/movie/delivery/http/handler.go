@@ -279,6 +279,8 @@ func (h handlerImpl) getMovieGenres(c *gin.Context) {
 // @Tags movie
 // @Accept json
 // @Produce json
+// @Param page query int true "Page"
+// @Param per_page query int true "Per page"
 // @Success 200 {object} []models.Trailer
 // @Router /movie/trailer/latest [get]
 func (h handlerImpl) getLastestTrailer(c *gin.Context) {
