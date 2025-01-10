@@ -1,9 +1,17 @@
+// @title Movseek API
+// @version 1.0
+// @description Movseek API
+// @host localhost:8080
+// @BasePath /api/v1
+
 package main
 
 import (
 	"github.com/tmplam/movseek/config"
 	"github.com/tmplam/movseek/internal/appconfig/mongo"
 	"github.com/tmplam/movseek/internal/httpserver"
+
+	_ "github.com/tmplam/movseek/docs"
 )
 
 func main() {

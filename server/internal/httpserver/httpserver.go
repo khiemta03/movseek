@@ -5,12 +5,16 @@ import (
 	"os"
 	"os/signal"
 	"syscall"
+
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
 // Run starts the HTTP server.
 func (srv HTTPServer) Run() {
 	srv.mapHandlers()
-
+	srv.gin.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+	
 	go func() {
 		srv.gin.Run(fmt.Sprintf(":%d", srv.port))
 	}()
