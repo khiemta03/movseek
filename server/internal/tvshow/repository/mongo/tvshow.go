@@ -2,7 +2,6 @@ package mongo
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/tmplam/movseek/internal/models"
 	"github.com/tmplam/movseek/internal/movie/repository"
@@ -12,13 +11,13 @@ import (
 )
 
 const (
-	tvshowCollection       = "tv_shows"
-	upcomingCollection     = "tv_upcoming"
-	weekTrendingCollection = "tv_trending_week"
-	dayTrendingCollection  = "tv_trending_day"
-	topRatedCollection     = "tv_top_rated"
-	popularCollection      = "tv_popular"
-	genresCollection       = "tv_genres"
+	tvshowCollection      = "tv_shows"
+	upcomingCollection    = "tv_upcoming"
+	onTheAirCollection    = "tv_on_the_air"
+	airingTodayCollection = "tv_airing_today"
+	topRatedCollection    = "tv_top_rated"
+	popularCollection     = "tv_popular"
+	genresCollection      = "tv_genres"
 )
 
 func (repo implRepository) getTVShowCollection() mongo.Collection {
@@ -29,8 +28,12 @@ func (repo implRepository) getUpcomingCollection() mongo.Collection {
 	return repo.db.Collection(upcomingCollection)
 }
 
-func (repo implRepository) getTrendingCollection(t string) mongo.Collection {
-	return repo.db.Collection(fmt.Sprintf("tv_trending_%s", t))
+func (repo implRepository) getOnTheAirCollection() mongo.Collection {
+	return repo.db.Collection(onTheAirCollection)
+}
+
+func (repo implRepository) getAiringTodayCollection() mongo.Collection {
+	return repo.db.Collection(airingTodayCollection)
 }
 
 func (repo implRepository) getTopRatedCollection() mongo.Collection {
@@ -83,6 +86,19 @@ func (repo implRepository) ListTVShows(ctx context.Context, input tvshow.ListTVs
 	return tvshows, nil
 }
 
+func (repo implRepository) CountTVShows(ctx context.Context, input tvshow.ListTVsOptions) (int64, error) {
+	col := repo.getTVShowCollection()
+
+	queryFilter := repo.buildListTVShowsQuery(input)
+
+	count, err := col.CountDocuments(ctx, queryFilter)
+	if err != nil {
+		return 0, err
+	}
+
+	return count, nil
+}
+
 func (repo implRepository) GetUpcomingTVShows(ctx context.Context, input tvshow.GetUpcomingTVsOptions) ([]models.TVSummary, error) {
 	col := repo.getUpcomingCollection()
 
@@ -102,8 +118,19 @@ func (repo implRepository) GetUpcomingTVShows(ctx context.Context, input tvshow.
 	return tvshows, nil
 }
 
-func (repo implRepository) GetTrendingTVShows(ctx context.Context, input tvshow.GetTrendingTVsOptions) ([]models.TVSummary, error) {
-	col := repo.getTrendingCollection(input.Type)
+func (repo implRepository) CountUpcomingTVShows(ctx context.Context, input tvshow.GetUpcomingTVsOptions) (int64, error) {
+	col := repo.getUpcomingCollection()
+
+	count, err := col.CountDocuments(ctx, bson.M{})
+	if err != nil {
+		return 0, err
+	}
+
+	return count, nil
+}
+
+func (repo implRepository) GetOnTheAirTVShows(ctx context.Context, input tvshow.GetOnTheAirTVsOptions) ([]models.TVSummary, error) {
+	col := repo.getOnTheAirCollection()
 
 	findOptions := repo.buildGetTVShowFindOptions(input.Filter)
 
@@ -119,6 +146,47 @@ func (repo implRepository) GetTrendingTVShows(ctx context.Context, input tvshow.
 	}
 
 	return tvshows, nil
+}
+
+func (repo implRepository) GetAiringTodayTVShows(ctx context.Context, input tvshow.GetAiringTodayTVsOptions) ([]models.TVSummary, error) {
+	col := repo.getAiringTodayCollection()
+
+	findOptions := repo.buildGetTVShowFindOptions(input.Filter)
+
+	cursor, err := col.Find(ctx, bson.M{}, findOptions)
+	if err != nil {
+		return []models.TVSummary{}, err
+	}
+
+	var tvshows []models.TVSummary
+	err = cursor.All(ctx, &tvshows)
+	if err != nil {
+		return []models.TVSummary{}, err
+	}
+
+	return tvshows, nil
+}
+
+func (repo implRepository) CountOnTheAirTVShows(ctx context.Context, input tvshow.GetOnTheAirTVsOptions) (int64, error) {
+	col := repo.getOnTheAirCollection()
+
+	count, err := col.CountDocuments(ctx, bson.M{})
+	if err != nil {
+		return 0, err
+	}
+
+	return count, nil
+}
+
+func (repo implRepository) CountAiringTodayTVShows(ctx context.Context, input tvshow.GetAiringTodayTVsOptions) (int64, error) {
+	col := repo.getAiringTodayCollection()
+
+	count, err := col.CountDocuments(ctx, bson.M{})
+	if err != nil {
+		return 0, err
+	}
+
+	return count, nil
 }
 
 func (repo implRepository) GetTopRatedTVShows(ctx context.Context, input tvshow.GetTopRatedTVsOptions) ([]models.TVSummary, error) {
@@ -140,6 +208,17 @@ func (repo implRepository) GetTopRatedTVShows(ctx context.Context, input tvshow.
 	return tvshows, nil
 }
 
+func (repo implRepository) CountTopRatedTVShows(ctx context.Context, input tvshow.GetTopRatedTVsOptions) (int64, error) {
+	col := repo.getTopRatedCollection()
+
+	count, err := col.CountDocuments(ctx, bson.M{})
+	if err != nil {
+		return 0, err
+	}
+
+	return count, nil
+}
+
 func (repo implRepository) GetPopularTVShows(ctx context.Context, input tvshow.GetPopularTVsOptions) ([]models.TVSummary, error) {
 	col := repo.getPopularCollection()
 
@@ -157,6 +236,17 @@ func (repo implRepository) GetPopularTVShows(ctx context.Context, input tvshow.G
 	}
 
 	return tvshows, nil
+}
+
+func (repo implRepository) CountPopularTVShows(ctx context.Context, input tvshow.GetPopularTVsOptions) (int64, error) {
+	col := repo.getPopularCollection()
+
+	count, err := col.CountDocuments(ctx, bson.M{})
+	if err != nil {
+		return 0, err
+	}
+
+	return count, nil
 }
 
 func (repo implRepository) GetTVShowGenres(ctx context.Context) ([]models.TVGenre, error) {

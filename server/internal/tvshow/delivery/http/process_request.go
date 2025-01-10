@@ -33,18 +33,19 @@ func (h handlerImpl) processGetUpcomingTVShowsRequest(c *gin.Context) (getUpcomi
 	return req, nil
 }
 
-func (h handlerImpl) processGetTrendingTVShowsRequest(c *gin.Context) (getTrendingTVShowsRequest, error) {
-	var req getTrendingTVShowsRequest
+func (h handlerImpl) processGetOnTheAirTVShowsRequest(c *gin.Context) (getOnTheAirTVShowsRequest, error) {
+	var req getOnTheAirTVShowsRequest
 	if err := c.ShouldBindQuery(&req); err != nil {
-		return getTrendingTVShowsRequest{}, err
+		return getOnTheAirTVShowsRequest{}, err
 	}
 
-	if err := c.ShouldBindUri(&req); err != nil {
-		return getTrendingTVShowsRequest{}, err
-	}
+	return req, nil
+}
 
-	if err := req.validate(); err != nil {
-		return getTrendingTVShowsRequest{}, err
+func (h handlerImpl) processGetAiringTodayTVShowsRequest(c *gin.Context) (getAiringTodayTVShowsRequest, error) {
+	var req getAiringTodayTVShowsRequest
+	if err := c.ShouldBindQuery(&req); err != nil {
+		return getAiringTodayTVShowsRequest{}, err
 	}
 
 	return req, nil

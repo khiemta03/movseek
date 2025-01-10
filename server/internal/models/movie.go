@@ -75,7 +75,6 @@ type MovieCredits struct {
 	Crew []MovieCrew `json:"crew" bson:"crew"`
 }
 
-// lastest
 type Trailer struct {
 	ID          string    `json:"id" bson:"id"`
 	ISO6391     string    `json:"iso_639_1" bson:"iso_639_1"`
@@ -107,6 +106,7 @@ type MovieCrew struct {
 type MovieSummary struct {
 	MovieID          primitive.ObjectID `json:"_id" bson:"_id"`
 	TMDBID           int64              `json:"tmdb_id" bson:"tmdb_id"`
+	ID               int64              `json:"id" bson:"id"`
 	Adult            bool               `json:"adult" bson:"adult"`
 	BackdropPath     string             `json:"backdrop_path" bson:"backdrop_path"`
 	GenreIDs         []int64            `json:"genre_ids" bson:"genre_ids"`

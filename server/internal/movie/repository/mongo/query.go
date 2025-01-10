@@ -16,8 +16,9 @@ func (repo implRepository) buildMovieQuery(movieID int64) (bson.M, error) {
 }
 
 func (repo implRepository) buildListMoviesQuery(input movie.ListMoviesOptions) (bson.M, error) {
-	queryFilter := bson.M{
-		"$or": []bson.M{
+	queryFilter := bson.M{}
+	if input.Query != "" {
+		queryFilter["$or"] = []bson.M{
 			{
 				"title": bson.M{
 					"$regex":   input.Query,
@@ -30,7 +31,7 @@ func (repo implRepository) buildListMoviesQuery(input movie.ListMoviesOptions) (
 					"$options": "i",
 				},
 			},
-		},
+		}
 	}
 
 	if len(input.Filter.IDs) > 0 {

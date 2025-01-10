@@ -14,8 +14,10 @@ type Config struct {
 }
 
 type MongoConfig struct {
-	URI    string `env:"MONGO_URI" envDefault:"mongodb+srv://khiemta03:ahWUapZkjCawUg9m@movseek.kjfyn.mongodb.net"`
-	DBName string `env:"MONGO_DB_NAME" envDefault:"MovSeek"`
+	URI      string `env:"MONGO_URI" envDefault:"mongodb+srv://movseek:movseekdb123@movseek.kjfyn.mongodb.net"`
+	URI_2    string `env:"MONGO_URI_2" envDefault:"mongodb+srv://movseek:movseekdb123@cluster14271.ogtgfuh.mongodb.net"`
+	DBName   string `env:"MONGO_DB_NAME" envDefault:"MovSeek"`
+	DBName_2 string `env:"MONGO_DB_NAME_2" envDefault:"Cluster14271"`
 }
 
 type HTTPServerConfig struct {

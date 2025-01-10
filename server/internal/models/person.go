@@ -4,6 +4,7 @@ import "go.mongodb.org/mongo-driver/bson/primitive"
 
 type Person struct {
 	ID                primitive.ObjectID `json:"_id" bson:"_id"`
+	PersonID          int                `json:"id" bson:"id"`
 	TMDBID            int                `json:"tmdb_id" bson:"tmdb_id"`
 	Adult             bool               `json:"adult" bson:"adult"`
 	Gender            int                `json:"gender" bson:"gender"`
@@ -15,6 +16,7 @@ type Person struct {
 	ImdbID            string             `json:"imdb_id" bson:"imdb_id"`
 	PlaceOfBirth      string             `json:"place_of_birth" bson:"place_of_birth"`
 	MovieCredits      MovieCredit        `json:"movie_credits" bson:"movie_credits"`
+	TVCredits         TVCredit           `json:"tv_credits" bson:"tv_credits"`
 	Name              string             `json:"name" bson:"name"`
 	KnowForDepartment string             `json:"know_for_department" bson:"know_for_department"`
 	OriginalName      string             `json:"original_name" bson:"original_name"`
@@ -59,6 +61,11 @@ type MovieCredit struct {
 	Crew []Crew `json:"crew" bson:"crew"`
 }
 
+type TVCredit struct {
+	Cast []Crew `json:"cast" bson:"cast"`
+	Crew []Crew `json:"crew" bson:"crew"`
+}
+
 type Crew struct {
 	ID               int64   `json:"id" bson:"id"`
 	Adult            bool    `json:"adult" bson:"adult"`
@@ -76,4 +83,5 @@ type Crew struct {
 	Character        string  `json:"character" bson:"character"`
 	CreditID         string  `json:"credit_id" bson:"credit_id"`
 	Order            int64   `json:"order" bson:"order"`
+	EpisodeCount     *int64  `json:"episode_count,omitempty" bson:"episode_count,omitempty"`
 }

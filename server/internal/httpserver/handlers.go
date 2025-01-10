@@ -25,8 +25,8 @@ import (
 func (srv HTTPServer) mapHandlers() {
 	// Repositories
 	movieRepo := movieRepo.NewRepository(srv.db)
-	personRepo := personRepo.NewRepository(srv.db)
-	tvShowRepo := tvShowRepo.NewRepository(srv.db)
+	personRepo := personRepo.NewRepository(srv.db2)
+	tvShowRepo := tvShowRepo.NewRepository(srv.db2)
 	savedItemRepo := savedItemRepo.NewRepository(srv.db)
 	reviewRepo := reviewRepo.NewRepository(srv.db)
 	// Usecases

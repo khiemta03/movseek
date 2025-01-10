@@ -7,13 +7,21 @@ type GetPersonFilter struct {
 	PerPage int `json:"per_page"`
 }
 
+type Pagination struct {
+	Page         int `json:"page"`
+	PerPage      int `json:"per_page"`
+	TotalPages   int `json:"total_pages"`
+	TotalResults int `json:"total_results"`
+}
+
 type ListPeopleInput struct {
 	Query  string `json:"query"`
 	Filter GetPersonFilter
 }
 
 type ListPeopleOutput struct {
-	People []models.Person `json:"people"`
+	People     []models.Person `json:"people"`
+	Pagination Pagination      `json:"pagination"`
 }
 
 type GetTrendingPeopleInput struct {
@@ -22,7 +30,8 @@ type GetTrendingPeopleInput struct {
 }
 
 type GetTrendingPeopleOutput struct {
-	People []models.PersonSummary `json:"people"`
+	People     []models.PersonSummary `json:"people"`
+	Pagination Pagination             `json:"pagination"`
 }
 
 type GetPopularPeopleInput struct {
@@ -30,5 +39,6 @@ type GetPopularPeopleInput struct {
 }
 
 type GetPopularPeopleOutput struct {
-	People []models.PersonSummary `json:"people"`
+	People     []models.PersonSummary `json:"people"`
+	Pagination Pagination             `json:"pagination"`
 }

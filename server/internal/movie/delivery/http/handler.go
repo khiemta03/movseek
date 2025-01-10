@@ -108,11 +108,11 @@ func (h handlerImpl) getMovieKeywords(c *gin.Context) {
 // @Tags movie
 // @Accept json
 // @Produce json
-// @Param query query string true "Query"
+// @Param query query string false "Query"
 // @Param page query int true "Page"
 // @Param per_page query int true "Per page"
 // @Success 200 {object} searchMoviesResponse
-// @Router /movie/search [get]
+// @Router /search/movie [get]
 func (h handlerImpl) searchMovies(c *gin.Context) {
 	req, err := h.processSearchMoviesRequest(c)
 	if err != nil {

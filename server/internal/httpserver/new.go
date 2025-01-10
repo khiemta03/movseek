@@ -10,11 +10,13 @@ type HTTPServer struct {
 	gin  *gin.Engine
 	port int
 	db   mongo.Database
+	db2  mongo.Database
 }
 
 type Config struct {
 	Port int
 	DB   mongo.Database
+	DB2  mongo.Database
 }
 
 func New(cfg Config) *HTTPServer {
@@ -22,5 +24,6 @@ func New(cfg Config) *HTTPServer {
 		gin:  gin.Default(),
 		port: cfg.Port,
 		db:   cfg.DB,
+		db2:  cfg.DB2,
 	}
 }

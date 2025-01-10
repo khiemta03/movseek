@@ -9,9 +9,12 @@ type GetUpcomingTVsOptions struct {
 	Filter GetTVFilter
 }
 
-type GetTrendingTVsOptions struct {
+type GetOnTheAirTVsOptions struct {
 	Filter GetTVFilter
-	Type   string
+}
+
+type GetAiringTodayTVsOptions struct {
+	Filter GetTVFilter
 }
 
 type GetTopRatedTVsOptions struct {
