@@ -25,7 +25,6 @@ func (repo implRepository) AddComment(ctx context.Context, input review.AddComme
 	col := repo.getCommentsCollection()
 
 	model := repo.buildAddComment(input)
-
 	_, err := col.InsertOne(ctx, model)
 	if err != nil {
 		return models.Comment{}, err

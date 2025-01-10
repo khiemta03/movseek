@@ -1,6 +1,8 @@
 package http
 
 import (
+	"fmt"
+
 	"github.com/gin-gonic/gin"
 	"github.com/tmplam/movseek/pkg/response"
 )
@@ -8,12 +10,14 @@ import (
 func (h handlerImpl) addComment(c *gin.Context) {
 	req, err := h.processAddCommentRequest(c)
 	if err != nil {
+		fmt.Println(err)
 		response.BadRequest(c)
 		return
 	}
 
 	cm, err := h.uc.AddComment(c.Request.Context(), req.toInput())
 	if err != nil {
+		fmt.Println(err)
 		response.BadRequest(c)
 		return
 	}
@@ -114,7 +118,7 @@ func (h handlerImpl) getCommentsByMedia(c *gin.Context) {
 		return
 	}
 
-	response.OK(c, cm)
+	response.OK(c, h.getCommentsByMediaResponse(cm))
 }
 
 func (h handlerImpl) getRatingsByMedia(c *gin.Context) {
@@ -130,7 +134,7 @@ func (h handlerImpl) getRatingsByMedia(c *gin.Context) {
 		return
 	}
 
-	response.OK(c, rt)
+	response.OK(c, h.getRatingsByMediaResponse(rt))
 }
 
 func (h handlerImpl) getCommentsByUser(c *gin.Context) {
@@ -146,7 +150,7 @@ func (h handlerImpl) getCommentsByUser(c *gin.Context) {
 		return
 	}
 
-	response.OK(c, cm)
+	response.OK(c, h.getCommentsByUserResponse(cm))
 }
 
 func (h handlerImpl) getRatingsByUser(c *gin.Context) {
@@ -162,5 +166,5 @@ func (h handlerImpl) getRatingsByUser(c *gin.Context) {
 		return
 	}
 
-	response.OK(c, rt)
+	response.OK(c, h.getRatingsByUserResponse(rt))
 }

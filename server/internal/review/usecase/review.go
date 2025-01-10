@@ -31,28 +31,62 @@ func (uc implUsecase) DeleteRating(ctx context.Context, input review.Scope) erro
 	return uc.repo.DeleteRating(ctx, input)
 }
 
-func (uc implUsecase) GetCommentsByMedia(ctx context.Context, input review.GetCommentsByMediaInput) ([]models.Comment, error) {
-	return uc.repo.GetComments(ctx, review.Scope{
+func (uc implUsecase) GetCommentsByMedia(ctx context.Context, input review.GetCommentsByMediaInput) (review.GetCommentsOutput, error) {
+	comments, err := uc.repo.GetComments(ctx, review.Scope{
 		MediaID: input.MediaID,
 		Type:    input.Type,
 	})
+	if err != nil {
+		return review.GetCommentsOutput{}, err
+	}
+
+	return review.GetCommentsOutput{
+		MediaID:  input.MediaID,
+		Type:     input.Type,
+		Comments: comments,
+	}, nil
 }
 
-func (uc implUsecase) GetCommentsByUserID(ctx context.Context, input review.GetCommentsByUserIDInput) ([]models.Comment, error) {
-	return uc.repo.GetComments(ctx, review.Scope{
+func (uc implUsecase) GetCommentsByUserID(ctx context.Context, input review.GetCommentsByUserIDInput) (review.GetCommentsOutput, error) {
+	comments, err := uc.repo.GetComments(ctx, review.Scope{
 		UserID: input.UserID,
 	})
+	if err != nil {
+		return review.GetCommentsOutput{}, err
+	}
+
+	return review.GetCommentsOutput{
+		UserID:   input.UserID,
+		Comments: comments,
+	}, nil
 }
 
-func (uc implUsecase) GetRatingsByMedia(ctx context.Context, input review.GetRatingsByMediaInput) ([]models.Rating, error) {
-	return uc.repo.GetRatings(ctx, review.Scope{
+func (uc implUsecase) GetRatingsByMedia(ctx context.Context, input review.GetRatingsByMediaInput) (review.GetRatingsOutput, error) {
+	ratings, err := uc.repo.GetRatings(ctx, review.Scope{
 		MediaID: input.MediaID,
 		Type:    input.Type,
 	})
+	if err != nil {
+		return review.GetRatingsOutput{}, err
+	}
+
+	return review.GetRatingsOutput{
+		MediaID: input.MediaID,
+		Type:    input.Type,
+		Ratings: ratings,
+	}, nil
 }
 
-func (uc implUsecase) GetRatingsByUserID(ctx context.Context, input review.GetRatingsByUserIDInput) ([]models.Rating, error) {
-	return uc.repo.GetRatings(ctx, review.Scope{
+func (uc implUsecase) GetRatingsByUserID(ctx context.Context, input review.GetRatingsByUserIDInput) (review.GetRatingsOutput, error) {
+	ratings, err := uc.repo.GetRatings(ctx, review.Scope{
 		UserID: input.UserID,
 	})
+	if err != nil {
+		return review.GetRatingsOutput{}, err
+	}
+
+	return review.GetRatingsOutput{
+		UserID:  input.UserID,
+		Ratings: ratings,
+	}, nil
 }

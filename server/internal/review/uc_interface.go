@@ -13,8 +13,8 @@ type Usecase interface {
 	AddRating(ctx context.Context, input AddRatingInput) (models.Rating, error)
 	UpdateRating(ctx context.Context, input UpdateRatingInput) error
 	DeleteRating(ctx context.Context, input Scope) error
-	GetCommentsByMedia(ctx context.Context, input GetCommentsByMediaInput) ([]models.Comment, error)
-	GetCommentsByUserID(ctx context.Context, input GetCommentsByUserIDInput) ([]models.Comment, error)
-	GetRatingsByMedia(ctx context.Context, input GetRatingsByMediaInput) ([]models.Rating, error)
-	GetRatingsByUserID(ctx context.Context, input GetRatingsByUserIDInput) ([]models.Rating, error)
+	GetCommentsByMedia(ctx context.Context, input GetCommentsByMediaInput) (GetCommentsOutput, error)
+	GetCommentsByUserID(ctx context.Context, input GetCommentsByUserIDInput) (GetCommentsOutput, error)
+	GetRatingsByMedia(ctx context.Context, input GetRatingsByMediaInput) (GetRatingsOutput, error)
+	GetRatingsByUserID(ctx context.Context, input GetRatingsByUserIDInput) (GetRatingsOutput, error)
 }
