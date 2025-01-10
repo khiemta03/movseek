@@ -1,17 +1,43 @@
 package http
 
 import (
+	"strconv"
+
 	"github.com/gin-gonic/gin"
 )
 
-func (h handlerImpl) processGetOneMovieRequest(c *gin.Context) (string, error) {
-	id := c.Param("id")
+func (h handlerImpl) processGetOneMovieRequest(c *gin.Context) (int64, error) {
+	id, err := strconv.ParseInt(c.Param("id"), 10, 64)
+	if err != nil {
+		return 0, err
+	}
 
 	return id, nil
 }
 
-func (h handlerImpl) processGetMovieCreditsRequest(c *gin.Context) (string, error) {
-	id := c.Param("id")
+func (h handlerImpl) processGetMovieCreditsRequest(c *gin.Context) (int64, error) {
+	id, err := strconv.ParseInt(c.Param("id"), 10, 64)
+	if err != nil {
+		return 0, err
+	}
+
+	return id, nil
+}
+
+func (h handlerImpl) processGetMovieKeywordsRequest(c *gin.Context) (int64, error) {
+	id, err := strconv.ParseInt(c.Param("id"), 10, 64)
+	if err != nil {
+		return 0, err
+	}
+
+	return id, nil
+}
+
+func (h handlerImpl) processGetMovieVideosRequest(c *gin.Context) (int64, error) {
+	id, err := strconv.ParseInt(c.Param("id"), 10, 64)
+	if err != nil {
+		return 0, err
+	}
 
 	return id, nil
 }
@@ -64,6 +90,15 @@ func (h handlerImpl) processGetPopularMoviesRequest(c *gin.Context) (getPopularM
 	var req getPopularMoviesRequest
 	if err := c.ShouldBindQuery(&req); err != nil {
 		return getPopularMoviesRequest{}, err
+	}
+
+	return req, nil
+}
+
+func (h handlerImpl) processGetLastestTrailerRequest(c *gin.Context) (getLastestTrailerRequest, error) {
+	var req getLastestTrailerRequest
+	if err := c.ShouldBindQuery(&req); err != nil {
+		return getLastestTrailerRequest{}, err
 	}
 
 	return req, nil

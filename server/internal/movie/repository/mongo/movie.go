@@ -9,6 +9,7 @@ import (
 	"github.com/tmplam/movseek/internal/movie/repository"
 	"github.com/tmplam/movseek/pkg/mongo"
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
 const (
@@ -45,7 +46,7 @@ func (repo implRepository) getGenresCollection() mongo.Collection {
 	return repo.db.Collection(genresCollection)
 }
 
-func (repo implRepository) GetOneMovie(ctx context.Context, movieID string) (models.Movie, error) {
+func (repo implRepository) GetOneMovie(ctx context.Context, movieID int64) (models.Movie, error) {
 	col := repo.getMovieCollection()
 
 	queryFilter, err := repo.buildMovieQuery(movieID)
@@ -65,7 +66,10 @@ func (repo implRepository) GetOneMovie(ctx context.Context, movieID string) (mod
 func (repo implRepository) ListMovies(ctx context.Context, input movie.ListMoviesOptions) ([]models.Movie, error) {
 	col := repo.getMovieCollection()
 
-	queryFilter := repo.buildListMoviesQuery(input)
+	queryFilter, err := repo.buildListMoviesQuery(input)
+	if err != nil {
+		return []models.Movie{}, err
+	}
 
 	findOptions := repo.buildGetMovieFindOptions(input.Filter)
 
@@ -81,6 +85,22 @@ func (repo implRepository) ListMovies(ctx context.Context, input movie.ListMovie
 	}
 
 	return movies, nil
+}
+
+func (repo implRepository) CountMovies(ctx context.Context, input movie.ListMoviesOptions) (int, error) {
+	col := repo.getMovieCollection()
+
+	queryFilter, err := repo.buildListMoviesQuery(input)
+	if err != nil {
+		return 0, err
+	}
+
+	count, err := col.CountDocuments(ctx, queryFilter)
+	if err != nil {
+		return 0, err
+	}
+
+	return int(count), nil
 }
 
 func (repo implRepository) GetUpcomingMovies(ctx context.Context, input movie.GetUpcomingMoviesOptions) ([]models.MovieSummary, error) {
@@ -102,6 +122,17 @@ func (repo implRepository) GetUpcomingMovies(ctx context.Context, input movie.Ge
 	return movies, nil
 }
 
+func (repo implRepository) CountUpcomingMovies(ctx context.Context, input movie.GetUpcomingMoviesOptions) (int, error) {
+	col := repo.getUpcomingCollection()
+
+	count, err := col.CountDocuments(ctx, bson.M{})
+	if err != nil {
+		return 0, err
+	}
+
+	return int(count), nil
+}
+
 func (repo implRepository) GetTrendingMovies(ctx context.Context, input movie.GetTrendingMoviesOptions) ([]models.MovieSummary, error) {
 	col := repo.getTrendingCollection(input.Type)
 
@@ -119,6 +150,17 @@ func (repo implRepository) GetTrendingMovies(ctx context.Context, input movie.Ge
 	}
 
 	return movies, nil
+}
+
+func (repo implRepository) CountTrendingMovies(ctx context.Context, input movie.GetTrendingMoviesOptions) (int, error) {
+	col := repo.getTrendingCollection(input.Type)
+
+	count, err := col.CountDocuments(ctx, bson.M{})
+	if err != nil {
+		return 0, err
+	}
+
+	return int(count), nil
 }
 
 func (repo implRepository) GetTopRatedMovies(ctx context.Context, input movie.GetTopRatedMoviesOptions) ([]models.MovieSummary, error) {
@@ -140,6 +182,17 @@ func (repo implRepository) GetTopRatedMovies(ctx context.Context, input movie.Ge
 	return movies, nil
 }
 
+func (repo implRepository) CountTopRatedMovies(ctx context.Context, input movie.GetTopRatedMoviesOptions) (int, error) {
+	col := repo.getTopRatedCollection()
+
+	count, err := col.CountDocuments(ctx, bson.M{})
+	if err != nil {
+		return 0, err
+	}
+
+	return int(count), nil
+}
+
 func (repo implRepository) GetPopularMovies(ctx context.Context, input movie.GetPopularMoviesOptions) ([]models.MovieSummary, error) {
 	col := repo.getPopularCollection()
 
@@ -159,6 +212,17 @@ func (repo implRepository) GetPopularMovies(ctx context.Context, input movie.Get
 	return movies, nil
 }
 
+func (repo implRepository) CountPopularMovies(ctx context.Context, input movie.GetPopularMoviesOptions) (int, error) {
+	col := repo.getPopularCollection()
+
+	count, err := col.CountDocuments(ctx, bson.M{})
+	if err != nil {
+		return 0, err
+	}
+
+	return int(count), nil
+}
+
 func (repo implRepository) GetMovieGenres(ctx context.Context) ([]models.MovieGenre, error) {
 	col := repo.getGenresCollection()
 
@@ -174,4 +238,38 @@ func (repo implRepository) GetMovieGenres(ctx context.Context) ([]models.MovieGe
 	}
 
 	return genres, nil
+}
+
+func (repo implRepository) GetLastestTrailer(ctx context.Context, input movie.GetLastestTrailerInput) ([]models.Trailer, error) {
+	col := repo.getMovieCollection()
+
+	findOptions := options.Find()
+	findOptions.SetLimit(int64(input.PerPage))
+	findOptions.SetSkip(int64((input.Page - 1) * input.PerPage))
+	findOptions.SetSort(bson.M{"trailers.0.published_at": -1})
+
+	queryFilter := bson.M{
+		"trailers": bson.M{
+			"$exists": true,
+			"$ne":     []models.Trailer{},
+		},
+	}
+
+	cursor, err := col.Find(ctx, queryFilter, findOptions)
+	if err != nil {
+		return []models.Trailer{}, err
+	}
+
+	var movies []models.Movie
+	err = cursor.All(ctx, &movies)
+	if err != nil {
+		return []models.Trailer{}, err
+	}
+
+	trailers := make([]models.Trailer, 0, len(movies))
+	for _, movie := range movies {
+		trailers = append(trailers, movie.Trailers[0])
+	}
+
+	return trailers, nil
 }

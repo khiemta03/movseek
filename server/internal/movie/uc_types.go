@@ -1,10 +1,21 @@
 package movie
 
-import "github.com/tmplam/movseek/internal/models"
+import (
+	"github.com/tmplam/movseek/internal/models"
+)
 
 type GetMovieFilter struct {
-	Page    int `json:"page"`
-	PerPage int `json:"per_page"`
+	Page      int      `json:"page"`
+	PerPage   int      `json:"per_page"`
+	IDs       []int64  `json:"ids"`
+	ObjectIDs []string `json:"object_ids"`
+}
+
+type Pagination struct {
+	Page      int `json:"page"`
+	PerPage   int `json:"per_page"`
+	Total     int `json:"total"`
+	TotalPage int `json:"total_page"`
 }
 
 type ListMoviesInput struct {
@@ -13,7 +24,8 @@ type ListMoviesInput struct {
 }
 
 type ListMoviesOutput struct {
-	Movies []models.Movie `json:"movies"`
+	Movies     []models.Movie `json:"movies"`
+	Pagination Pagination     `json:"pagination"`
 }
 
 type GetUpcomingMoviesInput struct {
@@ -21,7 +33,8 @@ type GetUpcomingMoviesInput struct {
 }
 
 type GetUpcomingMoviesOutput struct {
-	Movies []models.MovieSummary `json:"movies"`
+	Movies     []models.MovieSummary `json:"movies"`
+	Pagination Pagination            `json:"pagination"`
 }
 
 type GetTrendingMoviesInput struct {
@@ -30,7 +43,8 @@ type GetTrendingMoviesInput struct {
 }
 
 type GetTrendingMoviesOutput struct {
-	Movies []models.MovieSummary `json:"movies"`
+	Movies     []models.MovieSummary `json:"movies"`
+	Pagination Pagination            `json:"pagination"`
 }
 
 type GetTopRatedMoviesInput struct {
@@ -38,7 +52,8 @@ type GetTopRatedMoviesInput struct {
 }
 
 type GetTopRatedMoviesOutput struct {
-	Movies []models.MovieSummary `json:"movies"`
+	Movies     []models.MovieSummary `json:"movies"`
+	Pagination Pagination            `json:"pagination"`
 }
 
 type GetPopularMoviesInput struct {
@@ -46,9 +61,23 @@ type GetPopularMoviesInput struct {
 }
 
 type GetPopularMoviesOutput struct {
-	Movies []models.MovieSummary `json:"movies"`
+	Movies     []models.MovieSummary `json:"movies"`
+	Pagination Pagination            `json:"pagination"`
 }
 
 type GetMovieGenresOutput struct {
 	Genres []models.MovieGenre `json:"genres"`
+}
+
+type GetLatestMoviesInput struct {
+	Filter GetMovieFilter
+}
+
+type GetLastestTrailerInput struct {
+	Page    int `json:"page"`
+	PerPage int `json:"per_page"`
+}
+
+type GetLastestTrailerOutput struct {
+	Trailers []models.Trailer `json:"trailers"`
 }

@@ -1,0 +1,900 @@
+basePath: /api/v1
+definitions:
+  http.addCommentRequest:
+    properties:
+      comment:
+        type: string
+      media_id:
+        type: integer
+      type:
+        type: string
+      user_id:
+        type: string
+    required:
+    - comment
+    - media_id
+    - type
+    - user_id
+    type: object
+  http.addRatingRequest:
+    properties:
+      media_id:
+        type: integer
+      rating:
+        type: number
+      type:
+        type: string
+      user_id:
+        type: string
+    required:
+    - media_id
+    - rating
+    - type
+    - user_id
+    type: object
+  http.addToSavedItemRequest:
+    properties:
+      media_id:
+        type: integer
+      media_type:
+        type: string
+      saved_item_type:
+        type: string
+      user_id:
+        type: string
+    required:
+    - media_id
+    - media_type
+    - saved_item_type
+    - user_id
+    type: object
+  http.getSummaryMoviesResponse:
+    properties:
+      movies:
+        items:
+          $ref: '#/definitions/models.MovieSummary'
+        type: array
+      pagination:
+        $ref: '#/definitions/http.pagination'
+    type: object
+  http.pagination:
+    properties:
+      page:
+        type: integer
+      per_page:
+        type: integer
+      total:
+        type: integer
+      total_page:
+        type: integer
+    type: object
+  http.removeFromSavedItemRequest:
+    properties:
+      media_id:
+        type: integer
+      media_type:
+        type: string
+      saved_item_type:
+        type: string
+      user_id:
+        type: string
+    required:
+    - media_id
+    - media_type
+    - saved_item_type
+    - user_id
+    type: object
+  http.searchMoviesResponse:
+    properties:
+      movies:
+        items:
+          $ref: '#/definitions/models.Movie'
+        type: array
+      pagination:
+        $ref: '#/definitions/http.pagination'
+    type: object
+  http.updateCommentRequest:
+    properties:
+      comment:
+        type: string
+      media_id:
+        type: integer
+      type:
+        type: string
+      userID:
+        type: string
+    required:
+    - userID
+    type: object
+  http.updateRatingRequest:
+    properties:
+      media_id:
+        type: integer
+      rating:
+        type: number
+      type:
+        type: string
+      userID:
+        type: string
+    required:
+    - userID
+    type: object
+  models.BelongsTo:
+    properties:
+      backdrop_path:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      poster_path:
+        type: string
+    type: object
+  models.KeyWord:
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+    type: object
+  models.Movie:
+    properties:
+      _id:
+        type: string
+      backdrop_path:
+        type: string
+      belongs_to_collection:
+        $ref: '#/definitions/models.BelongsTo'
+      budget:
+        type: integer
+      categories:
+        items:
+          type: string
+        type: array
+      credits:
+        $ref: '#/definitions/models.MovieCredits'
+      genres:
+        items:
+          $ref: '#/definitions/models.MovieGenres'
+        type: array
+      homepage:
+        type: string
+      id:
+        type: integer
+      imdb_id:
+        type: string
+      keywords:
+        items:
+          $ref: '#/definitions/models.KeyWord'
+        type: array
+      original_country:
+        items:
+          type: string
+        type: array
+      original_language:
+        type: string
+      overview:
+        type: string
+      popularity:
+        type: number
+      poster_path:
+        type: string
+      production_companies:
+        items:
+          $ref: '#/definitions/models.ProductionCompanies'
+        type: array
+      production_countries:
+        items:
+          $ref: '#/definitions/models.ProductionCountries'
+        type: array
+      release_date:
+        type: string
+      revenue:
+        type: integer
+      runtime:
+        type: integer
+      spoken_languages:
+        items:
+          $ref: '#/definitions/models.SpokenLanguages'
+        type: array
+      status:
+        type: string
+      tagline:
+        type: string
+      title:
+        type: string
+      tmdb_id:
+        type: integer
+      trailers:
+        items:
+          $ref: '#/definitions/models.Trailer'
+        type: array
+      video:
+        type: boolean
+      vote_average:
+        type: number
+      vote_count:
+        type: integer
+    type: object
+  models.MovieCredits:
+    properties:
+      cast:
+        items:
+          $ref: '#/definitions/models.MovieCrew'
+        type: array
+      crew:
+        items:
+          $ref: '#/definitions/models.MovieCrew'
+        type: array
+      id:
+        type: integer
+    type: object
+  models.MovieCrew:
+    properties:
+      adult:
+        type: boolean
+      cast_id:
+        type: integer
+      character:
+        type: string
+      credit_id:
+        type: string
+      gender:
+        type: integer
+      id:
+        type: integer
+      known_for_department:
+        type: string
+      name:
+        type: string
+      order:
+        type: integer
+      original_name:
+        type: string
+      popularity:
+        type: number
+      profile_path:
+        type: string
+    type: object
+  models.MovieGenre:
+    properties:
+      _id:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      tmdb_id:
+        type: integer
+    type: object
+  models.MovieGenres:
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+    type: object
+  models.MovieSummary:
+    properties:
+      _id:
+        type: string
+      adult:
+        type: boolean
+      backdrop_path:
+        type: string
+      genre_ids:
+        items:
+          type: integer
+        type: array
+      original_language:
+        type: string
+      original_title:
+        type: string
+      overview:
+        type: string
+      popularity:
+        type: number
+      poster_path:
+        type: string
+      release_date:
+        type: string
+      title:
+        type: string
+      tmdb_id:
+        type: integer
+      video:
+        type: boolean
+      vote_average:
+        type: number
+      vote_count:
+        type: integer
+    type: object
+  models.ProductionCompanies:
+    properties:
+      id:
+        type: integer
+      logo_path:
+        type: string
+      name:
+        type: string
+      origin_country:
+        type: string
+    type: object
+  models.ProductionCountries:
+    properties:
+      iso_3166_1:
+        type: string
+      name:
+        type: string
+    type: object
+  models.SavedItems:
+    properties:
+      movie_id:
+        items:
+          type: integer
+        type: array
+      tv_show_id:
+        items:
+          type: integer
+        type: array
+      type:
+        type: string
+      user_id:
+        type: string
+    type: object
+  models.SpokenLanguages:
+    properties:
+      english_name:
+        type: string
+      iso_639_1:
+        type: string
+      name:
+        type: string
+    type: object
+  models.Trailer:
+    properties:
+      id:
+        type: string
+      iso_639_1:
+        type: string
+      iso_3166_1:
+        type: string
+      key:
+        type: string
+      name:
+        type: string
+      official:
+        type: boolean
+      published_at:
+        type: string
+      site:
+        type: string
+      size:
+        type: integer
+      type:
+        type: string
+    type: object
+  movie.GetMovieGenresOutput:
+    properties:
+      genres:
+        items:
+          $ref: '#/definitions/models.MovieGenre'
+        type: array
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: Movseek API
+  title: Movseek API
+  version: "1.0"
+paths:
+  /comments:
+    post:
+      consumes:
+      - application/json
+      description: Add comment
+      parameters:
+      - description: Add comment request
+        in: body
+        name: addCommentRequest
+        required: true
+        schema:
+          $ref: '#/definitions/http.addCommentRequest'
+      produces:
+      - application/json
+      responses: {}
+      summary: Add comment
+      tags:
+      - review
+  /comments/{user_id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete comment
+      parameters:
+      - description: User ID
+        in: path
+        name: user_id
+        required: true
+        type: string
+      - description: Media ID
+        in: query
+        name: media_id
+        required: true
+        type: integer
+      - description: Type
+        in: query
+        name: type
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses: {}
+      summary: Delete comment
+      tags:
+      - review
+    put:
+      consumes:
+      - application/json
+      description: Update comment
+      parameters:
+      - description: Update comment request
+        in: body
+        name: updateCommentRequest
+        required: true
+        schema:
+          $ref: '#/definitions/http.updateCommentRequest'
+      produces:
+      - application/json
+      responses: {}
+      summary: Update comment
+      tags:
+      - review
+  /comments/media/{media_id}:
+    get:
+      consumes:
+      - application/json
+      description: Get comments by media
+      parameters:
+      - description: Media ID
+        in: path
+        name: media_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses: {}
+      summary: Get comments by media
+      tags:
+      - review
+  /comments/user/{user_id}:
+    get:
+      consumes:
+      - application/json
+      description: Get comments by user
+      parameters:
+      - description: User ID
+        in: path
+        name: user_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses: {}
+      summary: Get comments by user
+      tags:
+      - review
+  /movie/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Get one movie
+      parameters:
+      - description: Movie ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Movie'
+      summary: Get one movie
+      tags:
+      - movie
+  /movie/{id}/credits:
+    get:
+      consumes:
+      - application/json
+      description: Get movie credits
+      parameters:
+      - description: Movie ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.MovieCredits'
+      summary: Get movie credits
+      tags:
+      - movie
+  /movie/{id}/keywords:
+    get:
+      consumes:
+      - application/json
+      description: Get movie keywords
+      parameters:
+      - description: Movie ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.KeyWord'
+            type: array
+      summary: Get movie keywords
+      tags:
+      - movie
+  /movie/{id}/videos:
+    get:
+      consumes:
+      - application/json
+      description: Get movie videos
+      parameters:
+      - description: Movie ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Trailer'
+            type: array
+      summary: Get movie videos
+      tags:
+      - movie
+  /movie/genres:
+    get:
+      consumes:
+      - application/json
+      description: Get movie genres
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/movie.GetMovieGenresOutput'
+      summary: Get movie genres
+      tags:
+      - movie
+  /movie/popular:
+    get:
+      consumes:
+      - application/json
+      description: Get popular movies
+      parameters:
+      - description: Page
+        in: query
+        name: page
+        required: true
+        type: integer
+      - description: Per page
+        in: query
+        name: per_page
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/http.getSummaryMoviesResponse'
+      summary: Get popular movies
+      tags:
+      - movie
+  /movie/search:
+    get:
+      consumes:
+      - application/json
+      description: Search movies
+      parameters:
+      - description: Query
+        in: query
+        name: query
+        required: true
+        type: string
+      - description: Page
+        in: query
+        name: page
+        required: true
+        type: integer
+      - description: Per page
+        in: query
+        name: per_page
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/http.searchMoviesResponse'
+      summary: Search movies
+      tags:
+      - movie
+  /movie/top-rated:
+    get:
+      consumes:
+      - application/json
+      description: Get top rated movies
+      parameters:
+      - description: Page
+        in: query
+        name: page
+        required: true
+        type: integer
+      - description: Per page
+        in: query
+        name: per_page
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/http.getSummaryMoviesResponse'
+      summary: Get top rated movies
+      tags:
+      - movie
+  /movie/trailer/latest:
+    get:
+      consumes:
+      - application/json
+      description: Get lastest trailer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Trailer'
+            type: array
+      summary: Get lastest trailer
+      tags:
+      - movie
+  /movie/trending/{type}:
+    get:
+      consumes:
+      - application/json
+      description: Get trending movies
+      parameters:
+      - description: Type
+        in: path
+        name: type
+        required: true
+        type: string
+      - description: Page
+        in: query
+        name: page
+        required: true
+        type: integer
+      - description: Per page
+        in: query
+        name: per_page
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/http.getSummaryMoviesResponse'
+      summary: Get trending movies
+      tags:
+      - movie
+  /movie/upcoming:
+    get:
+      consumes:
+      - application/json
+      description: Get upcoming movies
+      parameters:
+      - description: Page
+        in: query
+        name: page
+        required: true
+        type: integer
+      - description: Per page
+        in: query
+        name: per_page
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/http.getSummaryMoviesResponse'
+      summary: Get upcoming movies
+      tags:
+      - movie
+  /ratings:
+    post:
+      consumes:
+      - application/json
+      description: Add rating
+      parameters:
+      - description: Add rating request
+        in: body
+        name: addRatingRequest
+        required: true
+        schema:
+          $ref: '#/definitions/http.addRatingRequest'
+      produces:
+      - application/json
+      responses: {}
+      summary: Add rating
+      tags:
+      - review
+  /ratings/{user_id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete rating
+      parameters:
+      - description: User ID
+        in: path
+        name: user_id
+        required: true
+        type: string
+      - description: Media ID
+        in: query
+        name: media_id
+        required: true
+        type: integer
+      - description: Type
+        in: query
+        name: type
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses: {}
+      summary: Delete rating
+      tags:
+      - review
+    put:
+      consumes:
+      - application/json
+      description: Update rating
+      parameters:
+      - description: Update rating request
+        in: body
+        name: updateRatingRequest
+        required: true
+        schema:
+          $ref: '#/definitions/http.updateRatingRequest'
+      produces:
+      - application/json
+      responses: {}
+      summary: Update rating
+      tags:
+      - review
+  /ratings/media/{media_id}:
+    get:
+      consumes:
+      - application/json
+      description: Get ratings by media
+      parameters:
+      - description: Media ID
+        in: path
+        name: media_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses: {}
+      summary: Get ratings by media
+      tags:
+      - review
+  /ratings/user/{user_id}:
+    get:
+      consumes:
+      - application/json
+      description: Get ratings by user
+      parameters:
+      - description: User ID
+        in: path
+        name: user_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses: {}
+      summary: Get ratings by user
+      tags:
+      - review
+  /saved-item/{user_id}:
+    get:
+      consumes:
+      - application/json
+      description: Get saved item
+      parameters:
+      - description: User ID
+        in: path
+        name: user_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.SavedItems'
+      summary: Get saved item
+      tags:
+      - saved-item
+  /saved-item/add:
+    put:
+      consumes:
+      - application/json
+      description: Add to saved item
+      parameters:
+      - description: Add to saved item request
+        in: body
+        name: addToSavedItemRequest
+        required: true
+        schema:
+          $ref: '#/definitions/http.addToSavedItemRequest'
+      produces:
+      - application/json
+      responses: {}
+      summary: Add to saved item
+      tags:
+      - saved-item
+  /saved-item/remove:
+    put:
+      consumes:
+      - application/json
+      description: Add to saved item
+      parameters:
+      - description: Remove from saved item request
+        in: body
+        name: removeFromSavedItemRequest
+        required: true
+        schema:
+          $ref: '#/definitions/http.removeFromSavedItemRequest'
+      produces:
+      - application/json
+      responses: {}
+      summary: Add to saved item
+      tags:
+      - saved-item
+swagger: "2.0"

@@ -3,21 +3,15 @@ package mongo
 import (
 	"github.com/tmplam/movseek/internal/person"
 	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-func (repo implRepository) buildPersonQuery(personID string) (bson.M, error) {
-	id, err := primitive.ObjectIDFromHex(personID)
-	if err != nil {
-		return bson.M{}, err
-	}
-
+func (repo implRepository) buildPersonQuery(personID int64) bson.M {
 	queryFilter := bson.M{
-		"_id": id,
+		"id": personID,
 	}
 
-	return queryFilter, nil
+	return queryFilter
 }
 
 func (repo implRepository) buildListPeopleQuery(input person.ListPeopleOptions) bson.M {

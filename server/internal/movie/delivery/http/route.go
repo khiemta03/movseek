@@ -8,9 +8,12 @@ func (h handlerImpl) MapRoutes(r *gin.RouterGroup) {
 	movie := r.Group("/movie")
 	movie.GET("/:id", h.getOneMovie)
 	movie.GET("/:id/credits", h.getMovieCredits)
+	movie.GET("/:id/videos", h.getMovieVideos)
+	movie.GET("/:id/keywords", h.getMovieKeywords)
 	movie.GET("/upcoming", h.getUpcomingMovies)
 	movie.GET("/trending/:type", h.getTrendingMovies)
 	movie.GET("/top-rated", h.getTopRatedMovies)
 	movie.GET("/popular", h.getPopularMovies)
 	movie.GET("/genres", h.getMovieGenres)
+	movie.GET("/trailer/latest", h.getLastestTrailer)
 }

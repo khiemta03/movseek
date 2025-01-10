@@ -7,7 +7,7 @@ import (
 	"github.com/tmplam/movseek/internal/person"
 )
 
-func (uc implUsecase) GetOnePerson(ctx context.Context, personID string) (models.Person, error) {
+func (uc implUsecase) GetOnePerson(ctx context.Context, personID int64) (models.Person, error) {
 	return uc.repo.GetOnePerson(ctx, personID)
 }
 
