@@ -179,6 +179,45 @@ const docTemplate = `{
                 }
             }
         },
+        "/movie/now-playing": {
+            "get": {
+                "description": "Get now playing movies",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "movie"
+                ],
+                "summary": "Get now playing movies",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Page",
+                        "name": "page",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Per page",
+                        "name": "per_page",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/http.getSummaryMoviesResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/movie/popular": {
             "get": {
                 "description": "Get popular movies",

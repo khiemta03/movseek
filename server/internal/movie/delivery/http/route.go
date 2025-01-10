@@ -14,6 +14,7 @@ func (h handlerImpl) MapRoutes(r *gin.RouterGroup) {
 	movie.GET("/trending/:type", h.getTrendingMovies)
 	movie.GET("/top-rated", h.getTopRatedMovies)
 	movie.GET("/popular", h.getPopularMovies)
+	movie.GET("/now-playing", h.getNowPlayingMovies)
 	movie.GET("/genres", h.getMovieGenres)
 	movie.GET("/trailer/latest", h.getLastestTrailer)
 }

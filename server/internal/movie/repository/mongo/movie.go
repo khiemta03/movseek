@@ -19,6 +19,7 @@ const (
 	dayTrendingCollection  = "movies_trending_day"
 	topRatedCollection     = "movies_top_rated"
 	popularCollection      = "movies_popular"
+	nowPlayingCollection   = "movies_now_playing"
 	genresCollection       = "movie_genres"
 )
 
@@ -44,6 +45,10 @@ func (repo implRepository) getPopularCollection() mongo.Collection {
 
 func (repo implRepository) getGenresCollection() mongo.Collection {
 	return repo.db.Collection(genresCollection)
+}
+
+func (repo implRepository) getNowPlayingCollection() mongo.Collection {
+	return repo.db.Collection(nowPlayingCollection)
 }
 
 func (repo implRepository) GetOneMovie(ctx context.Context, movieID int64) (models.Movie, error) {
@@ -211,6 +216,37 @@ func (repo implRepository) GetPopularMovies(ctx context.Context, input movie.Get
 
 	return movies, nil
 }
+
+func (repo implRepository) GetNowPlayingMovies(ctx context.Context, input movie.GetNowPlayingMoviesOptions) ([]models.MovieSummary, error) {
+	col := repo.getNowPlayingCollection()
+
+	findOptions := repo.buildGetMovieFindOptions(input.Filter)
+
+	cursor, err := col.Find(ctx, bson.M{}, findOptions)
+	if err != nil {
+		return []models.MovieSummary{}, err
+	}
+
+	var movies []models.MovieSummary
+	err = cursor.All(ctx, &movies)
+	if err != nil {
+		return []models.MovieSummary{}, err
+	}
+
+	return movies, nil
+}
+
+func (repo implRepository) CountNowPlayingMovies(ctx context.Context, input movie.GetNowPlayingMoviesOptions) (int, error) {
+	col := repo.getNowPlayingCollection()
+
+	count, err := col.CountDocuments(ctx, bson.M{})
+	if err != nil {
+		return 0, err
+	}
+
+	return int(count), nil
+}
+
 
 func (repo implRepository) CountPopularMovies(ctx context.Context, input movie.GetPopularMoviesOptions) (int, error) {
 	col := repo.getPopularCollection()

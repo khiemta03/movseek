@@ -16,6 +16,7 @@ type Usecase interface {
 	GetTrendingMovies(ctx context.Context, input GetTrendingMoviesInput) (GetTrendingMoviesOutput, error)
 	GetTopRatedMovies(ctx context.Context, input GetTopRatedMoviesInput) (GetTopRatedMoviesOutput, error)
 	GetPopularMovies(ctx context.Context, input GetPopularMoviesInput) (GetPopularMoviesOutput, error)
+	GetNowPlayingMovies(ctx context.Context, input GetNowPlayingMoviesInput) (GetNowPlayingMoviesOutput, error)
 	GetMovieGenres(ctx context.Context) (GetMovieGenresOutput, error)
 	GetLastestTrailer(ctx context.Context, input GetLastestTrailerInput) (GetLastestTrailerOutput, error)
 }

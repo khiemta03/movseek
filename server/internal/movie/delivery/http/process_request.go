@@ -95,6 +95,15 @@ func (h handlerImpl) processGetPopularMoviesRequest(c *gin.Context) (getPopularM
 	return req, nil
 }
 
+func (h handlerImpl) processGetNowPlayingMoviesRequest(c *gin.Context) (getNowPlayingMoviesRequest, error) {
+	var req getNowPlayingMoviesRequest
+	if err := c.ShouldBindQuery(&req); err != nil {
+		return getNowPlayingMoviesRequest{}, err
+	}
+
+	return req, nil
+}
+
 func (h handlerImpl) processGetLastestTrailerRequest(c *gin.Context) (getLastestTrailerRequest, error) {
 	var req getLastestTrailerRequest
 	if err := c.ShouldBindQuery(&req); err != nil {

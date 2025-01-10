@@ -134,6 +134,19 @@ func (req getPopularMoviesRequest) toInput() movie.GetPopularMoviesInput {
 	}
 }
 
+type getNowPlayingMoviesRequest struct {
+	filter `form:"filter"`
+}
+
+func (req getNowPlayingMoviesRequest) toInput() movie.GetNowPlayingMoviesInput {
+	return movie.GetNowPlayingMoviesInput{
+		Filter: movie.GetMovieFilter{
+			Page:    req.Page,
+			PerPage: req.PerPage,
+		},
+	}
+}
+
 type getLastestTrailerRequest struct {
 	filter
 }

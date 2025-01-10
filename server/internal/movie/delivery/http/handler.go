@@ -232,6 +232,31 @@ func (h handlerImpl) getPopularMovies(c *gin.Context) {
 	response.OK(c, h.buildGetSummaryMoviesResponse(movies.Movies, movies.Pagination))
 }
 
+// @Summary Get now playing movies
+// @Description Get now playing movies
+// @Tags movie
+// @Accept json
+// @Produce json
+// @Param page query int true "Page"
+// @Param per_page query int true "Per page"
+// @Success 200 {object} getSummaryMoviesResponse
+// @Router /movie/now-playing [get]
+func (h handlerImpl) getNowPlayingMovies(c *gin.Context) {
+	req, err := h.processGetNowPlayingMoviesRequest(c)
+	if err != nil {
+		response.BadRequest(c)
+		return
+	}
+
+	movies, err := h.uc.GetNowPlayingMovies(c.Request.Context(), req.toInput())
+	if err != nil {
+		response.BadRequest(c)
+		return
+	}
+
+	response.OK(c, h.buildGetSummaryMoviesResponse(movies.Movies, movies.Pagination))
+}
+
 // @Summary Get movie genres
 // @Description Get movie genres
 // @Tags movie

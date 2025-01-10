@@ -173,6 +173,32 @@ func (uc implUsecase) GetPopularMovies(ctx context.Context, input movie.GetPopul
 	}, nil
 }
 
+func (uc implUsecase) GetNowPlayingMovies(ctx context.Context, input movie.GetNowPlayingMoviesInput) (movie.GetNowPlayingMoviesOutput, error) {
+	total, err := uc.repo.CountNowPlayingMovies(ctx, movie.GetNowPlayingMoviesOptions{
+		Filter: input.Filter,
+	})
+	if err != nil {
+		return movie.GetNowPlayingMoviesOutput{}, err
+	}
+
+	movies, err := uc.repo.GetNowPlayingMovies(ctx, movie.GetNowPlayingMoviesOptions{
+		Filter: input.Filter,
+	})
+	if err != nil {
+		return movie.GetNowPlayingMoviesOutput{}, err
+	}
+
+	return movie.GetNowPlayingMoviesOutput{
+		Movies: movies,
+		Pagination: movie.Pagination{
+			Page:      input.Filter.Page,
+			PerPage:   input.Filter.PerPage,
+			Total:     total,
+			TotalPage: int(math.Ceil(float64(total) / float64(input.Filter.PerPage))),
+		},
+	}, nil
+}
+
 func (uc implUsecase) GetMovieGenres(ctx context.Context) (movie.GetMovieGenresOutput, error) {
 	genres, err := uc.repo.GetMovieGenres(ctx)
 	if err != nil {

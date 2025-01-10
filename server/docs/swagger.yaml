@@ -587,6 +587,32 @@ paths:
       summary: Get movie genres
       tags:
       - movie
+  /movie/now-playing:
+    get:
+      consumes:
+      - application/json
+      description: Get now playing movies
+      parameters:
+      - description: Page
+        in: query
+        name: page
+        required: true
+        type: integer
+      - description: Per page
+        in: query
+        name: per_page
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/http.getSummaryMoviesResponse'
+      summary: Get now playing movies
+      tags:
+      - movie
   /movie/popular:
     get:
       consumes:
