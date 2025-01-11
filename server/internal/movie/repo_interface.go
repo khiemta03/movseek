@@ -21,5 +21,5 @@ type Repository interface {
 	GetPopularMovies(ctx context.Context, input GetPopularMoviesOptions) ([]models.MovieSummary, error)
 	CountPopularMovies(ctx context.Context, input GetPopularMoviesOptions) (int, error)
 	GetMovieGenres(ctx context.Context) ([]models.MovieGenre, error)
-	GetLastestTrailer(ctx context.Context, input GetLastestTrailerInput) ([]models.Trailer, error)
+	GetLastestTrailer(ctx context.Context, input GetLastestTrailerInput) ([]GetLastestTrailerResponse, error)
 }

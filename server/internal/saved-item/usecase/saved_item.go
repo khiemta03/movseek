@@ -9,7 +9,20 @@ import (
 )
 
 func (uc implUsecase) GetSavedItem(ctx context.Context, input saved_item.GetSavedItemFilter) (models.SavedItems, error) {
-	return uc.repo.GetSavedItem(ctx, input)
+	items, err := uc.repo.GetSavedItem(ctx, input)
+	if err != nil {
+		if err == mongo.ErrNoDocuments {
+			return models.SavedItems{
+				UserID:   input.UserID,
+				Type:     input.Type,
+				MovieID:  []int64{},
+				TVShowID: []int64{},
+			}, nil
+		}
+		return models.SavedItems{}, err
+	}
+
+	return items, nil
 }
 
 func (uc implUsecase) AddToSavedItem(ctx context.Context, input saved_item.AddToSavedItemInput) error {

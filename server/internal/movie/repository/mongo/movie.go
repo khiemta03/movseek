@@ -247,7 +247,6 @@ func (repo implRepository) CountNowPlayingMovies(ctx context.Context, input movi
 	return int(count), nil
 }
 
-
 func (repo implRepository) CountPopularMovies(ctx context.Context, input movie.GetPopularMoviesOptions) (int, error) {
 	col := repo.getPopularCollection()
 
@@ -276,7 +275,7 @@ func (repo implRepository) GetMovieGenres(ctx context.Context) ([]models.MovieGe
 	return genres, nil
 }
 
-func (repo implRepository) GetLastestTrailer(ctx context.Context, input movie.GetLastestTrailerInput) ([]models.Trailer, error) {
+func (repo implRepository) GetLastestTrailer(ctx context.Context, input movie.GetLastestTrailerInput) ([]movie.GetLastestTrailerResponse, error) {
 	col := repo.getMovieCollection()
 
 	findOptions := options.Find()
@@ -293,18 +292,24 @@ func (repo implRepository) GetLastestTrailer(ctx context.Context, input movie.Ge
 
 	cursor, err := col.Find(ctx, queryFilter, findOptions)
 	if err != nil {
-		return []models.Trailer{}, err
+		return []movie.GetLastestTrailerResponse{}, err
 	}
 
 	var movies []models.Movie
 	err = cursor.All(ctx, &movies)
 	if err != nil {
-		return []models.Trailer{}, err
+		return []movie.GetLastestTrailerResponse{}, err
 	}
 
-	trailers := make([]models.Trailer, 0, len(movies))
-	for _, movie := range movies {
-		trailers = append(trailers, movie.Trailers[0])
+	trailers := make([]movie.GetLastestTrailerResponse, 0, len(movies))
+	for _, m := range movies {
+		trailers = append(trailers, movie.GetLastestTrailerResponse{
+			Trailer:      m.Trailers[0],
+			ID:           m.ID,
+			PosterPath:   m.PosterPath,
+			BackdropPath: m.BackdropPath,
+			Title:        m.Title,
+		})
 	}
 
 	return trailers, nil

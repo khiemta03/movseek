@@ -87,6 +87,3 @@ type GetLastestTrailerInput struct {
 	PerPage int `json:"per_page"`
 }
 
-type GetLastestTrailerOutput struct {
-	Trailers []models.Trailer `json:"trailers"`
-}
