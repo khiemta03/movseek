@@ -1,50 +1,44 @@
 'use client';
 
 import { useSearchParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import Loading from '@/components/search/search-loading';
-import PaginationCustom from '@/components/person/pagination';
+import PaginationCustom from '@/components/movie-list/pagination';
 import { FilterSortState } from '@/models/movie-list-types';
 import { Button } from '@/components/ui/button';
-import { deepEqual } from '@/utils/util-functions/movie-list-page';
+import { buildRoute, deepEqual } from '@/utils/util-functions/movie-list-page';
 import SortSection from '@/components/movie-list/sort-section';
 import FiltersSection from '@/components/movie-list/filters-section';
 import { GenresTVResults, TVListResults } from '@/models/tv-list-types';
 import TVSearchCard from '@/components/search/tv-search-card';
 import { fetchGenresTV, fetchTVOnTheAir } from '@/apis/tv-list';
+import useInitFilterSortState from '@/hooks/useInitFilterSortState';
+import { useRouter } from 'next/navigation';
 
 export default function TVOnTheAirPage() {
   const searchParams = useSearchParams();
   const page = searchParams.get('page');
+  const filteredParams = useMemo(() => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.delete('page');
+    return params;
+  }, [searchParams]);
+  const router = useRouter();
   const [tvResults, setTVResults] = useState<TVListResults | null>(null);
   const [genreListResults, setGenreListResults] = useState<GenresTVResults | null>(null);
   const [loading, setLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const [isOpenSort, setIsOpenSort] = useState(false);
   const [isOpenFilter, setIsOpenFilter] = useState(false);
-  const initFilterSortState = {
-    sort: 'popularity-desc',
-    genre: [],
-    releaseDate: {
-      from: null,
-      to: new Date(),
-    },
-    userScore: {
-      from: 0,
-      to: 100,
-    },
-    runTime: {
-      from: 0,
-      to: 360,
-    },
-  };
+  const initFilterSortState = useInitFilterSortState();
+
   const [filterSortState, setFilterSortState] = useState<FilterSortState>(initFilterSortState);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const tvResponse = await fetchTVOnTheAir(page != null ? parseInt(page) : 1);
+        const tvResponse = await fetchTVOnTheAir(page != null ? parseInt(page) : 1, filteredParams.toString());
         setTVResults(tvResponse.data.data);
         const genreResponse = await fetchGenresTV();
         setGenreListResults(genreResponse.data.data);
@@ -58,7 +52,7 @@ export default function TVOnTheAirPage() {
 
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [page]);
+  }, [page, filteredParams]);
 
   const updateFilterSort = (key: keyof FilterSortState, value: unknown) => {
     setFilterSortState((prev) => ({
@@ -104,11 +98,6 @@ export default function TVOnTheAirPage() {
     updateNestedFilterSort('userScore', 'to', newUserScore[1]);
   };
 
-  const handleRuntimeChange = (newRuntime: number[]) => {
-    updateNestedFilterSort('runTime', 'from', newRuntime[0]);
-    updateNestedFilterSort('runTime', 'to', newRuntime[1]);
-  };
-
   const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>, key: 'from' | 'to') => {
     const dateValue = new Date(e.target.value);
     if (!isNaN(dateValue.getTime())) {
@@ -124,6 +113,11 @@ export default function TVOnTheAirPage() {
     } else {
       updateNestedFilterSort('releaseDate', key, null);
     }
+  };
+
+  const handleFilterSort = () => {
+    console.log(initFilterSortState, filterSortState);
+    router.push(buildRoute('/tv/on-the-air', filterSortState));
   };
 
   if (isError)
@@ -151,11 +145,15 @@ export default function TVOnTheAirPage() {
                 handleDateChange={handleDateChange}
                 handleGenreClick={handleGenreClick}
                 handleUserScoreChange={handleUserScoreChange}
-                handleRuntimeChange={handleRuntimeChange}
                 genreListResults={genreListResults}
                 loading={loading}
               />
-              <Button disabled={deepEqual(initFilterSortState, filterSortState)}>Search</Button>
+              <Button
+                disabled={deepEqual(initFilterSortState, filterSortState)}
+                onClick={handleFilterSort}
+              >
+                Search
+              </Button>
             </div>
           </div>
           {tvResults != null && !loading ? (
@@ -175,6 +173,7 @@ export default function TVOnTheAirPage() {
                       currentPage={page != null ? parseInt(page) : 1}
                       totalPage={tvResults.total_pages}
                       endpoint={'/tv/on-the-air'}
+                      params={filteredParams.toString()}
                     />
                   )}
                 </div>

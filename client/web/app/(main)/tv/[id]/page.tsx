@@ -56,10 +56,6 @@ export default function TVDetail() {
 
         const videoResponse = await fetchTVVideos(idTV);
         setVideos(videoResponse.data.results);
-        console.log(data);
-        // console.log(creditsResponse.data.data);
-        console.log(keywordsResponde.data);
-        console.log(videoResponse.data);
       } catch (err) {
         setError('Failed to fetch movie detail');
         console.log(err);

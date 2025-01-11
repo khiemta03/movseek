@@ -66,18 +66,18 @@ export const TMDB_API = {
   PEOPLE_TV_CREDITS: (id: number) => `/person/${id}/credits/tv`,
 
   GENRES_MOVIE: () => `/movie/genres`,
-  MOVIE_POPULAR: (page: number) => `/movie/popular?page=${page}&per_page=18`,
-  MOVIE_TOP_RATED: (page: number) => `/movie/top-rated?page=${page}&per_page=18`,
-  MOVIE_NOW_PLAYING: (page: number) => `/movie/now-playing?page=${page}&per_page=18`,
-  MOVIE_UPCOMING: (page: number) => `/movie/upcoming?page=${page}&per_page=18`,
+  MOVIE_POPULAR: (page: number, params: string) => `/movie/popular?page=${page}&per_page=18&${params}`,
+  MOVIE_TOP_RATED: (page: number, params: string) => `/movie/top-rated?page=${page}&per_page=18&${params}`,
+  MOVIE_NOW_PLAYING: (page: number, params: string) => `/movie/now-playing?page=${page}&per_page=18&${params}`,
+  MOVIE_UPCOMING: (page: number, params: string) => `/movie/upcoming?page=${page}&per_page=18&${params}`,
 
   MOVIE_LATEST_TRAILERS: () => `/movie/trailer/latest?page=2&per_page=15`,
 
   GENRES_TV: () => `/tvshow/genres`,
-  TV_POPULAR: (page: number) => `/tvshow/popular?page=${page}&per_page=18`,
-  TV_TOP_RATED: (page: number) => `/tvshow/top-rated?page=${page}&per_page=18`,
-  TV_ON_THE_AIR: (page: number) => `/tvshow/on-the-air?page=${page}&per_page=18`,
-  TV_AIRING_TODAY: (page: number) => `/tvshow/airing-today?page=${page}&per_page=18`,
+  TV_POPULAR: (page: number, params: string) => `/tvshow/popular?page=${page}&per_page=18&${params}`,
+  TV_TOP_RATED: (page: number, params: string) => `/tvshow/top-rated?page=${page}&per_page=18&${params}`,
+  TV_ON_THE_AIR: (page: number, params: string) => `/tvshow/on-the-air?page=${page}&per_page=18&${params}`,
+  TV_AIRING_TODAY: (page: number, params: string) => `/tvshow/airing-today?page=${page}&per_page=18&${params}`,
 
   ADD_SAVED_ITEM: () => `/saved-item/add`,
   REMOVE_SAVED_ITEM: () => `/saved-item/remove`,

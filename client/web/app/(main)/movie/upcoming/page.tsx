@@ -1,49 +1,43 @@
 'use client';
 
 import { useSearchParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import MovieSearchCard from '@/components/search/movie-search-card';
 import Loading from '@/components/search/search-loading';
 import { fetchGenresMovie, fetchMovieUpcoming } from '@/apis/movie-list';
-import PaginationCustom from '@/components/person/pagination';
+import PaginationCustom from '@/components/movie-list/pagination';
 import { FilterSortState, GenresMovieResults, MovieListResults } from '@/models/movie-list-types';
 import { Button } from '@/components/ui/button';
-import { deepEqual } from '@/utils/util-functions/movie-list-page';
+import { buildRoute, deepEqual } from '@/utils/util-functions/movie-list-page';
 import SortSection from '@/components/movie-list/sort-section';
 import FiltersSection from '@/components/movie-list/filters-section';
+import useInitFilterSortState from '@/hooks/useInitFilterSortState';
+import { useRouter } from 'next/navigation';
 
 export default function MovieUpcomingPage() {
   const searchParams = useSearchParams();
   const page = searchParams.get('page');
+  const filteredParams = useMemo(() => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.delete('page');
+    return params;
+  }, [searchParams]);
+  const router = useRouter();
   const [movieResults, setMovieResults] = useState<MovieListResults | null>(null);
   const [genreListResults, setGenreListResults] = useState<GenresMovieResults | null>(null);
   const [loading, setLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const [isOpenSort, setIsOpenSort] = useState(false);
   const [isOpenFilter, setIsOpenFilter] = useState(false);
-  const initFilterSortState = {
-    sort: 'popularity-desc',
-    genre: [],
-    releaseDate: {
-      from: null,
-      to: new Date(),
-    },
-    userScore: {
-      from: 0,
-      to: 100,
-    },
-    runTime: {
-      from: 0,
-      to: 360,
-    },
-  };
+  const initFilterSortState = useInitFilterSortState();
+
   const [filterSortState, setFilterSortState] = useState<FilterSortState>(initFilterSortState);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const movieResponse = await fetchMovieUpcoming(page != null ? parseInt(page) : 1);
+        const movieResponse = await fetchMovieUpcoming(page != null ? parseInt(page) : 1, filteredParams.toString());
         setMovieResults(movieResponse.data.data);
         const genreResponse = await fetchGenresMovie();
         setGenreListResults(genreResponse.data.data);
@@ -57,7 +51,7 @@ export default function MovieUpcomingPage() {
 
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [page]);
+  }, [page, filteredParams]);
 
   const updateFilterSort = (key: keyof FilterSortState, value: unknown) => {
     setFilterSortState((prev) => ({
@@ -103,11 +97,6 @@ export default function MovieUpcomingPage() {
     updateNestedFilterSort('userScore', 'to', newUserScore[1]);
   };
 
-  const handleRuntimeChange = (newRuntime: number[]) => {
-    updateNestedFilterSort('runTime', 'from', newRuntime[0]);
-    updateNestedFilterSort('runTime', 'to', newRuntime[1]);
-  };
-
   const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>, key: 'from' | 'to') => {
     const dateValue = new Date(e.target.value);
     if (!isNaN(dateValue.getTime())) {
@@ -123,6 +112,11 @@ export default function MovieUpcomingPage() {
     } else {
       updateNestedFilterSort('releaseDate', key, null);
     }
+  };
+
+  const handleFilterSort = () => {
+    console.log(initFilterSortState, filterSortState);
+    router.push(buildRoute('/movie/upcoming', filterSortState));
   };
 
   if (isError)
@@ -150,11 +144,15 @@ export default function MovieUpcomingPage() {
                 handleDateChange={handleDateChange}
                 handleGenreClick={handleGenreClick}
                 handleUserScoreChange={handleUserScoreChange}
-                handleRuntimeChange={handleRuntimeChange}
                 genreListResults={genreListResults}
                 loading={loading}
               />
-              <Button disabled={deepEqual(initFilterSortState, filterSortState)}>Search</Button>
+              <Button
+                disabled={deepEqual(initFilterSortState, filterSortState)}
+                onClick={handleFilterSort}
+              >
+                Search
+              </Button>
             </div>
           </div>
           {movieResults != null && !loading ? (
@@ -174,6 +172,7 @@ export default function MovieUpcomingPage() {
                       currentPage={page != null ? parseInt(page) : 1}
                       totalPage={movieResults.total_pages}
                       endpoint={'/movie/upcoming'}
+                      params={filteredParams.toString()}
                     />
                   )}
                 </div>

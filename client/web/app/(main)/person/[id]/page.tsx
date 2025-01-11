@@ -33,7 +33,6 @@ const MovieDetail = () => {
       try {
         setLoading(true);
         const personResponse = await fetchPeopleDetail(idPerson);
-        console.log(personResponse.data);
         const data: PeopleDetail = personResponse.data.data;
         setImageSrc(TMDB_API.POSTER(data.profile_path));
         setPerson(data);

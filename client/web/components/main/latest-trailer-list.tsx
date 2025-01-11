@@ -37,7 +37,6 @@ const LatestTrailerList: React.FC<LatestTrailerListProps> = ({ changeThumbnail, 
               id: element.id,
             };
           });
-        console.log(data);
         setTrailers(data);
       } catch (err) {
         console.log(err);

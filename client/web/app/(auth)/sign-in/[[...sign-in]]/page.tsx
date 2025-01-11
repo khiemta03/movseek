@@ -7,7 +7,6 @@ import { useSearchParams } from 'next/navigation';
 const Page = () => {
   const searchParams = useSearchParams();
   const redirect = searchParams.get('redirect') || '/';
-  console.log(redirect);
 
   return <SignIn fallbackRedirectUrl={redirect || '/'} />;
 };

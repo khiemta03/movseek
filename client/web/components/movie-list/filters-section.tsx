@@ -13,7 +13,6 @@ interface FiltersSectionProps {
   handleDateChange: (e: React.ChangeEvent<HTMLInputElement>, key: 'from' | 'to') => void;
   handleGenreClick: (genreId: number) => void;
   handleUserScoreChange: (newUserScore: number[]) => void;
-  handleRuntimeChange: (newRuntime: number[]) => void;
   genreListResults: GenresMovieResults | null;
   loading: boolean;
 }
@@ -25,14 +24,17 @@ const FiltersSection: React.FC<FiltersSectionProps> = ({
   handleDateChange,
   handleGenreClick,
   handleUserScoreChange,
-  handleRuntimeChange,
   genreListResults,
   loading,
 }) => {
   return (
     <div className="flex flex-col">
       <div className={`p-4 bg-gray-100 rounded-lg shadow hover:shadow-lg transition`}>
-        <Collapsible open={isOpenFilter} onOpenChange={setIsOpenFilter} className="space-y-2">
+        <Collapsible
+          open={isOpenFilter}
+          onOpenChange={setIsOpenFilter}
+          className="space-y-2"
+        >
           <CollapsibleTrigger asChild>
             <div className="flex justify-between hover:cursor-pointer">
               <div className="text-lg font-bold">Filters</div>
@@ -101,17 +103,6 @@ const FiltersSection: React.FC<FiltersSectionProps> = ({
                 min={0}
                 max={100}
                 onChange={handleUserScoreChange}
-              />
-            </div>
-            <div>
-              <hr className="my-2 border-t border-gray-300" />
-              <div className="text-base mb-3">Runtime (minutes)</div>
-              <DoubleSlider
-                values={[filterSortState.runTime.from, filterSortState.runTime.to]}
-                step={1}
-                min={0}
-                max={360}
-                onChange={handleRuntimeChange}
               />
             </div>
           </CollapsibleContent>

@@ -1,20 +1,20 @@
 import axiosInstance from '@/lib/axios.config';
 import { TMDB_API } from '@/utils/constants';
 
-export const fetchMoviePopular = (page: number) => {
-  return axiosInstance.get(TMDB_API.MOVIE_POPULAR(page));
+export const fetchMoviePopular = (page: number, params: string) => {
+  return axiosInstance.get(TMDB_API.MOVIE_POPULAR(page, params));
 };
 
-export const fetchMovieTopRated = (page: number) => {
-  return axiosInstance.get(TMDB_API.MOVIE_TOP_RATED(page));
+export const fetchMovieTopRated = (page: number, params: string) => {
+  return axiosInstance.get(TMDB_API.MOVIE_TOP_RATED(page, params));
 };
 
-export const fetchMovieNowPlaying = (page: number) => {
-  return axiosInstance.get(TMDB_API.MOVIE_NOW_PLAYING(page));
+export const fetchMovieNowPlaying = (page: number, params: string) => {
+  return axiosInstance.get(TMDB_API.MOVIE_NOW_PLAYING(page, params));
 };
 
-export const fetchMovieUpcoming = (page: number) => {
-  return axiosInstance.get(TMDB_API.MOVIE_UPCOMING(page));
+export const fetchMovieUpcoming = (page: number, params: string) => {
+  return axiosInstance.get(TMDB_API.MOVIE_UPCOMING(page, params));
 };
 
 export const fetchGenresMovie = () => {

@@ -164,7 +164,7 @@ const MainMovieInformation: React.FC<MainMovieInformationProps> = ({
 
           <div className="flex flex-col justify-around items-start ml-10">
             <div>
-              <h1 className="text-3xl font-bold">{movie.original_title}</h1>
+              <h1 className="text-3xl font-bold">{movie.title}</h1>
               <div className="flex flex-row gap-6 text-sm">
                 {movie.release_date && <div>{formatDate(movie.release_date)}</div>}
                 {movie.genres.length > 0 && (

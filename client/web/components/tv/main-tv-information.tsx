@@ -45,7 +45,7 @@ const MainTVInformation: React.FC<MainTVInformationProps> = ({ tv, creadits, tog
 
           <div className="flex flex-col justify-around items-start ml-10">
             <div>
-              <h1 className="text-3xl font-bold">{tv.original_name}</h1>
+              <h1 className="text-3xl font-bold">{tv.name}</h1>
               <div className="flex flex-row gap-6 text-sm">
                 {tv.first_air_date && <div>{formatDate(tv.first_air_date)}</div>}
                 {tv.genres.length > 0 && (
