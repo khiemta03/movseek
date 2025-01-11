@@ -31,6 +31,18 @@ func (repo implRepository) buildListMoviesQuery(input movie.ListMoviesOptions) (
 					"$options": "i",
 				},
 			},
+			{
+				"overview": bson.M{
+					"$regex":   input.Query,
+					"$options": "i",
+				},
+			},
+			{
+				"belongs_to_collection.name": bson.M{
+					"$regex":   input.Query,
+					"$options": "i",
+				},
+			},
 		}
 	}
 

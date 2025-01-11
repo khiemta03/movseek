@@ -17,9 +17,31 @@ func (repo implRepository) buildTVShowQuery(tvID int64) (bson.M, error) {
 func (repo implRepository) buildListTVShowsQuery(input tvshow.ListTVsOptions) bson.M {
 	queryFilter := bson.M{}
 	if input.Query != "" {
-		queryFilter["title"] = bson.M{
-			"$regex":   input.Query,
-			"$options": "i",
+		queryFilter["$or"] = []bson.M{
+			{
+				"name": bson.M{
+					"$regex":   input.Query,
+					"$options": "i",
+				},
+			},
+			{
+				"belongs_to_collection.name": bson.M{
+					"$regex":   input.Query,
+					"$options": "i",
+				},
+			},
+			{
+				"overview": bson.M{
+					"$regex":   input.Query,
+					"$options": "i",
+				},
+			},
+			{
+				"original_name": bson.M{
+					"$regex":   input.Query,
+					"$options": "i",
+				},
+			},
 		}
 	}
 

@@ -17,9 +17,19 @@ func (repo implRepository) buildPersonQuery(personID int64) bson.M {
 func (repo implRepository) buildListPeopleQuery(input person.ListPeopleOptions) bson.M {
 	queryFilter := bson.M{}
 	if input.Query != "" {
-		queryFilter["name"] = bson.M{
-			"$regex":   input.Query,
-			"$options": "i",
+		queryFilter["$or"] = []bson.M{
+			{
+				"name": bson.M{
+					"$regex":   input.Query,
+					"$options": "i",
+				},
+			},
+			{
+				"also_known_as": bson.M{
+					"$regex":   input.Query,
+					"$options": "i",
+				},
+			},
 		}
 	}
 
