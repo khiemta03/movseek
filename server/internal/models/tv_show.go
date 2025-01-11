@@ -10,7 +10,8 @@ type TVShow struct {
 	CreatedBy           []CreatedBy           `json:"created_by" bson:"created_by"`
 	EpisodeRunTime      []int64               `json:"episode_run_time" bson:"episode_run_time"`
 	FirstAirDate        string                `json:"first_air_date" bson:"first_air_date"`
-	Genres              []TVShowGenres        `json:"genres" bson:"genres"`
+	Genres              []TVShowGenres        `json:"genres" bson:"genres"` //diff
+	MovieID             int64                 `json:"id" bson:"id"`
 	Homepage            string                `json:"homepage" bson:"homepage"`
 	BelongsTo           BelongsTo             `json:"belongs_to_collection" bson:"belongs_to_collection"`
 	InProduction        bool                  `json:"in_production" bson:"in_production"`
@@ -78,17 +79,18 @@ type Networks struct {
 type TVSummary struct {
 	MovieID          primitive.ObjectID `json:"_id" bson:"_id"`
 	TMDBID           int64              `json:"tmdb_id" bson:"tmdb_id"`
+	ID               int64              `json:"id" bson:"id"`
 	Adult            bool               `json:"adult" bson:"adult"`
 	BackdropPath     string             `json:"backdrop_path" bson:"backdrop_path"`
+	FirstAirDate     string             `json:"first_air_date" bson:"first_air_date"`
 	GenreIDs         []int64            `json:"genre_ids" bson:"genre_ids"`
+	OriginalCountry  []string           `json:"original_country" bson:"original_country"`
 	OriginalLanguage string             `json:"original_language" bson:"original_language"`
-	OriginalTitle    string             `json:"original_title" bson:"original_title"`
+	OriginalName     string             `json:"original_name" bson:"original_name"`
+	Name             string             `json:"name" bson:"name"`
 	Overview         string             `json:"overview" bson:"overview"`
 	Popularity       float64            `json:"popularity" bson:"popularity"`
 	PosterPath       string             `json:"poster_path" bson:"poster_path"`
-	ReleaseDate      string             `json:"release_date" bson:"release_date"`
-	Title            string             `json:"title" bson:"title"`
-	Video            bool               `json:"video" bson:"video"`
 	VoteAverage      float64            `json:"vote_average" bson:"vote_average"`
 	VoteCount        int64              `json:"vote_count" bson:"vote_count"`
 }

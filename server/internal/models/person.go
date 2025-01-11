@@ -45,6 +45,7 @@ type KnownFor struct {
 type PersonSummary struct {
 	ID                primitive.ObjectID `json:"_id" bson:"_id"`
 	TMDBID            int                `json:"tmdb_id" bson:"tmdb_id"`
+	PersonID          int                `json:"id" bson:"id"`
 	Adult             bool               `json:"adult" bson:"adult"`
 	Gender            int                `json:"gender" bson:"gender"`
 	KnownFor          []KnownFor         `json:"known_for" bson:"known_for"`
