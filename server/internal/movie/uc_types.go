@@ -5,8 +5,19 @@ import (
 )
 
 type GetMovieFilter struct {
-	Page      int      `json:"page"`
-	PerPage   int      `json:"per_page"`
+	Page             int     `json:"page"`
+	PerPage          int     `json:"per_page"`
+	StartDate        string  `json:"start_date"`
+	EndDate          string  `json:"end_date"`
+	GenreIDs         []int64 `json:"genre_ids"`
+	StartAverageVote float64 `json:"start_average_vote"`
+	EndAverageVote   float64 `json:"end_average_vote"`
+	// sort order
+	TimeOrder       int `json:"time_order"`
+	PopularityOrder int `json:"popularity"`
+	VoteOrder       int `json:"vote_average"`
+	TitleOrder      int `json:"title"`
+
 	IDs       []int64  `json:"ids"`
 	ObjectIDs []string `json:"object_ids"`
 }
@@ -86,4 +97,3 @@ type GetLastestTrailerInput struct {
 	Page    int `json:"page"`
 	PerPage int `json:"per_page"`
 }
-

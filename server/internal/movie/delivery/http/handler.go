@@ -1,8 +1,6 @@
 package http
 
 import (
-	"fmt"
-
 	"github.com/gin-gonic/gin"
 	"github.com/tmplam/movseek/pkg/response"
 )
@@ -111,19 +109,26 @@ func (h handlerImpl) getMovieKeywords(c *gin.Context) {
 // @Param query query string false "Query"
 // @Param page query int true "Page"
 // @Param per_page query int true "Per page"
+// @Param time_order query int false "Time order"
+// @Param popularity_order query int false "Popularity order"
+// @Param vote_order query int false "Vote order"
+// @Param title_order query int false "Title order"
+// @Param start_date query string false "Start date"
+// @Param end_date query string false "End date"
+// @Param genre_ids query []int64 false "Genre IDs"
+// @Param start_average_vote query float64 false "Start average vote"
+// @Param end_average_vote query float64 false "End average vote"
 // @Success 200 {object} searchMoviesResponse
 // @Router /search/movie [get]
 func (h handlerImpl) searchMovies(c *gin.Context) {
 	req, err := h.processSearchMoviesRequest(c)
 	if err != nil {
-		fmt.Println(err)
 		response.BadRequest(c)
 		return
 	}
 
 	movies, err := h.uc.ListMovies(c.Request.Context(), req.toInput())
 	if err != nil {
-		fmt.Println(err)
 		response.BadRequest(c)
 		return
 	}
@@ -138,6 +143,15 @@ func (h handlerImpl) searchMovies(c *gin.Context) {
 // @Produce json
 // @Param page query int true "Page"
 // @Param per_page query int true "Per page"
+// @Param time_order query int false "Time order"
+// @Param popularity_order query int false "Popularity order"
+// @Param vote_order query int false "Vote order"
+// @Param title_order query int false "Title order"
+// @Param start_date query string false "Start date"
+// @Param end_date query string false "End date"
+// @Param genre_ids query []int64 false "Genre IDs"
+// @Param start_average_vote query float64 false "Start average vote"
+// @Param end_average_vote query float64 false "End average vote"
 // @Success 200 {object} getSummaryMoviesResponse
 // @Router /movie/upcoming [get]
 func (h handlerImpl) getUpcomingMovies(c *gin.Context) {
@@ -164,6 +178,15 @@ func (h handlerImpl) getUpcomingMovies(c *gin.Context) {
 // @Param type path string true "Type"
 // @Param page query int true "Page"
 // @Param per_page query int true "Per page"
+// @Param time_order query int false "Time order"
+// @Param popularity_order query int false "Popularity order"
+// @Param vote_order query int false "Vote order"
+// @Param title_order query int false "Title order"
+// @Param start_date query string false "Start date"
+// @Param end_date query string false "End date"
+// @Param genre_ids query []int64 false "Genre IDs"
+// @Param start_average_vote query float64 false "Start average vote"
+// @Param end_average_vote query float64 false "End average vote"
 // @Success 200 {object} getSummaryMoviesResponse
 // @Router /movie/trending/{type} [get]
 func (h handlerImpl) getTrendingMovies(c *gin.Context) {
@@ -189,6 +212,15 @@ func (h handlerImpl) getTrendingMovies(c *gin.Context) {
 // @Produce json
 // @Param page query int true "Page"
 // @Param per_page query int true "Per page"
+// @Param time_order query int false "Time order"
+// @Param popularity_order query int false "Popularity order"
+// @Param vote_order query int false "Vote order"
+// @Param title_order query int false "Title order"
+// @Param start_date query string false "Start date"
+// @Param end_date query string false "End date"
+// @Param genre_ids query []int64 false "Genre IDs"
+// @Param start_average_vote query float64 false "Start average vote"
+// @Param end_average_vote query float64 false "End average vote"
 // @Success 200 {object} getSummaryMoviesResponse
 // @Router /movie/top-rated [get]
 func (h handlerImpl) getTopRatedMovies(c *gin.Context) {
@@ -214,6 +246,15 @@ func (h handlerImpl) getTopRatedMovies(c *gin.Context) {
 // @Produce json
 // @Param page query int true "Page"
 // @Param per_page query int true "Per page"
+// @Param time_order query int false "Time order"
+// @Param popularity_order query int false "Popularity order"
+// @Param vote_order query int false "Vote order"
+// @Param title_order query int false "Title order"
+// @Param start_date query string false "Start date"
+// @Param end_date query string false "End date"
+// @Param genre_ids query []int64 false "Genre IDs"
+// @Param start_average_vote query float64 false "Start average vote"
+// @Param end_average_vote query float64 false "End average vote"
 // @Success 200 {object} getSummaryMoviesResponse
 // @Router /movie/popular [get]
 func (h handlerImpl) getPopularMovies(c *gin.Context) {
@@ -239,6 +280,15 @@ func (h handlerImpl) getPopularMovies(c *gin.Context) {
 // @Produce json
 // @Param page query int true "Page"
 // @Param per_page query int true "Per page"
+// @Param time_order query int false "Time order"
+// @Param popularity_order query int false "Popularity order"
+// @Param vote_order query int false "Vote order"
+// @Param title_order query int false "Title order"
+// @Param start_date query string false "Start date"
+// @Param end_date query string false "End date"
+// @Param genre_ids query []int64 false "Genre IDs"
+// @Param start_average_vote query float64 false "Start average vote"
+// @Param end_average_vote query float64 false "End average vote"
 // @Success 200 {object} getSummaryMoviesResponse
 // @Router /movie/now-playing [get]
 func (h handlerImpl) getNowPlayingMovies(c *gin.Context) {

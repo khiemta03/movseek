@@ -1,7 +1,6 @@
 package http
 
 import (
-	"fmt"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
@@ -22,8 +21,6 @@ func (h handlerImpl) processSearchPeopleRequest(c *gin.Context) (searchPeopleReq
 	if err := c.ShouldBindQuery(&req); err != nil {
 		return searchPeopleRequest{}, err
 	}
-
-	fmt.Println(req)
 
 	return req, nil
 }

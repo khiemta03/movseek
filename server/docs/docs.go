@@ -206,6 +206,64 @@ const docTemplate = `{
                         "name": "per_page",
                         "in": "query",
                         "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Time order",
+                        "name": "time_order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Popularity order",
+                        "name": "popularity_order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Vote order",
+                        "name": "vote_order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Title order",
+                        "name": "title_order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Start date",
+                        "name": "start_date",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "End date",
+                        "name": "end_date",
+                        "in": "query"
+                    },
+                    {
+                        "type": "array",
+                        "items": {
+                            "type": "integer"
+                        },
+                        "collectionFormat": "csv",
+                        "description": "Genre IDs",
+                        "name": "genre_ids",
+                        "in": "query"
+                    },
+                    {
+                        "type": "number",
+                        "description": "Start average vote",
+                        "name": "start_average_vote",
+                        "in": "query"
+                    },
+                    {
+                        "type": "number",
+                        "description": "End average vote",
+                        "name": "end_average_vote",
+                        "in": "query"
                     }
                 ],
                 "responses": {
@@ -245,6 +303,64 @@ const docTemplate = `{
                         "name": "per_page",
                         "in": "query",
                         "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Time order",
+                        "name": "time_order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Popularity order",
+                        "name": "popularity_order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Vote order",
+                        "name": "vote_order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Title order",
+                        "name": "title_order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Start date",
+                        "name": "start_date",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "End date",
+                        "name": "end_date",
+                        "in": "query"
+                    },
+                    {
+                        "type": "array",
+                        "items": {
+                            "type": "integer"
+                        },
+                        "collectionFormat": "csv",
+                        "description": "Genre IDs",
+                        "name": "genre_ids",
+                        "in": "query"
+                    },
+                    {
+                        "type": "number",
+                        "description": "Start average vote",
+                        "name": "start_average_vote",
+                        "in": "query"
+                    },
+                    {
+                        "type": "number",
+                        "description": "End average vote",
+                        "name": "end_average_vote",
+                        "in": "query"
                     }
                 ],
                 "responses": {
@@ -284,6 +400,64 @@ const docTemplate = `{
                         "name": "per_page",
                         "in": "query",
                         "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Time order",
+                        "name": "time_order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Popularity order",
+                        "name": "popularity_order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Vote order",
+                        "name": "vote_order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Title order",
+                        "name": "title_order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Start date",
+                        "name": "start_date",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "End date",
+                        "name": "end_date",
+                        "in": "query"
+                    },
+                    {
+                        "type": "array",
+                        "items": {
+                            "type": "integer"
+                        },
+                        "collectionFormat": "csv",
+                        "description": "Genre IDs",
+                        "name": "genre_ids",
+                        "in": "query"
+                    },
+                    {
+                        "type": "number",
+                        "description": "Start average vote",
+                        "name": "start_average_vote",
+                        "in": "query"
+                    },
+                    {
+                        "type": "number",
+                        "description": "End average vote",
+                        "name": "end_average_vote",
+                        "in": "query"
                     }
                 ],
                 "responses": {
@@ -372,6 +546,64 @@ const docTemplate = `{
                         "name": "per_page",
                         "in": "query",
                         "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Time order",
+                        "name": "time_order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Popularity order",
+                        "name": "popularity_order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Vote order",
+                        "name": "vote_order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Title order",
+                        "name": "title_order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Start date",
+                        "name": "start_date",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "End date",
+                        "name": "end_date",
+                        "in": "query"
+                    },
+                    {
+                        "type": "array",
+                        "items": {
+                            "type": "integer"
+                        },
+                        "collectionFormat": "csv",
+                        "description": "Genre IDs",
+                        "name": "genre_ids",
+                        "in": "query"
+                    },
+                    {
+                        "type": "number",
+                        "description": "Start average vote",
+                        "name": "start_average_vote",
+                        "in": "query"
+                    },
+                    {
+                        "type": "number",
+                        "description": "End average vote",
+                        "name": "end_average_vote",
+                        "in": "query"
                     }
                 ],
                 "responses": {
@@ -411,6 +643,64 @@ const docTemplate = `{
                         "name": "per_page",
                         "in": "query",
                         "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Time order",
+                        "name": "time_order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Popularity order",
+                        "name": "popularity_order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Vote order",
+                        "name": "vote_order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Title order",
+                        "name": "title_order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Start date",
+                        "name": "start_date",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "End date",
+                        "name": "end_date",
+                        "in": "query"
+                    },
+                    {
+                        "type": "array",
+                        "items": {
+                            "type": "integer"
+                        },
+                        "collectionFormat": "csv",
+                        "description": "Genre IDs",
+                        "name": "genre_ids",
+                        "in": "query"
+                    },
+                    {
+                        "type": "number",
+                        "description": "Start average vote",
+                        "name": "start_average_vote",
+                        "in": "query"
+                    },
+                    {
+                        "type": "number",
+                        "description": "End average vote",
+                        "name": "end_average_vote",
+                        "in": "query"
                     }
                 ],
                 "responses": {
@@ -987,6 +1277,64 @@ const docTemplate = `{
                         "name": "per_page",
                         "in": "query",
                         "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Time order",
+                        "name": "time_order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Popularity order",
+                        "name": "popularity_order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Vote order",
+                        "name": "vote_order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Title order",
+                        "name": "title_order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Start date",
+                        "name": "start_date",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "End date",
+                        "name": "end_date",
+                        "in": "query"
+                    },
+                    {
+                        "type": "array",
+                        "items": {
+                            "type": "integer"
+                        },
+                        "collectionFormat": "csv",
+                        "description": "Genre IDs",
+                        "name": "genre_ids",
+                        "in": "query"
+                    },
+                    {
+                        "type": "number",
+                        "description": "Start average vote",
+                        "name": "start_average_vote",
+                        "in": "query"
+                    },
+                    {
+                        "type": "number",
+                        "description": "End average vote",
+                        "name": "end_average_vote",
+                        "in": "query"
                     }
                 ],
                 "responses": {
@@ -1066,10 +1414,68 @@ const docTemplate = `{
                     },
                     {
                         "type": "integer",
-                        "description": "Page size",
-                        "name": "pageSize",
+                        "description": "Per page",
+                        "name": "per_page",
                         "in": "query",
                         "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Time order",
+                        "name": "time_order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Popularity order",
+                        "name": "popularity_order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Vote order",
+                        "name": "vote_order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Name order",
+                        "name": "name_order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Start date",
+                        "name": "start_date",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "End date",
+                        "name": "end_date",
+                        "in": "query"
+                    },
+                    {
+                        "type": "array",
+                        "items": {
+                            "type": "integer"
+                        },
+                        "collectionFormat": "csv",
+                        "description": "Genre IDs",
+                        "name": "genre_ids",
+                        "in": "query"
+                    },
+                    {
+                        "type": "number",
+                        "description": "Start average vote",
+                        "name": "start_average_vote",
+                        "in": "query"
+                    },
+                    {
+                        "type": "number",
+                        "description": "End average vote",
+                        "name": "end_average_vote",
+                        "in": "query"
                     }
                 ],
                 "responses": {
@@ -1131,10 +1537,68 @@ const docTemplate = `{
                     },
                     {
                         "type": "integer",
-                        "description": "Page size",
-                        "name": "pageSize",
+                        "description": "Per page",
+                        "name": "per_page",
                         "in": "query",
                         "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Time order",
+                        "name": "time_order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Popularity order",
+                        "name": "popularity_order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Vote order",
+                        "name": "vote_order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Name order",
+                        "name": "name_order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Start date",
+                        "name": "start_date",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "End date",
+                        "name": "end_date",
+                        "in": "query"
+                    },
+                    {
+                        "type": "array",
+                        "items": {
+                            "type": "integer"
+                        },
+                        "collectionFormat": "csv",
+                        "description": "Genre IDs",
+                        "name": "genre_ids",
+                        "in": "query"
+                    },
+                    {
+                        "type": "number",
+                        "description": "Start average vote",
+                        "name": "start_average_vote",
+                        "in": "query"
+                    },
+                    {
+                        "type": "number",
+                        "description": "End average vote",
+                        "name": "end_average_vote",
+                        "in": "query"
                     }
                 ],
                 "responses": {
@@ -1170,10 +1634,68 @@ const docTemplate = `{
                     },
                     {
                         "type": "integer",
-                        "description": "Page size",
-                        "name": "pageSize",
+                        "description": "Per page",
+                        "name": "per_page",
                         "in": "query",
                         "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Time order",
+                        "name": "time_order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Popularity order",
+                        "name": "popularity_order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Vote order",
+                        "name": "vote_order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Name order",
+                        "name": "name_order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Start date",
+                        "name": "start_date",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "End date",
+                        "name": "end_date",
+                        "in": "query"
+                    },
+                    {
+                        "type": "array",
+                        "items": {
+                            "type": "integer"
+                        },
+                        "collectionFormat": "csv",
+                        "description": "Genre IDs",
+                        "name": "genre_ids",
+                        "in": "query"
+                    },
+                    {
+                        "type": "number",
+                        "description": "Start average vote",
+                        "name": "start_average_vote",
+                        "in": "query"
+                    },
+                    {
+                        "type": "number",
+                        "description": "End average vote",
+                        "name": "end_average_vote",
+                        "in": "query"
                     }
                 ],
                 "responses": {
@@ -1215,10 +1737,68 @@ const docTemplate = `{
                     },
                     {
                         "type": "integer",
-                        "description": "Page size",
-                        "name": "pageSize",
+                        "description": "Per page",
+                        "name": "per_page",
                         "in": "query",
                         "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Time order",
+                        "name": "time_order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Popularity order",
+                        "name": "popularity_order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Vote order",
+                        "name": "vote_order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Name order",
+                        "name": "name_order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Start date",
+                        "name": "start_date",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "End date",
+                        "name": "end_date",
+                        "in": "query"
+                    },
+                    {
+                        "type": "array",
+                        "items": {
+                            "type": "integer"
+                        },
+                        "collectionFormat": "csv",
+                        "description": "Genre IDs",
+                        "name": "genre_ids",
+                        "in": "query"
+                    },
+                    {
+                        "type": "number",
+                        "description": "Start average vote",
+                        "name": "start_average_vote",
+                        "in": "query"
+                    },
+                    {
+                        "type": "number",
+                        "description": "End average vote",
+                        "name": "end_average_vote",
+                        "in": "query"
                     }
                 ],
                 "responses": {
@@ -1254,10 +1834,68 @@ const docTemplate = `{
                     },
                     {
                         "type": "integer",
-                        "description": "Page size",
-                        "name": "pageSize",
+                        "description": "Per page",
+                        "name": "per_page",
                         "in": "query",
                         "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Time order",
+                        "name": "time_order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Popularity order",
+                        "name": "popularity_order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Vote order",
+                        "name": "vote_order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Name order",
+                        "name": "name_order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Start date",
+                        "name": "start_date",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "End date",
+                        "name": "end_date",
+                        "in": "query"
+                    },
+                    {
+                        "type": "array",
+                        "items": {
+                            "type": "integer"
+                        },
+                        "collectionFormat": "csv",
+                        "description": "Genre IDs",
+                        "name": "genre_ids",
+                        "in": "query"
+                    },
+                    {
+                        "type": "number",
+                        "description": "Start average vote",
+                        "name": "start_average_vote",
+                        "in": "query"
+                    },
+                    {
+                        "type": "number",
+                        "description": "End average vote",
+                        "name": "end_average_vote",
+                        "in": "query"
                     }
                 ],
                 "responses": {
@@ -1293,10 +1931,68 @@ const docTemplate = `{
                     },
                     {
                         "type": "integer",
-                        "description": "Page size",
-                        "name": "pageSize",
+                        "description": "Per page",
+                        "name": "per_page",
                         "in": "query",
                         "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Time order",
+                        "name": "time_order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Popularity order",
+                        "name": "popularity_order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Vote order",
+                        "name": "vote_order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Name order",
+                        "name": "name_order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Start date",
+                        "name": "start_date",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "End date",
+                        "name": "end_date",
+                        "in": "query"
+                    },
+                    {
+                        "type": "array",
+                        "items": {
+                            "type": "integer"
+                        },
+                        "collectionFormat": "csv",
+                        "description": "Genre IDs",
+                        "name": "genre_ids",
+                        "in": "query"
+                    },
+                    {
+                        "type": "number",
+                        "description": "Start average vote",
+                        "name": "start_average_vote",
+                        "in": "query"
+                    },
+                    {
+                        "type": "number",
+                        "description": "End average vote",
+                        "name": "end_average_vote",
+                        "in": "query"
                     }
                 ],
                 "responses": {
@@ -1346,12 +2042,17 @@ const docTemplate = `{
         "http.addCommentRequest": {
             "type": "object",
             "required": [
+                "avatar",
                 "comment",
                 "media_id",
                 "type",
-                "user_id"
+                "user_id",
+                "username"
             ],
             "properties": {
+                "avatar": {
+                    "type": "string"
+                },
                 "comment": {
                     "type": "string"
                 },
@@ -1363,18 +2064,26 @@ const docTemplate = `{
                 },
                 "user_id": {
                     "type": "string"
+                },
+                "username": {
+                    "type": "string"
                 }
             }
         },
         "http.addRatingRequest": {
             "type": "object",
             "required": [
+                "avatar",
                 "media_id",
                 "rating",
                 "type",
-                "user_id"
+                "user_id",
+                "username"
             ],
             "properties": {
+                "avatar": {
+                    "type": "string"
+                },
                 "media_id": {
                     "type": "integer"
                 },
@@ -1385,6 +2094,9 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "user_id": {
+                    "type": "string"
+                },
+                "username": {
                     "type": "string"
                 }
             }
@@ -1579,6 +2291,9 @@ const docTemplate = `{
                 "userID"
             ],
             "properties": {
+                "avatar": {
+                    "type": "string"
+                },
                 "comment": {
                     "type": "string"
                 },
@@ -1590,6 +2305,9 @@ const docTemplate = `{
                 },
                 "userID": {
                     "type": "string"
+                },
+                "username": {
+                    "type": "string"
                 }
             }
         },
@@ -1599,6 +2317,9 @@ const docTemplate = `{
                 "userID"
             ],
             "properties": {
+                "avatar": {
+                    "type": "string"
+                },
                 "media_id": {
                     "type": "integer"
                 },
@@ -1609,6 +2330,9 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "userID": {
+                    "type": "string"
+                },
+                "username": {
                     "type": "string"
                 }
             }
@@ -1845,6 +2569,7 @@ const docTemplate = `{
                     "$ref": "#/definitions/models.MovieCredits"
                 },
                 "genres": {
+                    "description": "diff",
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/models.MovieGenres"
@@ -1917,6 +2642,7 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "title": {
+                    "description": "diff",
                     "type": "string"
                 },
                 "tmdb_id": {
@@ -2198,6 +2924,9 @@ const docTemplate = `{
                 "gender": {
                     "type": "integer"
                 },
+                "id": {
+                    "type": "integer"
+                },
                 "know_for_department": {
                     "type": "string"
                 },
@@ -2354,6 +3083,7 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "genres": {
+                    "description": "diff",
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/models.TVShowGenres"
@@ -2361,6 +3091,9 @@ const docTemplate = `{
                 },
                 "homepage": {
                     "type": "string"
+                },
+                "id": {
+                    "type": "integer"
                 },
                 "in_production": {
                     "type": "boolean"
@@ -2477,16 +3210,31 @@ const docTemplate = `{
                 "backdrop_path": {
                     "type": "string"
                 },
+                "first_air_date": {
+                    "type": "string"
+                },
                 "genre_ids": {
                     "type": "array",
                     "items": {
                         "type": "integer"
                     }
                 },
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "original_country": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
                 "original_language": {
                     "type": "string"
                 },
-                "original_title": {
+                "original_name": {
                     "type": "string"
                 },
                 "overview": {
@@ -2498,17 +3246,8 @@ const docTemplate = `{
                 "poster_path": {
                     "type": "string"
                 },
-                "release_date": {
-                    "type": "string"
-                },
-                "title": {
-                    "type": "string"
-                },
                 "tmdb_id": {
                     "type": "integer"
-                },
-                "video": {
-                    "type": "boolean"
                 },
                 "vote_average": {
                     "type": "number"

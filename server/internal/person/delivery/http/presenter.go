@@ -2,7 +2,6 @@ package http
 
 import (
 	"errors"
-	"fmt"
 
 	"github.com/tmplam/movseek/internal/models"
 	"github.com/tmplam/movseek/internal/person"
@@ -19,7 +18,6 @@ type searchPeopleRequest struct {
 }
 
 func (req searchPeopleRequest) toInput() person.ListPeopleInput {
-	fmt.Println("query", req.Query)
 	return person.ListPeopleInput{
 		Query: req.Query,
 		Filter: person.GetPersonFilter{

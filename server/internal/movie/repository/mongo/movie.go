@@ -71,7 +71,7 @@ func (repo implRepository) GetOneMovie(ctx context.Context, movieID int64) (mode
 func (repo implRepository) ListMovies(ctx context.Context, input movie.ListMoviesOptions) ([]models.Movie, error) {
 	col := repo.getMovieCollection()
 
-	queryFilter, err := repo.buildListMoviesQuery(input)
+	queryFilter, err := repo.buildListMoviesQuery(input.Filter, input.Query)
 	if err != nil {
 		return []models.Movie{}, err
 	}
@@ -95,7 +95,7 @@ func (repo implRepository) ListMovies(ctx context.Context, input movie.ListMovie
 func (repo implRepository) CountMovies(ctx context.Context, input movie.ListMoviesOptions) (int, error) {
 	col := repo.getMovieCollection()
 
-	queryFilter, err := repo.buildListMoviesQuery(input)
+	queryFilter, err := repo.buildListMoviesQuery(input.Filter, input.Query)
 	if err != nil {
 		return 0, err
 	}
@@ -111,9 +111,14 @@ func (repo implRepository) CountMovies(ctx context.Context, input movie.ListMovi
 func (repo implRepository) GetUpcomingMovies(ctx context.Context, input movie.GetUpcomingMoviesOptions) ([]models.MovieSummary, error) {
 	col := repo.getUpcomingCollection()
 
+	queryFilter, err := repo.buildListMoviesQuery(input.Filter, "")
+	if err != nil {
+		return []models.MovieSummary{}, err
+	}
+
 	findOptions := repo.buildGetMovieFindOptions(input.Filter)
 
-	cursor, err := col.Find(ctx, bson.M{}, findOptions)
+	cursor, err := col.Find(ctx, queryFilter, findOptions)
 	if err != nil {
 		return []models.MovieSummary{}, err
 	}
@@ -130,7 +135,12 @@ func (repo implRepository) GetUpcomingMovies(ctx context.Context, input movie.Ge
 func (repo implRepository) CountUpcomingMovies(ctx context.Context, input movie.GetUpcomingMoviesOptions) (int, error) {
 	col := repo.getUpcomingCollection()
 
-	count, err := col.CountDocuments(ctx, bson.M{})
+	queryFilter, err := repo.buildListMoviesQuery(input.Filter, "")
+	if err != nil {
+		return 0, err
+	}
+
+	count, err := col.CountDocuments(ctx, queryFilter)
 	if err != nil {
 		return 0, err
 	}
@@ -141,9 +151,14 @@ func (repo implRepository) CountUpcomingMovies(ctx context.Context, input movie.
 func (repo implRepository) GetTrendingMovies(ctx context.Context, input movie.GetTrendingMoviesOptions) ([]models.MovieSummary, error) {
 	col := repo.getTrendingCollection(input.Type)
 
+	queryFilter, err := repo.buildListMoviesQuery(input.Filter, "")
+	if err != nil {
+		return []models.MovieSummary{}, err
+	}
+
 	findOptions := repo.buildGetMovieFindOptions(input.Filter)
 
-	cursor, err := col.Find(ctx, bson.M{}, findOptions)
+	cursor, err := col.Find(ctx, queryFilter, findOptions)
 	if err != nil {
 		return []models.MovieSummary{}, err
 	}
@@ -160,7 +175,12 @@ func (repo implRepository) GetTrendingMovies(ctx context.Context, input movie.Ge
 func (repo implRepository) CountTrendingMovies(ctx context.Context, input movie.GetTrendingMoviesOptions) (int, error) {
 	col := repo.getTrendingCollection(input.Type)
 
-	count, err := col.CountDocuments(ctx, bson.M{})
+	queryFilter, err := repo.buildListMoviesQuery(input.Filter, "")
+	if err != nil {
+		return 0, err
+	}
+
+	count, err := col.CountDocuments(ctx, queryFilter)
 	if err != nil {
 		return 0, err
 	}
@@ -171,9 +191,14 @@ func (repo implRepository) CountTrendingMovies(ctx context.Context, input movie.
 func (repo implRepository) GetTopRatedMovies(ctx context.Context, input movie.GetTopRatedMoviesOptions) ([]models.MovieSummary, error) {
 	col := repo.getTopRatedCollection()
 
+	queryFilter, err := repo.buildListMoviesQuery(input.Filter, "")
+	if err != nil {
+		return []models.MovieSummary{}, err
+	}
+
 	findOptions := repo.buildGetMovieFindOptions(input.Filter)
 
-	cursor, err := col.Find(ctx, bson.M{}, findOptions)
+	cursor, err := col.Find(ctx, queryFilter, findOptions)
 	if err != nil {
 		return []models.MovieSummary{}, err
 	}
@@ -190,7 +215,12 @@ func (repo implRepository) GetTopRatedMovies(ctx context.Context, input movie.Ge
 func (repo implRepository) CountTopRatedMovies(ctx context.Context, input movie.GetTopRatedMoviesOptions) (int, error) {
 	col := repo.getTopRatedCollection()
 
-	count, err := col.CountDocuments(ctx, bson.M{})
+	queryFilter, err := repo.buildListMoviesQuery(input.Filter, "")
+	if err != nil {
+		return 0, err
+	}
+
+	count, err := col.CountDocuments(ctx, queryFilter)
 	if err != nil {
 		return 0, err
 	}
@@ -201,9 +231,14 @@ func (repo implRepository) CountTopRatedMovies(ctx context.Context, input movie.
 func (repo implRepository) GetPopularMovies(ctx context.Context, input movie.GetPopularMoviesOptions) ([]models.MovieSummary, error) {
 	col := repo.getPopularCollection()
 
+	queryFilter, err := repo.buildListMoviesQuery(input.Filter, "")
+	if err != nil {
+		return []models.MovieSummary{}, err
+	}
+
 	findOptions := repo.buildGetMovieFindOptions(input.Filter)
 
-	cursor, err := col.Find(ctx, bson.M{}, findOptions)
+	cursor, err := col.Find(ctx, queryFilter, findOptions)
 	if err != nil {
 		return []models.MovieSummary{}, err
 	}
@@ -220,9 +255,14 @@ func (repo implRepository) GetPopularMovies(ctx context.Context, input movie.Get
 func (repo implRepository) GetNowPlayingMovies(ctx context.Context, input movie.GetNowPlayingMoviesOptions) ([]models.MovieSummary, error) {
 	col := repo.getNowPlayingCollection()
 
+	queryFilter, err := repo.buildListMoviesQuery(input.Filter, "")
+	if err != nil {
+		return []models.MovieSummary{}, err
+	}
+
 	findOptions := repo.buildGetMovieFindOptions(input.Filter)
 
-	cursor, err := col.Find(ctx, bson.M{}, findOptions)
+	cursor, err := col.Find(ctx, queryFilter, findOptions)
 	if err != nil {
 		return []models.MovieSummary{}, err
 	}
@@ -239,7 +279,12 @@ func (repo implRepository) GetNowPlayingMovies(ctx context.Context, input movie.
 func (repo implRepository) CountNowPlayingMovies(ctx context.Context, input movie.GetNowPlayingMoviesOptions) (int, error) {
 	col := repo.getNowPlayingCollection()
 
-	count, err := col.CountDocuments(ctx, bson.M{})
+	queryFilter, err := repo.buildListMoviesQuery(input.Filter, "")
+	if err != nil {
+		return 0, err
+	}
+
+	count, err := col.CountDocuments(ctx, queryFilter)
 	if err != nil {
 		return 0, err
 	}
@@ -250,7 +295,12 @@ func (repo implRepository) CountNowPlayingMovies(ctx context.Context, input movi
 func (repo implRepository) CountPopularMovies(ctx context.Context, input movie.GetPopularMoviesOptions) (int, error) {
 	col := repo.getPopularCollection()
 
-	count, err := col.CountDocuments(ctx, bson.M{})
+	queryFilter, err := repo.buildListMoviesQuery(input.Filter, "")
+	if err != nil {
+		return 0, err
+	}
+
+	count, err := col.CountDocuments(ctx, queryFilter)
 	if err != nil {
 		return 0, err
 	}

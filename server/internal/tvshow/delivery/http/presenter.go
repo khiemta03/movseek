@@ -8,6 +8,17 @@ import (
 type filter struct {
 	Page    int `form:"page" binding:"required"`
 	PerPage int `form:"per_page" binding:"required"`
+	// filter
+	StartDate        string  `form:"start_date"`
+	EndDate          string  `form:"end_date"`
+	GenreIDs         []int64 `form:"genre_ids"`
+	StartAverageVote float64 `form:"start_average_vote"`
+	EndAverageVote   float64 `form:"end_average_vote"`
+	// sort order
+	TimeOrder       int `form:"time_order"`
+	PopularityOrder int `form:"popularity"`
+	VoteOrder       int `form:"vote_average"`
+	NameOrder       int `form:"name"`
 }
 
 type searchTVShowsRequest struct {
@@ -16,12 +27,23 @@ type searchTVShowsRequest struct {
 }
 
 func (req searchTVShowsRequest) toInput() tvshow.ListTVsInput {
+	filter := tvshow.GetTVFilter{
+		Page:             req.Filter.Page,
+		PerPage:          req.Filter.PerPage,
+		StartDate:        req.Filter.StartDate,
+		EndDate:          req.Filter.EndDate,
+		GenreIDs:         req.Filter.GenreIDs,
+		StartAverageVote: req.Filter.StartAverageVote,
+		EndAverageVote:   req.Filter.EndAverageVote,
+		TimeOrder:        req.Filter.TimeOrder,
+		PopularityOrder:  req.Filter.PopularityOrder,
+		VoteOrder:        req.Filter.VoteOrder,
+		NameOrder:        req.Filter.NameOrder,
+	}
+
 	return tvshow.ListTVsInput{
-		Query: req.Query,
-		Filter: tvshow.GetTVFilter{
-			Page:    req.Filter.Page,
-			PerPage: req.Filter.PerPage,
-		},
+		Query:  req.Query,
+		Filter: filter,
 	}
 }
 
@@ -30,11 +52,22 @@ type getUpcomingTVShowsRequest struct {
 }
 
 func (req getUpcomingTVShowsRequest) toInput() tvshow.GetUpcomingTVsInput {
+	filter := tvshow.GetTVFilter{
+		Page:             req.Page,
+		PerPage:          req.PerPage,
+		StartDate:        req.StartDate,
+		EndDate:          req.EndDate,
+		GenreIDs:         req.GenreIDs,
+		StartAverageVote: req.StartAverageVote,
+		EndAverageVote:   req.EndAverageVote,
+		TimeOrder:        req.TimeOrder,
+		PopularityOrder:  req.PopularityOrder,
+		VoteOrder:        req.VoteOrder,
+		NameOrder:        req.NameOrder,
+	}
+
 	return tvshow.GetUpcomingTVsInput{
-		Filter: tvshow.GetTVFilter{
-			Page:    req.Page,
-			PerPage: req.PerPage,
-		},
+		Filter: filter,
 	}
 }
 
@@ -43,11 +76,22 @@ type getOnTheAirTVShowsRequest struct {
 }
 
 func (req getOnTheAirTVShowsRequest) toInput() tvshow.GetOnTheAirTVsInput {
+	filter := tvshow.GetTVFilter{
+		Page:             req.Page,
+		PerPage:          req.PerPage,
+		StartDate:        req.StartDate,
+		EndDate:          req.EndDate,
+		GenreIDs:         req.GenreIDs,
+		StartAverageVote: req.StartAverageVote,
+		EndAverageVote:   req.EndAverageVote,
+		TimeOrder:        req.TimeOrder,
+		PopularityOrder:  req.PopularityOrder,
+		VoteOrder:        req.VoteOrder,
+		NameOrder:        req.NameOrder,
+	}
+
 	return tvshow.GetOnTheAirTVsInput{
-		Filter: tvshow.GetTVFilter{
-			Page:    req.Page,
-			PerPage: req.PerPage,
-		},
+		Filter: filter,
 	}
 }
 
@@ -56,11 +100,22 @@ type getAiringTodayTVShowsRequest struct {
 }
 
 func (req getAiringTodayTVShowsRequest) toInput() tvshow.GetAiringTodayTVsInput {
+	filter := tvshow.GetTVFilter{
+		Page:             req.Page,
+		PerPage:          req.PerPage,
+		StartDate:        req.StartDate,
+		EndDate:          req.EndDate,
+		GenreIDs:         req.GenreIDs,
+		StartAverageVote: req.StartAverageVote,
+		EndAverageVote:   req.EndAverageVote,
+		TimeOrder:        req.TimeOrder,
+		PopularityOrder:  req.PopularityOrder,
+		VoteOrder:        req.VoteOrder,
+		NameOrder:        req.NameOrder,
+	}
+
 	return tvshow.GetAiringTodayTVsInput{
-		Filter: tvshow.GetTVFilter{
-			Page:    req.Page,
-			PerPage: req.PerPage,
-		},
+		Filter: filter,
 	}
 }
 
@@ -69,11 +124,22 @@ type getTopRatedTVShowsRequest struct {
 }
 
 func (req getTopRatedTVShowsRequest) toInput() tvshow.GetTopRatedTVsInput {
+	filter := tvshow.GetTVFilter{
+		Page:             req.Page,
+		PerPage:          req.PerPage,
+		StartDate:        req.StartDate,
+		EndDate:          req.EndDate,
+		GenreIDs:         req.GenreIDs,
+		StartAverageVote: req.StartAverageVote,
+		EndAverageVote:   req.EndAverageVote,
+		TimeOrder:        req.TimeOrder,
+		PopularityOrder:  req.PopularityOrder,
+		VoteOrder:        req.VoteOrder,
+		NameOrder:        req.NameOrder,
+	}
+
 	return tvshow.GetTopRatedTVsInput{
-		Filter: tvshow.GetTVFilter{
-			Page:    req.Page,
-			PerPage: req.PerPage,
-		},
+		Filter: filter,
 	}
 }
 
@@ -82,11 +148,22 @@ type getPopularTVShowsRequest struct {
 }
 
 func (req getPopularTVShowsRequest) toInput() tvshow.GetPopularTVsInput {
+	filter := tvshow.GetTVFilter{
+		Page:             req.Page,
+		PerPage:          req.PerPage,
+		StartDate:        req.StartDate,
+		EndDate:          req.EndDate,
+		GenreIDs:         req.GenreIDs,
+		StartAverageVote: req.StartAverageVote,
+		EndAverageVote:   req.EndAverageVote,
+		TimeOrder:        req.TimeOrder,
+		PopularityOrder:  req.PopularityOrder,
+		VoteOrder:        req.VoteOrder,
+		NameOrder:        req.NameOrder,
+	}
+
 	return tvshow.GetPopularTVsInput{
-		Filter: tvshow.GetTVFilter{
-			Page:    req.Page,
-			PerPage: req.PerPage,
-		},
+		Filter: filter,
 	}
 }
 
