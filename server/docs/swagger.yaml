@@ -2,6 +2,8 @@ basePath: /api/v1
 definitions:
   http.addCommentRequest:
     properties:
+      avatar:
+        type: string
       comment:
         type: string
       media_id:
@@ -10,14 +12,20 @@ definitions:
         type: string
       user_id:
         type: string
+      username:
+        type: string
     required:
+    - avatar
     - comment
     - media_id
     - type
     - user_id
+    - username
     type: object
   http.addRatingRequest:
     properties:
+      avatar:
+        type: string
       media_id:
         type: integer
       rating:
@@ -26,11 +34,15 @@ definitions:
         type: string
       user_id:
         type: string
+      username:
+        type: string
     required:
+    - avatar
     - media_id
     - rating
     - type
     - user_id
+    - username
     type: object
   http.addToSavedItemRequest:
     properties:
@@ -156,6 +168,8 @@ definitions:
     type: object
   http.updateCommentRequest:
     properties:
+      avatar:
+        type: string
       comment:
         type: string
       media_id:
@@ -164,11 +178,15 @@ definitions:
         type: string
       userID:
         type: string
+      username:
+        type: string
     required:
     - userID
     type: object
   http.updateRatingRequest:
     properties:
+      avatar:
+        type: string
       media_id:
         type: integer
       rating:
@@ -176,6 +194,8 @@ definitions:
       type:
         type: string
       userID:
+        type: string
+      username:
         type: string
     required:
     - userID
@@ -333,6 +353,7 @@ definitions:
       credits:
         $ref: '#/definitions/models.MovieCredits'
       genres:
+        description: diff
         items:
           $ref: '#/definitions/models.MovieGenres'
         type: array
@@ -381,6 +402,7 @@ definitions:
       tagline:
         type: string
       title:
+        description: diff
         type: string
       tmdb_id:
         type: integer
@@ -565,6 +587,8 @@ definitions:
         type: boolean
       gender:
         type: integer
+      id:
+        type: integer
       know_for_department:
         type: string
       known_for:
@@ -667,11 +691,14 @@ definitions:
       first_air_date:
         type: string
       genres:
+        description: diff
         items:
           $ref: '#/definitions/models.TVShowGenres'
         type: array
       homepage:
         type: string
+      id:
+        type: integer
       in_production:
         type: boolean
       languages:
@@ -748,13 +775,23 @@ definitions:
         type: boolean
       backdrop_path:
         type: string
+      first_air_date:
+        type: string
       genre_ids:
         items:
           type: integer
         type: array
+      id:
+        type: integer
+      name:
+        type: string
+      original_country:
+        items:
+          type: string
+        type: array
       original_language:
         type: string
-      original_title:
+      original_name:
         type: string
       overview:
         type: string
@@ -762,14 +799,8 @@ definitions:
         type: number
       poster_path:
         type: string
-      release_date:
-        type: string
-      title:
-        type: string
       tmdb_id:
         type: integer
-      video:
-        type: boolean
       vote_average:
         type: number
       vote_count:
@@ -1027,6 +1058,45 @@ paths:
         name: per_page
         required: true
         type: integer
+      - description: Time order
+        in: query
+        name: time_order
+        type: integer
+      - description: Popularity order
+        in: query
+        name: popularity_order
+        type: integer
+      - description: Vote order
+        in: query
+        name: vote_order
+        type: integer
+      - description: Title order
+        in: query
+        name: title_order
+        type: integer
+      - description: Start date
+        in: query
+        name: start_date
+        type: string
+      - description: End date
+        in: query
+        name: end_date
+        type: string
+      - collectionFormat: csv
+        description: Genre IDs
+        in: query
+        items:
+          type: integer
+        name: genre_ids
+        type: array
+      - description: Start average vote
+        in: query
+        name: start_average_vote
+        type: number
+      - description: End average vote
+        in: query
+        name: end_average_vote
+        type: number
       produces:
       - application/json
       responses:
@@ -1053,6 +1123,45 @@ paths:
         name: per_page
         required: true
         type: integer
+      - description: Time order
+        in: query
+        name: time_order
+        type: integer
+      - description: Popularity order
+        in: query
+        name: popularity_order
+        type: integer
+      - description: Vote order
+        in: query
+        name: vote_order
+        type: integer
+      - description: Title order
+        in: query
+        name: title_order
+        type: integer
+      - description: Start date
+        in: query
+        name: start_date
+        type: string
+      - description: End date
+        in: query
+        name: end_date
+        type: string
+      - collectionFormat: csv
+        description: Genre IDs
+        in: query
+        items:
+          type: integer
+        name: genre_ids
+        type: array
+      - description: Start average vote
+        in: query
+        name: start_average_vote
+        type: number
+      - description: End average vote
+        in: query
+        name: end_average_vote
+        type: number
       produces:
       - application/json
       responses:
@@ -1079,6 +1188,45 @@ paths:
         name: per_page
         required: true
         type: integer
+      - description: Time order
+        in: query
+        name: time_order
+        type: integer
+      - description: Popularity order
+        in: query
+        name: popularity_order
+        type: integer
+      - description: Vote order
+        in: query
+        name: vote_order
+        type: integer
+      - description: Title order
+        in: query
+        name: title_order
+        type: integer
+      - description: Start date
+        in: query
+        name: start_date
+        type: string
+      - description: End date
+        in: query
+        name: end_date
+        type: string
+      - collectionFormat: csv
+        description: Genre IDs
+        in: query
+        items:
+          type: integer
+        name: genre_ids
+        type: array
+      - description: Start average vote
+        in: query
+        name: start_average_vote
+        type: number
+      - description: End average vote
+        in: query
+        name: end_average_vote
+        type: number
       produces:
       - application/json
       responses:
@@ -1138,6 +1286,45 @@ paths:
         name: per_page
         required: true
         type: integer
+      - description: Time order
+        in: query
+        name: time_order
+        type: integer
+      - description: Popularity order
+        in: query
+        name: popularity_order
+        type: integer
+      - description: Vote order
+        in: query
+        name: vote_order
+        type: integer
+      - description: Title order
+        in: query
+        name: title_order
+        type: integer
+      - description: Start date
+        in: query
+        name: start_date
+        type: string
+      - description: End date
+        in: query
+        name: end_date
+        type: string
+      - collectionFormat: csv
+        description: Genre IDs
+        in: query
+        items:
+          type: integer
+        name: genre_ids
+        type: array
+      - description: Start average vote
+        in: query
+        name: start_average_vote
+        type: number
+      - description: End average vote
+        in: query
+        name: end_average_vote
+        type: number
       produces:
       - application/json
       responses:
@@ -1164,6 +1351,45 @@ paths:
         name: per_page
         required: true
         type: integer
+      - description: Time order
+        in: query
+        name: time_order
+        type: integer
+      - description: Popularity order
+        in: query
+        name: popularity_order
+        type: integer
+      - description: Vote order
+        in: query
+        name: vote_order
+        type: integer
+      - description: Title order
+        in: query
+        name: title_order
+        type: integer
+      - description: Start date
+        in: query
+        name: start_date
+        type: string
+      - description: End date
+        in: query
+        name: end_date
+        type: string
+      - collectionFormat: csv
+        description: Genre IDs
+        in: query
+        items:
+          type: integer
+        name: genre_ids
+        type: array
+      - description: Start average vote
+        in: query
+        name: start_average_vote
+        type: number
+      - description: End average vote
+        in: query
+        name: end_average_vote
+        type: number
       produces:
       - application/json
       responses:
@@ -1458,6 +1684,45 @@ paths:
         name: per_page
         required: true
         type: integer
+      - description: Time order
+        in: query
+        name: time_order
+        type: integer
+      - description: Popularity order
+        in: query
+        name: popularity_order
+        type: integer
+      - description: Vote order
+        in: query
+        name: vote_order
+        type: integer
+      - description: Title order
+        in: query
+        name: title_order
+        type: integer
+      - description: Start date
+        in: query
+        name: start_date
+        type: string
+      - description: End date
+        in: query
+        name: end_date
+        type: string
+      - collectionFormat: csv
+        description: Genre IDs
+        in: query
+        items:
+          type: integer
+        name: genre_ids
+        type: array
+      - description: Start average vote
+        in: query
+        name: start_average_vote
+        type: number
+      - description: End average vote
+        in: query
+        name: end_average_vote
+        type: number
       produces:
       - application/json
       responses:
@@ -1529,11 +1794,50 @@ paths:
         name: page
         required: true
         type: integer
-      - description: Page size
+      - description: Per page
         in: query
-        name: pageSize
+        name: per_page
         required: true
         type: integer
+      - description: Time order
+        in: query
+        name: time_order
+        type: integer
+      - description: Popularity order
+        in: query
+        name: popularity_order
+        type: integer
+      - description: Vote order
+        in: query
+        name: vote_order
+        type: integer
+      - description: Name order
+        in: query
+        name: name_order
+        type: integer
+      - description: Start date
+        in: query
+        name: start_date
+        type: string
+      - description: End date
+        in: query
+        name: end_date
+        type: string
+      - collectionFormat: csv
+        description: Genre IDs
+        in: query
+        items:
+          type: integer
+        name: genre_ids
+        type: array
+      - description: Start average vote
+        in: query
+        name: start_average_vote
+        type: number
+      - description: End average vote
+        in: query
+        name: end_average_vote
+        type: number
       produces:
       - application/json
       responses:
@@ -1572,11 +1876,50 @@ paths:
         name: page
         required: true
         type: integer
-      - description: Page size
+      - description: Per page
         in: query
-        name: pageSize
+        name: per_page
         required: true
         type: integer
+      - description: Time order
+        in: query
+        name: time_order
+        type: integer
+      - description: Popularity order
+        in: query
+        name: popularity_order
+        type: integer
+      - description: Vote order
+        in: query
+        name: vote_order
+        type: integer
+      - description: Name order
+        in: query
+        name: name_order
+        type: integer
+      - description: Start date
+        in: query
+        name: start_date
+        type: string
+      - description: End date
+        in: query
+        name: end_date
+        type: string
+      - collectionFormat: csv
+        description: Genre IDs
+        in: query
+        items:
+          type: integer
+        name: genre_ids
+        type: array
+      - description: Start average vote
+        in: query
+        name: start_average_vote
+        type: number
+      - description: End average vote
+        in: query
+        name: end_average_vote
+        type: number
       produces:
       - application/json
       responses:
@@ -1598,11 +1941,50 @@ paths:
         name: page
         required: true
         type: integer
-      - description: Page size
+      - description: Per page
         in: query
-        name: pageSize
+        name: per_page
         required: true
         type: integer
+      - description: Time order
+        in: query
+        name: time_order
+        type: integer
+      - description: Popularity order
+        in: query
+        name: popularity_order
+        type: integer
+      - description: Vote order
+        in: query
+        name: vote_order
+        type: integer
+      - description: Name order
+        in: query
+        name: name_order
+        type: integer
+      - description: Start date
+        in: query
+        name: start_date
+        type: string
+      - description: End date
+        in: query
+        name: end_date
+        type: string
+      - collectionFormat: csv
+        description: Genre IDs
+        in: query
+        items:
+          type: integer
+        name: genre_ids
+        type: array
+      - description: Start average vote
+        in: query
+        name: start_average_vote
+        type: number
+      - description: End average vote
+        in: query
+        name: end_average_vote
+        type: number
       produces:
       - application/json
       responses:
@@ -1628,11 +2010,50 @@ paths:
         name: page
         required: true
         type: integer
-      - description: Page size
+      - description: Per page
         in: query
-        name: pageSize
+        name: per_page
         required: true
         type: integer
+      - description: Time order
+        in: query
+        name: time_order
+        type: integer
+      - description: Popularity order
+        in: query
+        name: popularity_order
+        type: integer
+      - description: Vote order
+        in: query
+        name: vote_order
+        type: integer
+      - description: Name order
+        in: query
+        name: name_order
+        type: integer
+      - description: Start date
+        in: query
+        name: start_date
+        type: string
+      - description: End date
+        in: query
+        name: end_date
+        type: string
+      - collectionFormat: csv
+        description: Genre IDs
+        in: query
+        items:
+          type: integer
+        name: genre_ids
+        type: array
+      - description: Start average vote
+        in: query
+        name: start_average_vote
+        type: number
+      - description: End average vote
+        in: query
+        name: end_average_vote
+        type: number
       produces:
       - application/json
       responses:
@@ -1654,11 +2075,50 @@ paths:
         name: page
         required: true
         type: integer
-      - description: Page size
+      - description: Per page
         in: query
-        name: pageSize
+        name: per_page
         required: true
         type: integer
+      - description: Time order
+        in: query
+        name: time_order
+        type: integer
+      - description: Popularity order
+        in: query
+        name: popularity_order
+        type: integer
+      - description: Vote order
+        in: query
+        name: vote_order
+        type: integer
+      - description: Name order
+        in: query
+        name: name_order
+        type: integer
+      - description: Start date
+        in: query
+        name: start_date
+        type: string
+      - description: End date
+        in: query
+        name: end_date
+        type: string
+      - collectionFormat: csv
+        description: Genre IDs
+        in: query
+        items:
+          type: integer
+        name: genre_ids
+        type: array
+      - description: Start average vote
+        in: query
+        name: start_average_vote
+        type: number
+      - description: End average vote
+        in: query
+        name: end_average_vote
+        type: number
       produces:
       - application/json
       responses:
@@ -1680,11 +2140,50 @@ paths:
         name: page
         required: true
         type: integer
-      - description: Page size
+      - description: Per page
         in: query
-        name: pageSize
+        name: per_page
         required: true
         type: integer
+      - description: Time order
+        in: query
+        name: time_order
+        type: integer
+      - description: Popularity order
+        in: query
+        name: popularity_order
+        type: integer
+      - description: Vote order
+        in: query
+        name: vote_order
+        type: integer
+      - description: Name order
+        in: query
+        name: name_order
+        type: integer
+      - description: Start date
+        in: query
+        name: start_date
+        type: string
+      - description: End date
+        in: query
+        name: end_date
+        type: string
+      - collectionFormat: csv
+        description: Genre IDs
+        in: query
+        items:
+          type: integer
+        name: genre_ids
+        type: array
+      - description: Start average vote
+        in: query
+        name: start_average_vote
+        type: number
+      - description: End average vote
+        in: query
+        name: end_average_vote
+        type: number
       produces:
       - application/json
       responses:

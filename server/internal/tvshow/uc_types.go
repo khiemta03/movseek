@@ -5,6 +5,17 @@ import "github.com/tmplam/movseek/internal/models"
 type GetTVFilter struct {
 	Page    int `json:"page"`
 	PerPage int `json:"per_page"`
+
+	StartDate        string  `form:"start_date"`
+	EndDate          string  `form:"end_date"`
+	GenreIDs         []int64 `form:"genre_ids"`
+	StartAverageVote float64 `form:"start_average_vote"`
+	EndAverageVote   float64 `form:"end_average_vote"`
+	// sort order
+	TimeOrder       int `form:"time_order"`
+	PopularityOrder int `form:"popularity"`
+	VoteOrder       int `form:"vote_average"`
+	NameOrder       int `form:"name"`
 }
 
 type Pagination struct {

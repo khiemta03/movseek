@@ -36,7 +36,16 @@ func (h handlerImpl) getOneTVShow(c *gin.Context) {
 // @Produce json
 // @Param query query string false "Search query"
 // @Param page query int true "Page"
-// @Param pageSize query int true "Page size"
+// @Param per_page query int true "Per page"
+// @Param time_order query int false "Time order"
+// @Param popularity_order query int false "Popularity order"
+// @Param vote_order query int false "Vote order"
+// @Param name_order query int false "Name order"
+// @Param start_date query string false "Start date"
+// @Param end_date query string false "End date"
+// @Param genre_ids query []int64 false "Genre IDs"
+// @Param start_average_vote query float64 false "Start average vote"
+// @Param end_average_vote query float64 false "End average vote"
 // @Success 200 {object} getListTVShowsResponse
 // @Router /tvshow/search [get]
 func (h handlerImpl) searchTVShows(c *gin.Context) {
@@ -61,7 +70,16 @@ func (h handlerImpl) searchTVShows(c *gin.Context) {
 // @Accept json
 // @Produce json
 // @Param page query int true "Page"
-// @Param pageSize query int true "Page size"
+// @Param per_page query int true "Per page"
+// @Param time_order query int false "Time order"
+// @Param popularity_order query int false "Popularity order"
+// @Param vote_order query int false "Vote order"
+// @Param name_order query int false "Name order"
+// @Param start_date query string false "Start date"
+// @Param end_date query string false "End date"
+// @Param genre_ids query []int64 false "Genre IDs"
+// @Param start_average_vote query float64 false "Start average vote"
+// @Param end_average_vote query float64 false "End average vote"
 // @Success 200 {object} getListTVShowSummaryResponse
 // @Router /tvshow/upcoming [get]
 func (h handlerImpl) getUpcomingTVShows(c *gin.Context) {
@@ -86,7 +104,16 @@ func (h handlerImpl) getUpcomingTVShows(c *gin.Context) {
 // @Accept json
 // @Produce json
 // @Param page query int true "Page"
-// @Param pageSize query int true "Page size"
+// @Param per_page query int true "Per page"
+// @Param time_order query int false "Time order"
+// @Param popularity_order query int false "Popularity order"
+// @Param vote_order query int false "Vote order"
+// @Param name_order query int false "Name order"
+// @Param start_date query string false "Start date"
+// @Param end_date query string false "End date"
+// @Param genre_ids query []int64 false "Genre IDs"
+// @Param start_average_vote query float64 false "Start average vote"
+// @Param end_average_vote query float64 false "End average vote"
 // @Success 200 {object} getListTVShowSummaryResponse
 // @Router /tvshow/on-the-air [get]
 func (h handlerImpl) getOnTheAirTVShows(c *gin.Context) {
@@ -111,7 +138,16 @@ func (h handlerImpl) getOnTheAirTVShows(c *gin.Context) {
 // @Accept json
 // @Produce json
 // @Param page query int true "Page"
-// @Param pageSize query int true "Page size"
+// @Param per_page query int true "Per page"
+// @Param time_order query int false "Time order"
+// @Param popularity_order query int false "Popularity order"
+// @Param vote_order query int false "Vote order"
+// @Param name_order query int false "Name order"
+// @Param start_date query string false "Start date"
+// @Param end_date query string false "End date"
+// @Param genre_ids query []int64 false "Genre IDs"
+// @Param start_average_vote query float64 false "Start average vote"
+// @Param end_average_vote query float64 false "End average vote"
 // @Success 200 {object} getListTVShowSummaryResponse
 // @Router /tvshow/airing-today [get]
 func (h handlerImpl) getAiringTodayTVShows(c *gin.Context) {
@@ -136,7 +172,16 @@ func (h handlerImpl) getAiringTodayTVShows(c *gin.Context) {
 // @Accept json
 // @Produce json
 // @Param page query int true "Page"
-// @Param pageSize query int true "Page size"
+// @Param per_page query int true "Per page"
+// @Param time_order query int false "Time order"
+// @Param popularity_order query int false "Popularity order"
+// @Param vote_order query int false "Vote order"
+// @Param name_order query int false "Name order"
+// @Param start_date query string false "Start date"
+// @Param end_date query string false "End date"
+// @Param genre_ids query []int64 false "Genre IDs"
+// @Param start_average_vote query float64 false "Start average vote"
+// @Param end_average_vote query float64 false "End average vote"
 // @Success 200 {object} getListTVShowSummaryResponse
 // @Router /tvshow/top-rated [get]
 func (h handlerImpl) getTopRatedTVShows(c *gin.Context) {
@@ -161,7 +206,16 @@ func (h handlerImpl) getTopRatedTVShows(c *gin.Context) {
 // @Accept json
 // @Produce json
 // @Param page query int true "Page"
-// @Param pageSize query int true "Page size"
+// @Param per_page query int true "Per page"
+// @Param time_order query int false "Time order"
+// @Param popularity_order query int false "Popularity order"
+// @Param vote_order query int false "Vote order"
+// @Param name_order query int false "Name order"
+// @Param start_date query string false "Start date"
+// @Param end_date query string false "End date"
+// @Param genre_ids query []int64 false "Genre IDs"
+// @Param start_average_vote query float64 false "Start average vote"
+// @Param end_average_vote query float64 false "End average vote"
 // @Success 200 {object} getListTVShowSummaryResponse
 // @Router /tvshow/popular [get]
 func (h handlerImpl) getPopularTVShows(c *gin.Context) {
