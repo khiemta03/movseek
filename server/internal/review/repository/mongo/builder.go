@@ -10,6 +10,8 @@ import (
 func (repo implRepository) buildAddComment(input review.AddCommentInput) models.Comment {
 	comment := models.Comment{
 		UserID:    input.UserID,
+		UserName:  input.UserName,
+		Avatar:    input.Avatar,
 		MediaID:   input.MediaID,
 		Type:      input.Type,
 		Comment:   input.Comment,
@@ -22,6 +24,8 @@ func (repo implRepository) buildAddComment(input review.AddCommentInput) models.
 func (repo implRepository) buildAddRating(input review.AddRatingInput) models.Rating {
 	rating := models.Rating{
 		UserID:    input.UserID,
+		UserName:  input.UserName,
+		Avatar:    input.Avatar,
 		MediaID:   input.MediaID,
 		Type:      input.Type,
 		Rating:    input.Rating,
@@ -35,6 +39,8 @@ func (repo implRepository) buildUpdateComment(input review.UpdateCommentInput) m
 	now := time.Now()
 	comment := models.Comment{
 		UserID:    input.UserID,
+		UserName:  input.UserName,
+		Avatar:    input.Avatar,
 		MediaID:   input.MediaID,
 		Type:      input.Type,
 		Comment:   input.Comment,
@@ -48,6 +54,8 @@ func (repo implRepository) buildUpdateRating(input review.UpdateRatingInput) mod
 	now := time.Now()
 	rating := models.Rating{
 		UserID:    input.UserID,
+		UserName:  input.UserName,
+		Avatar:    input.Avatar,
 		MediaID:   input.MediaID,
 		Type:      input.Type,
 		Rating:    input.Rating,

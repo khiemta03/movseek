@@ -9,18 +9,22 @@ import (
 )
 
 type addCommentRequest struct {
-	UserID  string `json:"user_id" binding:"required"`
-	MediaID int64  `json:"media_id" binding:"required"`
-	Type    string `json:"type" binding:"required"`
-	Comment string `json:"comment" binding:"required"`
+	UserID   string `json:"user_id" binding:"required"`
+	UserName string `json:"username" binding:"required"`
+	Avatar   string `json:"avatar" binding:"required"`
+	MediaID  int64  `json:"media_id" binding:"required"`
+	Type     string `json:"type" binding:"required"`
+	Comment  string `json:"comment" binding:"required"`
 }
 
 func (req addCommentRequest) toInput() review.AddCommentInput {
 	return review.AddCommentInput{
 		Scope: review.Scope{
-			UserID:  req.UserID,
-			MediaID: req.MediaID,
-			Type:    req.Type,
+			UserID:   req.UserID,
+			UserName: req.UserName,
+			Avatar:   req.Avatar,
+			MediaID:  req.MediaID,
+			Type:     req.Type,
 		},
 		Comment: req.Comment,
 	}
@@ -38,18 +42,22 @@ func (req addCommentRequest) validate() error {
 }
 
 type addRatingRequest struct {
-	UserID  string  `json:"user_id" binding:"required"`
-	MediaID int64   `json:"media_id" binding:"required"`
-	Type    string  `json:"type" binding:"required"`
-	Rating  float64 `json:"rating" binding:"required"`
+	UserID   string  `json:"user_id" binding:"required"`
+	UserName string  `json:"username" binding:"required"`
+	Avatar   string  `json:"avatar" binding:"required"`
+	MediaID  int64   `json:"media_id" binding:"required"`
+	Type     string  `json:"type" binding:"required"`
+	Rating   float64 `json:"rating" binding:"required"`
 }
 
 func (req addRatingRequest) toInput() review.AddRatingInput {
 	return review.AddRatingInput{
 		Scope: review.Scope{
-			UserID:  req.UserID,
-			MediaID: req.MediaID,
-			Type:    req.Type,
+			UserID:   req.UserID,
+			UserName: req.UserName,
+			Avatar:   req.Avatar,
+			MediaID:  req.MediaID,
+			Type:     req.Type,
 		},
 		Rating: req.Rating,
 	}
@@ -72,18 +80,22 @@ func (req addRatingRequest) validate() error {
 }
 
 type updateCommentRequest struct {
-	UserID  string `uri:"user_id" binding:"required"`
-	MediaID int64  `json:"media_id"`
-	Type    string `json:"type"`
-	Comment string `json:"comment"`
+	UserID   string `uri:"user_id" binding:"required"`
+	UserName string `json:"username"`
+	Avatar   string `json:"avatar"`
+	MediaID  int64  `json:"media_id"`
+	Type     string `json:"type"`
+	Comment  string `json:"comment"`
 }
 
 func (req updateCommentRequest) toInput() review.UpdateCommentInput {
 	return review.UpdateCommentInput{
 		Scope: review.Scope{
-			UserID:  req.UserID,
-			MediaID: req.MediaID,
-			Type:    req.Type,
+			UserID:   req.UserID,
+			UserName: req.UserName,
+			Avatar:   req.Avatar,
+			MediaID:  req.MediaID,
+			Type:     req.Type,
 		},
 		Comment: req.Comment,
 	}
@@ -101,18 +113,22 @@ func (req updateCommentRequest) validate() error {
 }
 
 type updateRatingRequest struct {
-	UserID  string  `uri:"user_id" binding:"required"`
-	MediaID int64   `json:"media_id"`
-	Type    string  `json:"type"`
-	Rating  float64 `json:"rating"`
+	UserID   string  `uri:"user_id" binding:"required"`
+	UserName string  `json:"username"`
+	Avatar   string  `json:"avatar"`
+	MediaID  int64   `json:"media_id"`
+	Type     string  `json:"type"`
+	Rating   float64 `json:"rating"`
 }
 
 func (req updateRatingRequest) toInput() review.UpdateRatingInput {
 	return review.UpdateRatingInput{
 		Scope: review.Scope{
-			UserID:  req.UserID,
-			MediaID: req.MediaID,
-			Type:    req.Type,
+			UserID:   req.UserID,
+			UserName: req.UserName,
+			Avatar:   req.Avatar,
+			MediaID:  req.MediaID,
+			Type:     req.Type,
 		},
 		Rating: req.Rating,
 	}
@@ -252,6 +268,8 @@ func (req getRatingsRequestByUserID) toInput() review.GetRatingsByUserIDInput {
 
 type getCommentsByMediaDetail struct {
 	UserID    string     `json:"user_id"`
+	UserName  string     `json:"username"`
+	Avatar    string     `json:"avatar"`
 	Comment   string     `json:"comment"`
 	CreatedAt time.Time  `json:"created_at"`
 	UpdatedAt *time.Time `json:"updated_at,omitempty"`
@@ -273,6 +291,8 @@ func (h handlerImpl) getCommentsByMediaResponse(output review.GetCommentsOutput)
 	for _, comment := range output.Comments {
 		res.Comments = append(res.Comments, getCommentsByMediaDetail{
 			UserID:    comment.UserID,
+			UserName:  comment.UserName,
+			Avatar:    comment.Avatar,
 			Comment:   comment.Comment,
 			CreatedAt: comment.CreatedAt,
 			UpdatedAt: comment.UpdatedAt,
@@ -284,6 +304,8 @@ func (h handlerImpl) getCommentsByMediaResponse(output review.GetCommentsOutput)
 
 type getRatingsByMediaDetail struct {
 	UserID    string     `json:"user_id"`
+	UserName  string     `json:"username"`
+	Avatar    string     `json:"avatar"`
 	Rating    float64    `json:"rating"`
 	CreatedAt time.Time  `json:"created_at"`
 	UpdatedAt *time.Time `json:"updated_at,omitempty"`
@@ -309,6 +331,8 @@ func (h handlerImpl) getRatingsByMediaResponse(output review.GetRatingsOutput) g
 	for _, rating := range output.Ratings {
 		res.Ratings = append(res.Ratings, getRatingsByMediaDetail{
 			UserID:    rating.UserID,
+			UserName:  rating.UserName,
+			Avatar:    rating.Avatar,
 			Rating:    rating.Rating,
 			CreatedAt: rating.CreatedAt,
 			UpdatedAt: rating.UpdatedAt,
@@ -333,12 +357,16 @@ type getCommentsByUserDetail struct {
 
 type getCommentsByUserDetailsResponse struct {
 	UserID   string                    `json:"user_id"`
+	UserName string                    `json:"username"`
+	Avatar   string                    `json:"avatar"`
 	Comments []getCommentsByUserDetail `json:"comments"`
 }
 
 func (h handlerImpl) getCommentsByUserResponse(output review.GetCommentsOutput) getCommentsByUserDetailsResponse {
 	res := getCommentsByUserDetailsResponse{
-		UserID: output.UserID,
+		UserID:   output.UserID,
+		UserName: output.UserName,
+		Avatar:   output.Avatar,
 	}
 
 	res.Comments = make([]getCommentsByUserDetail, 0, len(output.Comments))
@@ -364,15 +392,19 @@ type getRatingsByUserDetail struct {
 }
 
 type getRatingsByUserDetailsResponse struct {
-	UserID  string                   `json:"user_id"`
-	Count   int                      `json:"count"`
-	Ratings []getRatingsByUserDetail `json:"ratings"`
+	UserID   string                   `json:"user_id"`
+	UserName string                   `json:"username"`
+	Avatar   string                   `json:"avatar"`
+	Count    int                      `json:"count"`
+	Ratings  []getRatingsByUserDetail `json:"ratings"`
 }
 
 func (h handlerImpl) getRatingsByUserResponse(output review.GetRatingsOutput) getRatingsByUserDetailsResponse {
 	res := getRatingsByUserDetailsResponse{
-		UserID: output.UserID,
-		Count:  len(output.Ratings),
+		UserID:   output.UserID,
+		UserName: output.UserName,
+		Avatar:   output.Avatar,
+		Count:    len(output.Ratings),
 	}
 
 	res.Ratings = make([]getRatingsByUserDetail, 0, len(output.Ratings))

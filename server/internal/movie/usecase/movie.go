@@ -208,11 +208,11 @@ func (uc implUsecase) GetMovieGenres(ctx context.Context) (movie.GetMovieGenresO
 	return movie.GetMovieGenresOutput{Genres: genres}, nil
 }
 
-func (uc implUsecase) GetLastestTrailer(ctx context.Context, input movie.GetLastestTrailerInput) (movie.GetLastestTrailerOutput, error) {
+func (uc implUsecase) GetLastestTrailer(ctx context.Context, input movie.GetLastestTrailerInput) ([]movie.GetLastestTrailerResponse, error) {
 	trailers, err := uc.repo.GetLastestTrailer(ctx, input)
 	if err != nil {
-		return movie.GetLastestTrailerOutput{}, err
+		return []movie.GetLastestTrailerResponse{}, err
 	}
 
-	return movie.GetLastestTrailerOutput{Trailers: trailers}, nil
+	return trailers, nil
 }
