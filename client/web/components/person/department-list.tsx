@@ -78,7 +78,7 @@ const DepartmentList: React.FC<DepartmentListProps> = ({ credits, knownForDepart
                     <DropdownItem
                       key={index}
                       number={department.count}
-                      label={department.name}
+                      label={department.name == 'undefined' ? 'Others' : department.name}
                       onClick={() => handleDepartmentSelect(department.name)}
                     />
                   ))}

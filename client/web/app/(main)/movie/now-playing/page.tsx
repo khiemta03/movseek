@@ -44,9 +44,9 @@ export default function MovieNowPlayingPage() {
       try {
         setLoading(true);
         const movieResponse = await fetchMovieNowPlaying(page != null ? parseInt(page) : 1);
-        setMovieResults(movieResponse.data);
+        setMovieResults(movieResponse.data.data);
         const genreResponse = await fetchGenresMovie();
-        setGenreListResults(genreResponse.data);
+        setGenreListResults(genreResponse.data.data);
       } catch (err) {
         console.log(err);
         setIsError(true);
@@ -163,7 +163,10 @@ export default function MovieNowPlayingPage() {
                 <div className="w-4/5">
                   <div className="mb-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
                     {movieResults.results.map((movie, index) => (
-                      <MovieSearchCard key={index} movie={movie} />
+                      <MovieSearchCard
+                        key={index}
+                        movie={movie}
+                      />
                     ))}
                   </div>
                   {movieResults.total_pages > 1 && (

@@ -45,9 +45,9 @@ export default function TVPopularPage() {
       try {
         setLoading(true);
         const tvResponse = await fetchTVPopular(page != null ? parseInt(page) : 1);
-        setTVResults(tvResponse.data);
+        setTVResults(tvResponse.data.data);
         const genreResponse = await fetchGenresTV();
-        setGenreListResults(genreResponse.data);
+        setGenreListResults(genreResponse.data.data);
       } catch (err) {
         console.log(err);
         setIsError(true);
@@ -164,7 +164,10 @@ export default function TVPopularPage() {
                 <div className="w-4/5">
                   <div className="mb-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
                     {tvResults.results.map((tv, index) => (
-                      <TVSearchCard key={index} tv={tv} />
+                      <TVSearchCard
+                        key={index}
+                        tv={tv}
+                      />
                     ))}
                   </div>
                   {tvResults.total_pages > 1 && (

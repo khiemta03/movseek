@@ -44,7 +44,7 @@ export default function TVDetail() {
       try {
         setLoading(true);
         const tvResponse = await fetchTVDetail(idTV);
-        const data = tvResponse.data;
+        const data = tvResponse.data.data;
         setImageSrc(TMDB_API.POSTER(data.poster_path));
         setTV(data);
 
@@ -56,6 +56,10 @@ export default function TVDetail() {
 
         const videoResponse = await fetchTVVideos(idTV);
         setVideos(videoResponse.data.results);
+        console.log(data);
+        // console.log(creditsResponse.data.data);
+        console.log(keywordsResponde.data);
+        console.log(videoResponse.data);
       } catch (err) {
         setError('Failed to fetch movie detail');
         console.log(err);

@@ -31,15 +31,15 @@ export default function SearchPage() {
       setLoading(true);
       if (mode == 'movie' || !isChangeMode) {
         const movieResponse = await fetchSearchMovie(query != null ? query : '', page != null ? parseInt(page) : 1);
-        setMovieResults(movieResponse.data);
+        setMovieResults(movieResponse.data.data);
       }
       if (mode == 'tv' || !isChangeMode) {
         const tvResponse = await fetchSearchTV(query != null ? query : '', page != null ? parseInt(page) : 1);
-        setTVResults(tvResponse.data);
+        setTVResults(tvResponse.data.data);
       }
       if (mode == 'person' || !isChangeMode) {
         const personResponse = await fetchSearchPerson(query != null ? query : '', page != null ? parseInt(page) : 1);
-        setPersonResults(personResponse.data);
+        setPersonResults(personResponse.data.data);
       }
     } catch (err) {
       console.log(err);

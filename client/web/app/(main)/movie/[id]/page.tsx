@@ -13,6 +13,7 @@ import AltMovieInformation from '@/components/movie/alt-movie-information';
 import MainMovieInformationDummy from '@/components/movie/main-movie-information-dummy';
 import Trailer from '@/components/movie/trailer';
 import RecommendationList from '@/components/movie/recommendations';
+import ReviewsAndRating from '@/components/movie/reviews-and-rating';
 
 const MovieDetail = () => {
   const params = useParams();
@@ -33,6 +34,7 @@ const MovieDetail = () => {
   const [backgroundStyle, setBackgroundStyle] = useState({});
   const buttonARef = useRef<HTMLButtonElement>(null);
   const buttonBRef = useRef<HTMLButtonElement>(null);
+
   const [isVisible, setIsVisible] = useState(false);
 
   const toggleVideo = () => setIsVisible(!isVisible);
@@ -49,18 +51,18 @@ const MovieDetail = () => {
       try {
         setLoading(true);
         const movieResponse = await fetchMovieDetail(idMovie);
-        const data = pickMovieFields(movieResponse.data);
+        const data = pickMovieFields(movieResponse.data.data);
         setImageSrc(TMDB_API.POSTER(data.poster_path));
         setMovie(data);
 
         const creditsResponse = await fetchMovieCredits(idMovie);
-        setCredits(handleMovieCredits(creditsResponse.data));
+        setCredits(handleMovieCredits(creditsResponse.data.data));
 
         const keywordsResponde = await fetchMovieKeywords(idMovie);
-        setKeywords(keywordsResponde.data.keywords);
+        setKeywords(keywordsResponde.data.data);
 
         const videoResponse = await fetchMovieVideos(idMovie);
-        setVideos(videoResponse.data.results);
+        setVideos(videoResponse.data.data);
       } catch (err) {
         setError('Failed to fetch movie detail');
         console.log(err);
@@ -161,6 +163,14 @@ const MovieDetail = () => {
               </div>
               <hr className="my-14 border-t border-gray-300" />
               <div>
+                <h2 className="text-2xl font-bold mb-4">Reviews And Rating</h2>
+                <ReviewsAndRating
+                  rated={null}
+                  review={''}
+                />
+              </div>
+              <hr className="my-14 border-t border-gray-300" />
+              <div>
                 <div className="flex justify-between">
                   <h2 className="text-2xl font-bold mb-4">Recommendations</h2>
                   <div className="relative items-center bg-white border-2 border-blue-500 mb-6 rounded-full w-fit">
@@ -193,10 +203,10 @@ const MovieDetail = () => {
                     transitioningRecommendation ? 'opacity-0' : 'opacity-100'
                   }`}
                 >
-                  <RecommendationList
+                  {/* <RecommendationList
                     baseOn={viewModeRecommendation}
                     setTransitioning={setTransitioningRecommendation}
-                  />
+                  /> */}
                 </div>
               </div>
             </div>

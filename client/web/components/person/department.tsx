@@ -8,7 +8,7 @@ interface DepartmentProps {
 const Department: React.FC<DepartmentProps> = ({ props }) => {
   return (
     <div className="flex flex-col items-start justify-center px-5 w-full rounded-lg border shadow-lg">
-      <h1 className="font-bold text-2xl my-2">{props.department}</h1>
+      <h1 className="font-bold text-2xl my-2">{props.department == 'undefined' ? 'Others' : props.department}</h1>
       <div className="flex flex-col w-full text-black text-lg font-medium">
         {Object.entries(
           props.items.reduce((groups, element) => {
@@ -29,7 +29,10 @@ const Department: React.FC<DepartmentProps> = ({ props }) => {
             return parseInt(yearB, 10) - parseInt(yearA, 10); // Sắp xếp giảm dần
           })
           .map(([year, elements]) => (
-            <div key={year} className="flex flex-col w-full gap-5">
+            <div
+              key={year}
+              className="flex flex-col w-full gap-5"
+            >
               <div className="font-geist-mono italic">{year}</div>
               <div className="flex flex-col gap-5">
                 {elements
@@ -42,21 +45,27 @@ const Department: React.FC<DepartmentProps> = ({ props }) => {
                     );
                     return dateB.getTime() - dateA.getTime();
                   })
-                  .map((element, index) => (
-                    <div key={index} className="flex justify-between">
-                      <div>
-                        <Link href={'title' in element ? `/movie/${element.id}` : '#'}>
-                          <div>{'title' in element ? element.title : element.name}</div>
-                        </Link>
-                        {(('character' in element && element.character) || ('job' in element && element.job)) && (
-                          <div className="text-sm text-gray-600">
-                            {'character' in element ? `as ${element.character}` : `${element.job}`}{' '}
+                  .map(
+                    (element, index) =>
+                      ('title' in element ? element.title : element.name) && (
+                        <div
+                          key={index}
+                          className="flex justify-between"
+                        >
+                          <div>
+                            <Link href={'title' in element ? `/movie/${element.id}` : '#'}>
+                              <div>{'title' in element ? element.title : element.name}</div>
+                            </Link>
+                            {(('character' in element && element.character) || ('job' in element && element.job)) && (
+                              <div className="text-sm text-gray-600">
+                                {'character' in element ? `as ${element.character}` : `${element.job}`}{' '}
+                              </div>
+                            )}
                           </div>
-                        )}
-                      </div>
-                      <div>{'release_date' in element ? element.release_date : element.first_air_date}</div>
-                    </div>
-                  ))}
+                          <div>{'release_date' in element ? element.release_date : element.first_air_date}</div>
+                        </div>
+                      ),
+                  )}
               </div>
               <hr className="my-2 border-t border-gray-300" />
             </div>

@@ -1,4 +1,5 @@
 import axiosInstance from '@/lib/axios.config';
+import axiosInstanceTMDB from '@/lib/axios.config.tmdb';
 import { TMDB_API } from '@/utils/constants';
 
 export const fetchTVDetail = (id: number) => {
@@ -6,13 +7,13 @@ export const fetchTVDetail = (id: number) => {
 };
 
 export const fetchTVCredits = (id: number) => {
-  return axiosInstance.get(TMDB_API.TV_CREDITS(id));
+  return axiosInstanceTMDB.get(TMDB_API.TV_CREDITS_TMDB(id));
 };
 
 export const fetchTVKeywords = (id: number) => {
-  return axiosInstance.get(TMDB_API.TV_KEYWORDS(id));
+  return axiosInstanceTMDB.get(TMDB_API.TV_KEYWORDS_TMDB(id));
 };
 
 export const fetchTVVideos = (id: number) => {
-  return axiosInstance.get(TMDB_API.TV_VIDEOS(id));
+  return axiosInstanceTMDB.get(TMDB_API.TV_VIDEOS_TMDB(id));
 };

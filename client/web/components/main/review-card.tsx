@@ -12,14 +12,14 @@ import { useToast } from '@/hooks/use-toast';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Slider } from '@/components/ui/slider';
 
-interface FavoriteMovieCardProps {
+interface ReviewCardProps {
   movie: Movie;
   isFavorite: boolean;
   isWatchlist: boolean;
   rated: number | null;
 }
 
-const FavoriteMovieCard: React.FC<FavoriteMovieCardProps> = ({ movie, isFavorite, isWatchlist, rated }) => {
+const ReviewCard: React.FC<ReviewCardProps> = ({ movie, isFavorite, isWatchlist, rated }) => {
   const { toast } = useToast();
   const [imageSrc, setImageSrc] = useState(TMDB_API.POSTER(movie.poster_path));
   const [favorite, setFavorite] = useState(isFavorite);
@@ -215,4 +215,4 @@ const FavoriteMovieCard: React.FC<FavoriteMovieCardProps> = ({ movie, isFavorite
   );
 };
 
-export default FavoriteMovieCard;
+export default ReviewCard;

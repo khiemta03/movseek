@@ -35,7 +35,7 @@ const MovieList = ({ mediaType, timeWindow }: MovieListProps) => {
         setLoading(true);
         const response = await fetchTrending(mediaType, timeWindow);
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const data = response.data.results.map((movie: Record<string, any>) => ({
+        const data = response.data.data.results.map((movie: Record<string, any>) => ({
           id: movie.id,
           title: movie.title,
           poster: movie.poster_path,

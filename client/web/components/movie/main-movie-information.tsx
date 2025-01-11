@@ -8,6 +8,7 @@ import type { Cast, Credits, Crew, Movie } from '@/models/movie-detail-types';
 import { convertMinutes, getCrewByJob } from '@/utils/util-functions/detail-page';
 import { useState } from 'react';
 import Rating from '@/components/movie/rating';
+import { useToast } from '@/hooks/use-toast';
 
 interface MainMovieInformationProps {
   movie: Movie;
@@ -17,7 +18,32 @@ interface MainMovieInformationProps {
 }
 
 const MainMovieInformation: React.FC<MainMovieInformationProps> = ({ movie, creadits, toggleVideo, hasTrailer }) => {
+  const { toast } = useToast();
   const [imageSrc, setImageSrc] = useState(TMDB_API.POSTER(movie.poster_path));
+  const [favorite, setFavorite] = useState(true);
+  const [watchlist, setwatchlist] = useState(true);
+
+  const handlClickFavorite = (favorite: boolean) => {
+    //call api here
+    setFavorite(!favorite);
+    toast({
+      title: 'Success',
+      description: `${movie.title} was ${favorite ? 'removed from' : 'added to'} your favourite list.`,
+      duration: 3000,
+      className: 'bg-green-600 text-white border border-gray-200',
+    });
+  };
+
+  const handlClickWatchlist = (watchlist: boolean) => {
+    //call api here
+    setwatchlist(!watchlist);
+    toast({
+      title: 'Success',
+      description: `${movie.title} was ${watchlist ? 'removed from' : 'added to'} your watchlist.`,
+      duration: 3000,
+      className: 'bg-green-600 text-white border border-gray-200',
+    });
+  };
 
   return (
     <div
@@ -77,12 +103,15 @@ const MainMovieInformation: React.FC<MainMovieInformationProps> = ({ movie, crea
                     <Button
                       variant="secondary"
                       size="icon"
-                      className="rounded-full p-6 mr-4"
+                      className={`rounded-full border border-gray-200 ${
+                        favorite ? 'bg-red-400 hover:bg-red-500' : 'hover:bg-red-400'
+                      } p-6 mr-4`}
+                      onClick={() => handlClickFavorite(favorite)}
                     >
-                      <Heart className="text-red-500 font-bold" />
+                      <Heart className="text-red-400 font-bold fill-white" />
                     </Button>
                   </TooltipTrigger>
-                  <TooltipContent>Mark as favorite</TooltipContent>
+                  <TooltipContent>{`${favorite ? 'Remove from favorite list' : 'Mark as favorite'}`}</TooltipContent>
                 </Tooltip>
               </TooltipProvider>
 
@@ -92,12 +121,15 @@ const MainMovieInformation: React.FC<MainMovieInformationProps> = ({ movie, crea
                     <Button
                       variant="secondary"
                       size="icon"
-                      className="rounded-full p-6 mr-4"
+                      className={`rounded-full border border-gray-200 ${
+                        watchlist ? 'bg-sky-600 hover:bg-sky-700' : 'hover:bg-sky-600'
+                      } p-6 mr-4`}
+                      onClick={() => handlClickWatchlist(watchlist)}
                     >
-                      <Bookmark className="text-sky-600 font-bold" />
+                      <Bookmark className="text-sky-600 font-bold fill-white" />
                     </Button>
                   </TooltipTrigger>
-                  <TooltipContent>Add to your watchlist</TooltipContent>
+                  <TooltipContent>{`${watchlist ? 'Remove from watchlist' : 'Add to your watchlist'}`}</TooltipContent>
                 </Tooltip>
               </TooltipProvider>
 

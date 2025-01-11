@@ -3,7 +3,7 @@
 import { useParams } from 'next/navigation';
 import { TMDB_API } from '@/utils/constants';
 import { useEffect, useState } from 'react';
-import { fetchPeopleCredits, fetchPeopleDetail } from '@/apis/people';
+import { fetchPeopleDetail } from '@/apis/people';
 import type { Credits, PeopleDetail } from '@/models/people-types';
 import Image from 'next/image';
 import AltPersonInformation from '@/components/person/alt-person-information';
@@ -33,12 +33,15 @@ const MovieDetail = () => {
       try {
         setLoading(true);
         const personResponse = await fetchPeopleDetail(idPerson);
-        const data: PeopleDetail = personResponse.data;
+        console.log(personResponse.data);
+        const data: PeopleDetail = personResponse.data.data;
         setImageSrc(TMDB_API.POSTER(data.profile_path));
         setPerson(data);
 
-        const creditsResponse = await fetchPeopleCredits(idPerson);
-        setCredits(creditsResponse);
+        setCredits({
+          movie_credits: data.movie_credits,
+          tv_credits: data.tv_credits,
+        });
       } catch (err) {
         setError('Failed to fetch movie detail');
         console.log(err);
@@ -83,8 +86,14 @@ const MovieDetail = () => {
               />
             </div>
             <div className={`w-4/5`}>
-              <MainPersonInformation person={person} credits={creadits} />
-              <DepartmentList credits={creadits} knownForDepartment={person.known_for_department} />
+              <MainPersonInformation
+                person={person}
+                credits={creadits}
+              />
+              <DepartmentList
+                credits={creadits}
+                knownForDepartment={person.known_for_department}
+              />
             </div>
           </div>
         </div>
