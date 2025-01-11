@@ -3,6 +3,8 @@
 import MovieList from '@/components/main/movie-list';
 import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import PopularList from '@/components/main/popular-list';
 
 export default function Home() {
   const [activeButton, setActiveButton] = useState<'day' | 'week'>('day');
@@ -12,6 +14,7 @@ export default function Home() {
   const buttonBRef = useRef<HTMLButtonElement>(null);
   const router = useRouter();
   const [searchQuery, setSearchQuery] = useState('');
+  const [popularType, setPopularType] = useState<'theaters' | 'tv-series'>('tv-series');
 
   useEffect(() => {
     const activeRef = activeButton === 'day' ? buttonARef.current : buttonBRef.current;
@@ -27,7 +30,7 @@ export default function Home() {
   const handleSearch = () => {
     const trimmedQuery = searchQuery.trim();
     if (trimmedQuery) {
-      router.push(`/search?query=${encodeURIComponent(trimmedQuery)}`);
+      router.push(`/search?query=${encodeURIComponent(trimmedQuery)}&type=movie`);
     }
   };
 
@@ -112,7 +115,31 @@ export default function Home() {
                 </button>
               </div>
             </div>
-            <MovieList mediaType="movie" timeWindow={activeButton} />
+            <MovieList
+              mediaType="movie"
+              timeWindow={activeButton}
+            />
+          </section>
+
+          <section className="container py-6">
+            <div className="flex items-center content-center gap-7">
+              <h1 className="text-2xl text-start font-bold">{`What\'s Popular`}</h1>
+              <Select
+                value={popularType}
+                onValueChange={(value: 'tv-series' | 'theaters') => setPopularType(value)}
+              >
+                <SelectTrigger className="w-fit border border-black text-lg p-3 bg-sky-600 rounded-full text-white">
+                  <SelectValue placeholder="Select a place" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    <SelectItem value="tv-series">In TV Series</SelectItem>
+                    <SelectItem value="theaters">In Theaters</SelectItem>
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+            </div>
+            <PopularList popularType={popularType} />
           </section>
         </main>
       </div>

@@ -121,13 +121,13 @@ const MovieList = ({ mediaType, timeWindow }: MovieListProps) => {
             <div className="flex space-x-8">
               <CarouselContent>
                 {loading
-                  ? moviesDummy.map((movie) => (
-                      <CarouselItem key={movie} className="basis-44 h-80">
+                  ? moviesDummy.map((movie, index) => (
+                      <CarouselItem key={index} className="basis-44 h-80">
                         <MovieCardDummpy />
                       </CarouselItem>
                     ))
-                  : movies.map((movie) => (
-                      <CarouselItem key={movie.id} className="basis-44 h-80">
+                  : movies.map((movie, index) => (
+                      <CarouselItem key={index} className="basis-44 h-80">
                         <MovieCard
                           id={movie.id}
                           title={movie.title}
@@ -152,8 +152,8 @@ const MovieList = ({ mediaType, timeWindow }: MovieListProps) => {
           </Carousel>
         ) : (
           <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-8 gap-4">
-            {movies.map((movie) => (
-              <div key={movie.id} className="h-80">
+            {movies.map((movie, index) => (
+              <div key={index} className="h-80">
                 <MovieCard
                   id={movie.id}
                   title={movie.title}

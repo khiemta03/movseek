@@ -1,0 +1,3301 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "Movseek API",
+        "title": "Movseek API",
+        "contact": {},
+        "version": "1.0"
+    },
+    "host": "localhost:8080",
+    "basePath": "/api/v1",
+    "paths": {
+        "/comments": {
+            "post": {
+                "description": "Add comment",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "review"
+                ],
+                "summary": "Add comment",
+                "parameters": [
+                    {
+                        "description": "Add comment request",
+                        "name": "addCommentRequest",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/http.addCommentRequest"
+                        }
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/comments/media/{media_id}": {
+            "get": {
+                "description": "Get comments by media",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "review"
+                ],
+                "summary": "Get comments by media",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Media ID",
+                        "name": "media_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/comments/user/{user_id}": {
+            "get": {
+                "description": "Get comments by user",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "review"
+                ],
+                "summary": "Get comments by user",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "user_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/comments/{user_id}": {
+            "put": {
+                "description": "Update comment",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "review"
+                ],
+                "summary": "Update comment",
+                "parameters": [
+                    {
+                        "description": "Update comment request",
+                        "name": "updateCommentRequest",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/http.updateCommentRequest"
+                        }
+                    }
+                ],
+                "responses": {}
+            },
+            "delete": {
+                "description": "Delete comment",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "review"
+                ],
+                "summary": "Delete comment",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "user_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Media ID",
+                        "name": "media_id",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Type",
+                        "name": "type",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/movie/genres": {
+            "get": {
+                "description": "Get movie genres",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "movie"
+                ],
+                "summary": "Get movie genres",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/movie.GetMovieGenresOutput"
+                        }
+                    }
+                }
+            }
+        },
+        "/movie/now-playing": {
+            "get": {
+                "description": "Get now playing movies",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "movie"
+                ],
+                "summary": "Get now playing movies",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Page",
+                        "name": "page",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Per page",
+                        "name": "per_page",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Time order",
+                        "name": "time_order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Popularity order",
+                        "name": "popularity_order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Vote order",
+                        "name": "vote_order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Title order",
+                        "name": "title_order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Start date",
+                        "name": "start_date",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "End date",
+                        "name": "end_date",
+                        "in": "query"
+                    },
+                    {
+                        "type": "array",
+                        "items": {
+                            "type": "integer"
+                        },
+                        "collectionFormat": "csv",
+                        "description": "Genre IDs",
+                        "name": "genre_ids",
+                        "in": "query"
+                    },
+                    {
+                        "type": "number",
+                        "description": "Start average vote",
+                        "name": "start_average_vote",
+                        "in": "query"
+                    },
+                    {
+                        "type": "number",
+                        "description": "End average vote",
+                        "name": "end_average_vote",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/http.getSummaryMoviesResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/movie/popular": {
+            "get": {
+                "description": "Get popular movies",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "movie"
+                ],
+                "summary": "Get popular movies",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Page",
+                        "name": "page",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Per page",
+                        "name": "per_page",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Time order",
+                        "name": "time_order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Popularity order",
+                        "name": "popularity_order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Vote order",
+                        "name": "vote_order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Title order",
+                        "name": "title_order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Start date",
+                        "name": "start_date",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "End date",
+                        "name": "end_date",
+                        "in": "query"
+                    },
+                    {
+                        "type": "array",
+                        "items": {
+                            "type": "integer"
+                        },
+                        "collectionFormat": "csv",
+                        "description": "Genre IDs",
+                        "name": "genre_ids",
+                        "in": "query"
+                    },
+                    {
+                        "type": "number",
+                        "description": "Start average vote",
+                        "name": "start_average_vote",
+                        "in": "query"
+                    },
+                    {
+                        "type": "number",
+                        "description": "End average vote",
+                        "name": "end_average_vote",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/http.getSummaryMoviesResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/movie/top-rated": {
+            "get": {
+                "description": "Get top rated movies",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "movie"
+                ],
+                "summary": "Get top rated movies",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Page",
+                        "name": "page",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Per page",
+                        "name": "per_page",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Time order",
+                        "name": "time_order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Popularity order",
+                        "name": "popularity_order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Vote order",
+                        "name": "vote_order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Title order",
+                        "name": "title_order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Start date",
+                        "name": "start_date",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "End date",
+                        "name": "end_date",
+                        "in": "query"
+                    },
+                    {
+                        "type": "array",
+                        "items": {
+                            "type": "integer"
+                        },
+                        "collectionFormat": "csv",
+                        "description": "Genre IDs",
+                        "name": "genre_ids",
+                        "in": "query"
+                    },
+                    {
+                        "type": "number",
+                        "description": "Start average vote",
+                        "name": "start_average_vote",
+                        "in": "query"
+                    },
+                    {
+                        "type": "number",
+                        "description": "End average vote",
+                        "name": "end_average_vote",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/http.getSummaryMoviesResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/movie/trailer/latest": {
+            "get": {
+                "description": "Get lastest trailer",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "movie"
+                ],
+                "summary": "Get lastest trailer",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Page",
+                        "name": "page",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Per page",
+                        "name": "per_page",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.Trailer"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/movie/trending/{type}": {
+            "get": {
+                "description": "Get trending movies",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "movie"
+                ],
+                "summary": "Get trending movies",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Type",
+                        "name": "type",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Page",
+                        "name": "page",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Per page",
+                        "name": "per_page",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Time order",
+                        "name": "time_order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Popularity order",
+                        "name": "popularity_order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Vote order",
+                        "name": "vote_order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Title order",
+                        "name": "title_order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Start date",
+                        "name": "start_date",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "End date",
+                        "name": "end_date",
+                        "in": "query"
+                    },
+                    {
+                        "type": "array",
+                        "items": {
+                            "type": "integer"
+                        },
+                        "collectionFormat": "csv",
+                        "description": "Genre IDs",
+                        "name": "genre_ids",
+                        "in": "query"
+                    },
+                    {
+                        "type": "number",
+                        "description": "Start average vote",
+                        "name": "start_average_vote",
+                        "in": "query"
+                    },
+                    {
+                        "type": "number",
+                        "description": "End average vote",
+                        "name": "end_average_vote",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/http.getSummaryMoviesResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/movie/upcoming": {
+            "get": {
+                "description": "Get upcoming movies",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "movie"
+                ],
+                "summary": "Get upcoming movies",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Page",
+                        "name": "page",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Per page",
+                        "name": "per_page",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Time order",
+                        "name": "time_order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Popularity order",
+                        "name": "popularity_order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Vote order",
+                        "name": "vote_order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Title order",
+                        "name": "title_order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Start date",
+                        "name": "start_date",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "End date",
+                        "name": "end_date",
+                        "in": "query"
+                    },
+                    {
+                        "type": "array",
+                        "items": {
+                            "type": "integer"
+                        },
+                        "collectionFormat": "csv",
+                        "description": "Genre IDs",
+                        "name": "genre_ids",
+                        "in": "query"
+                    },
+                    {
+                        "type": "number",
+                        "description": "Start average vote",
+                        "name": "start_average_vote",
+                        "in": "query"
+                    },
+                    {
+                        "type": "number",
+                        "description": "End average vote",
+                        "name": "end_average_vote",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/http.getSummaryMoviesResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/movie/{id}": {
+            "get": {
+                "description": "Get one movie",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "movie"
+                ],
+                "summary": "Get one movie",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Movie ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Movie"
+                        }
+                    }
+                }
+            }
+        },
+        "/movie/{id}/credits": {
+            "get": {
+                "description": "Get movie credits",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "movie"
+                ],
+                "summary": "Get movie credits",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Movie ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.MovieCredits"
+                        }
+                    }
+                }
+            }
+        },
+        "/movie/{id}/keywords": {
+            "get": {
+                "description": "Get movie keywords",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "movie"
+                ],
+                "summary": "Get movie keywords",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Movie ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.KeyWord"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/movie/{id}/videos": {
+            "get": {
+                "description": "Get movie videos",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "movie"
+                ],
+                "summary": "Get movie videos",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Movie ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.Trailer"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/person/popular": {
+            "get": {
+                "description": "Get popular people",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "person"
+                ],
+                "summary": "Get popular people",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Page",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Per Page",
+                        "name": "per_page",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/http.getListPeopleSummaryResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/person/trending/{type}": {
+            "get": {
+                "description": "Get trending people",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "person"
+                ],
+                "summary": "Get trending people",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Page",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Per Page",
+                        "name": "per_page",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/http.getListPeopleSummaryResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/person/{id}": {
+            "get": {
+                "description": "Get one person",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "person"
+                ],
+                "summary": "Get one person",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Person ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Person"
+                        }
+                    }
+                }
+            }
+        },
+        "/person/{id}/credits/movie": {
+            "get": {
+                "description": "Get person credits",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "person"
+                ],
+                "summary": "Get person credits",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Person ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/http.getListPeopleSummaryResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/person/{id}/credits/tv": {
+            "get": {
+                "description": "Get person TV credits",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "person"
+                ],
+                "summary": "Get person TV credits",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Person ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/http.getListPeopleSummaryResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/ratings": {
+            "post": {
+                "description": "Add rating",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "review"
+                ],
+                "summary": "Add rating",
+                "parameters": [
+                    {
+                        "description": "Add rating request",
+                        "name": "addRatingRequest",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/http.addRatingRequest"
+                        }
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/ratings/media/{media_id}": {
+            "get": {
+                "description": "Get ratings by media",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "review"
+                ],
+                "summary": "Get ratings by media",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Media ID",
+                        "name": "media_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/ratings/user/{user_id}": {
+            "get": {
+                "description": "Get ratings by user",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "review"
+                ],
+                "summary": "Get ratings by user",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "user_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/ratings/{user_id}": {
+            "put": {
+                "description": "Update rating",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "review"
+                ],
+                "summary": "Update rating",
+                "parameters": [
+                    {
+                        "description": "Update rating request",
+                        "name": "updateRatingRequest",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/http.updateRatingRequest"
+                        }
+                    }
+                ],
+                "responses": {}
+            },
+            "delete": {
+                "description": "Delete rating",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "review"
+                ],
+                "summary": "Delete rating",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "user_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Media ID",
+                        "name": "media_id",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Type",
+                        "name": "type",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/saved-item/add": {
+            "put": {
+                "description": "Add to saved item",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "saved-item"
+                ],
+                "summary": "Add to saved item",
+                "parameters": [
+                    {
+                        "description": "Add to saved item request",
+                        "name": "addToSavedItemRequest",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/http.addToSavedItemRequest"
+                        }
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/saved-item/remove": {
+            "put": {
+                "description": "Add to saved item",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "saved-item"
+                ],
+                "summary": "Add to saved item",
+                "parameters": [
+                    {
+                        "description": "Remove from saved item request",
+                        "name": "removeFromSavedItemRequest",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/http.removeFromSavedItemRequest"
+                        }
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/saved-item/{user_id}": {
+            "get": {
+                "description": "Get saved item",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "saved-item"
+                ],
+                "summary": "Get saved item",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "user_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.SavedItems"
+                        }
+                    }
+                }
+            }
+        },
+        "/search/movie": {
+            "get": {
+                "description": "Search movies",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "movie"
+                ],
+                "summary": "Search movies",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Query",
+                        "name": "query",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Page",
+                        "name": "page",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Per page",
+                        "name": "per_page",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Time order",
+                        "name": "time_order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Popularity order",
+                        "name": "popularity_order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Vote order",
+                        "name": "vote_order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Title order",
+                        "name": "title_order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Start date",
+                        "name": "start_date",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "End date",
+                        "name": "end_date",
+                        "in": "query"
+                    },
+                    {
+                        "type": "array",
+                        "items": {
+                            "type": "integer"
+                        },
+                        "collectionFormat": "csv",
+                        "description": "Genre IDs",
+                        "name": "genre_ids",
+                        "in": "query"
+                    },
+                    {
+                        "type": "number",
+                        "description": "Start average vote",
+                        "name": "start_average_vote",
+                        "in": "query"
+                    },
+                    {
+                        "type": "number",
+                        "description": "End average vote",
+                        "name": "end_average_vote",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/http.searchMoviesResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/search/person": {
+            "get": {
+                "description": "Search people",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "person"
+                ],
+                "summary": "Search people",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Query",
+                        "name": "query",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Page",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Per Page",
+                        "name": "per_page",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/http.getListPeopleResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/tvshow/airing-today": {
+            "get": {
+                "description": "Get airing today tv shows",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tv show"
+                ],
+                "summary": "Get airing today tv shows",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Page",
+                        "name": "page",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Per page",
+                        "name": "per_page",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Time order",
+                        "name": "time_order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Popularity order",
+                        "name": "popularity_order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Vote order",
+                        "name": "vote_order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Name order",
+                        "name": "name_order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Start date",
+                        "name": "start_date",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "End date",
+                        "name": "end_date",
+                        "in": "query"
+                    },
+                    {
+                        "type": "array",
+                        "items": {
+                            "type": "integer"
+                        },
+                        "collectionFormat": "csv",
+                        "description": "Genre IDs",
+                        "name": "genre_ids",
+                        "in": "query"
+                    },
+                    {
+                        "type": "number",
+                        "description": "Start average vote",
+                        "name": "start_average_vote",
+                        "in": "query"
+                    },
+                    {
+                        "type": "number",
+                        "description": "End average vote",
+                        "name": "end_average_vote",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/http.getListTVShowSummaryResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/tvshow/genres": {
+            "get": {
+                "description": "Get tv show genres",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tv show"
+                ],
+                "summary": "Get tv show genres",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.TVGenre"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/tvshow/on-the-air": {
+            "get": {
+                "description": "Get on the air tv shows",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tv show"
+                ],
+                "summary": "Get on the air tv shows",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Page",
+                        "name": "page",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Per page",
+                        "name": "per_page",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Time order",
+                        "name": "time_order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Popularity order",
+                        "name": "popularity_order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Vote order",
+                        "name": "vote_order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Name order",
+                        "name": "name_order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Start date",
+                        "name": "start_date",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "End date",
+                        "name": "end_date",
+                        "in": "query"
+                    },
+                    {
+                        "type": "array",
+                        "items": {
+                            "type": "integer"
+                        },
+                        "collectionFormat": "csv",
+                        "description": "Genre IDs",
+                        "name": "genre_ids",
+                        "in": "query"
+                    },
+                    {
+                        "type": "number",
+                        "description": "Start average vote",
+                        "name": "start_average_vote",
+                        "in": "query"
+                    },
+                    {
+                        "type": "number",
+                        "description": "End average vote",
+                        "name": "end_average_vote",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/http.getListTVShowSummaryResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/tvshow/popular": {
+            "get": {
+                "description": "Get popular tv shows",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tv show"
+                ],
+                "summary": "Get popular tv shows",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Page",
+                        "name": "page",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Per page",
+                        "name": "per_page",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Time order",
+                        "name": "time_order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Popularity order",
+                        "name": "popularity_order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Vote order",
+                        "name": "vote_order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Name order",
+                        "name": "name_order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Start date",
+                        "name": "start_date",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "End date",
+                        "name": "end_date",
+                        "in": "query"
+                    },
+                    {
+                        "type": "array",
+                        "items": {
+                            "type": "integer"
+                        },
+                        "collectionFormat": "csv",
+                        "description": "Genre IDs",
+                        "name": "genre_ids",
+                        "in": "query"
+                    },
+                    {
+                        "type": "number",
+                        "description": "Start average vote",
+                        "name": "start_average_vote",
+                        "in": "query"
+                    },
+                    {
+                        "type": "number",
+                        "description": "End average vote",
+                        "name": "end_average_vote",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/http.getListTVShowSummaryResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/tvshow/search": {
+            "get": {
+                "description": "Search tv shows",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tv show"
+                ],
+                "summary": "Search tv shows",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Search query",
+                        "name": "query",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Page",
+                        "name": "page",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Per page",
+                        "name": "per_page",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Time order",
+                        "name": "time_order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Popularity order",
+                        "name": "popularity_order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Vote order",
+                        "name": "vote_order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Name order",
+                        "name": "name_order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Start date",
+                        "name": "start_date",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "End date",
+                        "name": "end_date",
+                        "in": "query"
+                    },
+                    {
+                        "type": "array",
+                        "items": {
+                            "type": "integer"
+                        },
+                        "collectionFormat": "csv",
+                        "description": "Genre IDs",
+                        "name": "genre_ids",
+                        "in": "query"
+                    },
+                    {
+                        "type": "number",
+                        "description": "Start average vote",
+                        "name": "start_average_vote",
+                        "in": "query"
+                    },
+                    {
+                        "type": "number",
+                        "description": "End average vote",
+                        "name": "end_average_vote",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/http.getListTVShowsResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/tvshow/top-rated": {
+            "get": {
+                "description": "Get top rated tv shows",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tv show"
+                ],
+                "summary": "Get top rated tv shows",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Page",
+                        "name": "page",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Per page",
+                        "name": "per_page",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Time order",
+                        "name": "time_order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Popularity order",
+                        "name": "popularity_order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Vote order",
+                        "name": "vote_order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Name order",
+                        "name": "name_order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Start date",
+                        "name": "start_date",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "End date",
+                        "name": "end_date",
+                        "in": "query"
+                    },
+                    {
+                        "type": "array",
+                        "items": {
+                            "type": "integer"
+                        },
+                        "collectionFormat": "csv",
+                        "description": "Genre IDs",
+                        "name": "genre_ids",
+                        "in": "query"
+                    },
+                    {
+                        "type": "number",
+                        "description": "Start average vote",
+                        "name": "start_average_vote",
+                        "in": "query"
+                    },
+                    {
+                        "type": "number",
+                        "description": "End average vote",
+                        "name": "end_average_vote",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/http.getListTVShowSummaryResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/tvshow/upcoming": {
+            "get": {
+                "description": "Get upcoming tv shows",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tv show"
+                ],
+                "summary": "Get upcoming tv shows",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Page",
+                        "name": "page",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Per page",
+                        "name": "per_page",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Time order",
+                        "name": "time_order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Popularity order",
+                        "name": "popularity_order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Vote order",
+                        "name": "vote_order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Name order",
+                        "name": "name_order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Start date",
+                        "name": "start_date",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "End date",
+                        "name": "end_date",
+                        "in": "query"
+                    },
+                    {
+                        "type": "array",
+                        "items": {
+                            "type": "integer"
+                        },
+                        "collectionFormat": "csv",
+                        "description": "Genre IDs",
+                        "name": "genre_ids",
+                        "in": "query"
+                    },
+                    {
+                        "type": "number",
+                        "description": "Start average vote",
+                        "name": "start_average_vote",
+                        "in": "query"
+                    },
+                    {
+                        "type": "number",
+                        "description": "End average vote",
+                        "name": "end_average_vote",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/http.getListTVShowSummaryResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/tvshow/{id}": {
+            "get": {
+                "description": "Get one tv show",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tv show"
+                ],
+                "summary": "Get one tv show",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "TV Show ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.TVShow"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "http.addCommentRequest": {
+            "type": "object",
+            "required": [
+                "avatar",
+                "comment",
+                "media_id",
+                "type",
+                "user_id",
+                "username"
+            ],
+            "properties": {
+                "avatar": {
+                    "type": "string"
+                },
+                "comment": {
+                    "type": "string"
+                },
+                "media_id": {
+                    "type": "integer"
+                },
+                "type": {
+                    "type": "string"
+                },
+                "user_id": {
+                    "type": "string"
+                },
+                "username": {
+                    "type": "string"
+                }
+            }
+        },
+        "http.addRatingRequest": {
+            "type": "object",
+            "required": [
+                "avatar",
+                "media_id",
+                "rating",
+                "type",
+                "user_id",
+                "username"
+            ],
+            "properties": {
+                "avatar": {
+                    "type": "string"
+                },
+                "media_id": {
+                    "type": "integer"
+                },
+                "rating": {
+                    "type": "number"
+                },
+                "type": {
+                    "type": "string"
+                },
+                "user_id": {
+                    "type": "string"
+                },
+                "username": {
+                    "type": "string"
+                }
+            }
+        },
+        "http.addToSavedItemRequest": {
+            "type": "object",
+            "required": [
+                "media_id",
+                "media_type",
+                "saved_item_type",
+                "user_id"
+            ],
+            "properties": {
+                "media_id": {
+                    "type": "integer"
+                },
+                "media_type": {
+                    "type": "string"
+                },
+                "saved_item_type": {
+                    "type": "string"
+                },
+                "user_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "http.getListPeopleResponse": {
+            "type": "object",
+            "properties": {
+                "page": {
+                    "type": "integer"
+                },
+                "per_page": {
+                    "type": "integer"
+                },
+                "results": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.Person"
+                    }
+                },
+                "total_pages": {
+                    "type": "integer"
+                },
+                "total_results": {
+                    "type": "integer"
+                }
+            }
+        },
+        "http.getListPeopleSummaryResponse": {
+            "type": "object",
+            "properties": {
+                "page": {
+                    "type": "integer"
+                },
+                "per_page": {
+                    "type": "integer"
+                },
+                "results": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.PersonSummary"
+                    }
+                },
+                "total_pages": {
+                    "type": "integer"
+                },
+                "total_results": {
+                    "type": "integer"
+                }
+            }
+        },
+        "http.getListTVShowSummaryResponse": {
+            "type": "object",
+            "properties": {
+                "page": {
+                    "type": "integer"
+                },
+                "per_page": {
+                    "type": "integer"
+                },
+                "results": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.TVSummary"
+                    }
+                },
+                "total_pages": {
+                    "type": "integer"
+                },
+                "total_results": {
+                    "type": "integer"
+                }
+            }
+        },
+        "http.getListTVShowsResponse": {
+            "type": "object",
+            "properties": {
+                "page": {
+                    "type": "integer"
+                },
+                "per_page": {
+                    "type": "integer"
+                },
+                "results": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.TVShow"
+                    }
+                },
+                "total_pages": {
+                    "type": "integer"
+                },
+                "total_results": {
+                    "type": "integer"
+                }
+            }
+        },
+        "http.getSummaryMoviesResponse": {
+            "type": "object",
+            "properties": {
+                "page": {
+                    "type": "integer"
+                },
+                "per_page": {
+                    "type": "integer"
+                },
+                "results": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.MovieSummary"
+                    }
+                },
+                "total_pages": {
+                    "type": "integer"
+                },
+                "total_results": {
+                    "type": "integer"
+                }
+            }
+        },
+        "http.removeFromSavedItemRequest": {
+            "type": "object",
+            "required": [
+                "media_id",
+                "media_type",
+                "saved_item_type",
+                "user_id"
+            ],
+            "properties": {
+                "media_id": {
+                    "type": "integer"
+                },
+                "media_type": {
+                    "type": "string"
+                },
+                "saved_item_type": {
+                    "type": "string"
+                },
+                "user_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "http.searchMoviesResponse": {
+            "type": "object",
+            "properties": {
+                "page": {
+                    "type": "integer"
+                },
+                "per_page": {
+                    "type": "integer"
+                },
+                "results": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.Movie"
+                    }
+                },
+                "total_pages": {
+                    "type": "integer"
+                },
+                "total_results": {
+                    "type": "integer"
+                }
+            }
+        },
+        "http.updateCommentRequest": {
+            "type": "object",
+            "required": [
+                "userID"
+            ],
+            "properties": {
+                "avatar": {
+                    "type": "string"
+                },
+                "comment": {
+                    "type": "string"
+                },
+                "media_id": {
+                    "type": "integer"
+                },
+                "type": {
+                    "type": "string"
+                },
+                "userID": {
+                    "type": "string"
+                },
+                "username": {
+                    "type": "string"
+                }
+            }
+        },
+        "http.updateRatingRequest": {
+            "type": "object",
+            "required": [
+                "userID"
+            ],
+            "properties": {
+                "avatar": {
+                    "type": "string"
+                },
+                "media_id": {
+                    "type": "integer"
+                },
+                "rating": {
+                    "type": "number"
+                },
+                "type": {
+                    "type": "string"
+                },
+                "userID": {
+                    "type": "string"
+                },
+                "username": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.BelongsTo": {
+            "type": "object",
+            "properties": {
+                "backdrop_path": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "poster_path": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.CreatedBy": {
+            "type": "object",
+            "properties": {
+                "_id": {
+                    "type": "string"
+                },
+                "credit_id": {
+                    "type": "string"
+                },
+                "gender": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "original_name": {
+                    "type": "string"
+                },
+                "profile_path": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.Crew": {
+            "type": "object",
+            "properties": {
+                "adult": {
+                    "type": "boolean"
+                },
+                "backdrop_path": {
+                    "type": "string"
+                },
+                "character": {
+                    "type": "string"
+                },
+                "credit_id": {
+                    "type": "string"
+                },
+                "episode_count": {
+                    "type": "integer"
+                },
+                "genre_ids": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "order": {
+                    "type": "integer"
+                },
+                "original_language": {
+                    "type": "string"
+                },
+                "original_title": {
+                    "type": "string"
+                },
+                "overview": {
+                    "type": "string"
+                },
+                "poster_path": {
+                    "type": "string"
+                },
+                "release_date": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "video": {
+                    "type": "boolean"
+                },
+                "vote_average": {
+                    "type": "number"
+                },
+                "vote_count": {
+                    "type": "integer"
+                }
+            }
+        },
+        "models.EpisodeToAir": {
+            "type": "object",
+            "properties": {
+                "air_date": {
+                    "type": "string"
+                },
+                "episode_number": {
+                    "type": "integer"
+                },
+                "episode_type": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "overview": {
+                    "type": "string"
+                },
+                "production_code": {
+                    "type": "string"
+                },
+                "runtime": {
+                    "type": "integer"
+                },
+                "season_number": {
+                    "type": "integer"
+                },
+                "show_id": {
+                    "type": "integer"
+                },
+                "still_path": {
+                    "type": "string"
+                },
+                "vote_average": {
+                    "type": "number"
+                },
+                "vote_count": {
+                    "type": "integer"
+                }
+            }
+        },
+        "models.KeyWord": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.KnownFor": {
+            "type": "object",
+            "properties": {
+                "adult": {
+                    "type": "boolean"
+                },
+                "backdrop_path": {
+                    "type": "string"
+                },
+                "genre_ids": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "media_type": {
+                    "type": "string"
+                },
+                "original_language": {
+                    "type": "string"
+                },
+                "original_title": {
+                    "type": "string"
+                },
+                "overview": {
+                    "type": "string"
+                },
+                "popularity": {
+                    "type": "number"
+                },
+                "poster_path": {
+                    "type": "string"
+                },
+                "release_date": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "video": {
+                    "type": "boolean"
+                },
+                "vote_average": {
+                    "type": "number"
+                },
+                "vote_count": {
+                    "type": "integer"
+                }
+            }
+        },
+        "models.Movie": {
+            "type": "object",
+            "properties": {
+                "_id": {
+                    "type": "string"
+                },
+                "backdrop_path": {
+                    "type": "string"
+                },
+                "belongs_to_collection": {
+                    "$ref": "#/definitions/models.BelongsTo"
+                },
+                "budget": {
+                    "type": "integer"
+                },
+                "categories": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "credits": {
+                    "$ref": "#/definitions/models.MovieCredits"
+                },
+                "genres": {
+                    "description": "diff",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.MovieGenres"
+                    }
+                },
+                "homepage": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "imdb_id": {
+                    "type": "string"
+                },
+                "keywords": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.KeyWord"
+                    }
+                },
+                "original_country": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "original_language": {
+                    "type": "string"
+                },
+                "overview": {
+                    "type": "string"
+                },
+                "popularity": {
+                    "type": "number"
+                },
+                "poster_path": {
+                    "type": "string"
+                },
+                "production_companies": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.ProductionCompanies"
+                    }
+                },
+                "production_countries": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.ProductionCountries"
+                    }
+                },
+                "release_date": {
+                    "type": "string"
+                },
+                "revenue": {
+                    "type": "integer"
+                },
+                "runtime": {
+                    "type": "integer"
+                },
+                "spoken_languages": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.SpokenLanguages"
+                    }
+                },
+                "status": {
+                    "type": "string"
+                },
+                "tagline": {
+                    "type": "string"
+                },
+                "title": {
+                    "description": "diff",
+                    "type": "string"
+                },
+                "tmdb_id": {
+                    "type": "integer"
+                },
+                "trailers": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.Trailer"
+                    }
+                },
+                "video": {
+                    "type": "boolean"
+                },
+                "vote_average": {
+                    "type": "number"
+                },
+                "vote_count": {
+                    "type": "integer"
+                }
+            }
+        },
+        "models.MovieCredit": {
+            "type": "object",
+            "properties": {
+                "cast": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.Crew"
+                    }
+                },
+                "crew": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.Crew"
+                    }
+                },
+                "id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "models.MovieCredits": {
+            "type": "object",
+            "properties": {
+                "cast": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.MovieCrew"
+                    }
+                },
+                "crew": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.MovieCrew"
+                    }
+                },
+                "id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "models.MovieCrew": {
+            "type": "object",
+            "properties": {
+                "adult": {
+                    "type": "boolean"
+                },
+                "cast_id": {
+                    "type": "integer"
+                },
+                "character": {
+                    "type": "string"
+                },
+                "credit_id": {
+                    "type": "string"
+                },
+                "gender": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "known_for_department": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "order": {
+                    "type": "integer"
+                },
+                "original_name": {
+                    "type": "string"
+                },
+                "popularity": {
+                    "type": "number"
+                },
+                "profile_path": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.MovieGenre": {
+            "type": "object",
+            "properties": {
+                "_id": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "tmdb_id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "models.MovieGenres": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.MovieSummary": {
+            "type": "object",
+            "properties": {
+                "_id": {
+                    "type": "string"
+                },
+                "adult": {
+                    "type": "boolean"
+                },
+                "backdrop_path": {
+                    "type": "string"
+                },
+                "genre_ids": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "original_language": {
+                    "type": "string"
+                },
+                "original_title": {
+                    "type": "string"
+                },
+                "overview": {
+                    "type": "string"
+                },
+                "popularity": {
+                    "type": "number"
+                },
+                "poster_path": {
+                    "type": "string"
+                },
+                "release_date": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "tmdb_id": {
+                    "type": "integer"
+                },
+                "video": {
+                    "type": "boolean"
+                },
+                "vote_average": {
+                    "type": "number"
+                },
+                "vote_count": {
+                    "type": "integer"
+                }
+            }
+        },
+        "models.Networks": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "logo_path": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "origin_country": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.Person": {
+            "type": "object",
+            "properties": {
+                "_id": {
+                    "type": "string"
+                },
+                "adult": {
+                    "type": "boolean"
+                },
+                "also_known_as": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "biography": {
+                    "type": "string"
+                },
+                "birthday": {
+                    "type": "string"
+                },
+                "deathday": {
+                    "type": "string"
+                },
+                "gender": {
+                    "type": "integer"
+                },
+                "homepage": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "imdb_id": {
+                    "type": "string"
+                },
+                "know_for_department": {
+                    "type": "string"
+                },
+                "movie_credits": {
+                    "$ref": "#/definitions/models.MovieCredit"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "original_name": {
+                    "type": "string"
+                },
+                "place_of_birth": {
+                    "type": "string"
+                },
+                "popularity": {
+                    "type": "number"
+                },
+                "profile_path": {
+                    "type": "string"
+                },
+                "tmdb_id": {
+                    "type": "integer"
+                },
+                "tv_credits": {
+                    "$ref": "#/definitions/models.TVCredit"
+                }
+            }
+        },
+        "models.PersonSummary": {
+            "type": "object",
+            "properties": {
+                "_id": {
+                    "type": "string"
+                },
+                "adult": {
+                    "type": "boolean"
+                },
+                "gender": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "know_for_department": {
+                    "type": "string"
+                },
+                "known_for": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.KnownFor"
+                    }
+                },
+                "name": {
+                    "type": "string"
+                },
+                "original_name": {
+                    "type": "string"
+                },
+                "popularity": {
+                    "type": "number"
+                },
+                "profile_path": {
+                    "type": "string"
+                },
+                "tmdb_id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "models.ProductionCompanies": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "logo_path": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "origin_country": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.ProductionCountries": {
+            "type": "object",
+            "properties": {
+                "iso_3166_1": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.SavedItems": {
+            "type": "object",
+            "properties": {
+                "movie_id": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                },
+                "tv_show_id": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                },
+                "type": {
+                    "type": "string"
+                },
+                "user_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.SpokenLanguages": {
+            "type": "object",
+            "properties": {
+                "english_name": {
+                    "type": "string"
+                },
+                "iso_639_1": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.TVCredit": {
+            "type": "object",
+            "properties": {
+                "cast": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.Crew"
+                    }
+                },
+                "crew": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.Crew"
+                    }
+                }
+            }
+        },
+        "models.TVGenre": {
+            "type": "object",
+            "properties": {
+                "_id": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "tmdb_id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "models.TVShow": {
+            "type": "object",
+            "properties": {
+                "_id": {
+                    "type": "string"
+                },
+                "adult": {
+                    "type": "boolean"
+                },
+                "backdrop_path": {
+                    "type": "string"
+                },
+                "belongs_to_collection": {
+                    "$ref": "#/definitions/models.BelongsTo"
+                },
+                "created_by": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.CreatedBy"
+                    }
+                },
+                "episode_run_time": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                },
+                "first_air_date": {
+                    "type": "string"
+                },
+                "genres": {
+                    "description": "diff",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.TVShowGenres"
+                    }
+                },
+                "homepage": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "in_production": {
+                    "type": "boolean"
+                },
+                "languages": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "last_air_date": {
+                    "type": "string"
+                },
+                "last_episode_to_air": {
+                    "$ref": "#/definitions/models.EpisodeToAir"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "networks": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.Networks"
+                    }
+                },
+                "next_episode_to_air": {
+                    "$ref": "#/definitions/models.EpisodeToAir"
+                },
+                "number_of_episodes": {
+                    "type": "integer"
+                },
+                "number_of_seasons": {
+                    "type": "integer"
+                },
+                "origin_country": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "original_language": {
+                    "type": "string"
+                },
+                "original_name": {
+                    "type": "string"
+                },
+                "overview": {
+                    "type": "string"
+                },
+                "popularity": {
+                    "type": "number"
+                },
+                "poster_path": {
+                    "type": "string"
+                },
+                "production_companies": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.ProductionCompanies"
+                    }
+                },
+                "production_countries": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.ProductionCountries"
+                    }
+                },
+                "spoken_languages": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.SpokenLanguages"
+                    }
+                },
+                "status": {
+                    "type": "string"
+                },
+                "tagline": {
+                    "type": "string"
+                },
+                "tmdb_id": {
+                    "type": "integer"
+                },
+                "type": {
+                    "type": "string"
+                },
+                "vote_average": {
+                    "type": "number"
+                },
+                "vote_count": {
+                    "type": "integer"
+                }
+            }
+        },
+        "models.TVShowGenres": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.TVSummary": {
+            "type": "object",
+            "properties": {
+                "_id": {
+                    "type": "string"
+                },
+                "adult": {
+                    "type": "boolean"
+                },
+                "backdrop_path": {
+                    "type": "string"
+                },
+                "first_air_date": {
+                    "type": "string"
+                },
+                "genre_ids": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "original_country": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "original_language": {
+                    "type": "string"
+                },
+                "original_name": {
+                    "type": "string"
+                },
+                "overview": {
+                    "type": "string"
+                },
+                "popularity": {
+                    "type": "number"
+                },
+                "poster_path": {
+                    "type": "string"
+                },
+                "tmdb_id": {
+                    "type": "integer"
+                },
+                "vote_average": {
+                    "type": "number"
+                },
+                "vote_count": {
+                    "type": "integer"
+                }
+            }
+        },
+        "models.Trailer": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "iso_3166_1": {
+                    "type": "string"
+                },
+                "iso_639_1": {
+                    "type": "string"
+                },
+                "key": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "official": {
+                    "type": "boolean"
+                },
+                "published_at": {
+                    "type": "string"
+                },
+                "site": {
+                    "type": "string"
+                },
+                "size": {
+                    "type": "integer"
+                },
+                "type": {
+                    "type": "string"
+                }
+            }
+        },
+        "movie.GetMovieGenresOutput": {
+            "type": "object",
+            "properties": {
+                "genres": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.MovieGenre"
+                    }
+                }
+            }
+        }
+    }
+}

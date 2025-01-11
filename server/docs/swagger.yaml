@@ -1,0 +1,2197 @@
+basePath: /api/v1
+definitions:
+  http.addCommentRequest:
+    properties:
+      avatar:
+        type: string
+      comment:
+        type: string
+      media_id:
+        type: integer
+      type:
+        type: string
+      user_id:
+        type: string
+      username:
+        type: string
+    required:
+    - avatar
+    - comment
+    - media_id
+    - type
+    - user_id
+    - username
+    type: object
+  http.addRatingRequest:
+    properties:
+      avatar:
+        type: string
+      media_id:
+        type: integer
+      rating:
+        type: number
+      type:
+        type: string
+      user_id:
+        type: string
+      username:
+        type: string
+    required:
+    - avatar
+    - media_id
+    - rating
+    - type
+    - user_id
+    - username
+    type: object
+  http.addToSavedItemRequest:
+    properties:
+      media_id:
+        type: integer
+      media_type:
+        type: string
+      saved_item_type:
+        type: string
+      user_id:
+        type: string
+    required:
+    - media_id
+    - media_type
+    - saved_item_type
+    - user_id
+    type: object
+  http.getListPeopleResponse:
+    properties:
+      page:
+        type: integer
+      per_page:
+        type: integer
+      results:
+        items:
+          $ref: '#/definitions/models.Person'
+        type: array
+      total_pages:
+        type: integer
+      total_results:
+        type: integer
+    type: object
+  http.getListPeopleSummaryResponse:
+    properties:
+      page:
+        type: integer
+      per_page:
+        type: integer
+      results:
+        items:
+          $ref: '#/definitions/models.PersonSummary'
+        type: array
+      total_pages:
+        type: integer
+      total_results:
+        type: integer
+    type: object
+  http.getListTVShowSummaryResponse:
+    properties:
+      page:
+        type: integer
+      per_page:
+        type: integer
+      results:
+        items:
+          $ref: '#/definitions/models.TVSummary'
+        type: array
+      total_pages:
+        type: integer
+      total_results:
+        type: integer
+    type: object
+  http.getListTVShowsResponse:
+    properties:
+      page:
+        type: integer
+      per_page:
+        type: integer
+      results:
+        items:
+          $ref: '#/definitions/models.TVShow'
+        type: array
+      total_pages:
+        type: integer
+      total_results:
+        type: integer
+    type: object
+  http.getSummaryMoviesResponse:
+    properties:
+      page:
+        type: integer
+      per_page:
+        type: integer
+      results:
+        items:
+          $ref: '#/definitions/models.MovieSummary'
+        type: array
+      total_pages:
+        type: integer
+      total_results:
+        type: integer
+    type: object
+  http.removeFromSavedItemRequest:
+    properties:
+      media_id:
+        type: integer
+      media_type:
+        type: string
+      saved_item_type:
+        type: string
+      user_id:
+        type: string
+    required:
+    - media_id
+    - media_type
+    - saved_item_type
+    - user_id
+    type: object
+  http.searchMoviesResponse:
+    properties:
+      page:
+        type: integer
+      per_page:
+        type: integer
+      results:
+        items:
+          $ref: '#/definitions/models.Movie'
+        type: array
+      total_pages:
+        type: integer
+      total_results:
+        type: integer
+    type: object
+  http.updateCommentRequest:
+    properties:
+      avatar:
+        type: string
+      comment:
+        type: string
+      media_id:
+        type: integer
+      type:
+        type: string
+      userID:
+        type: string
+      username:
+        type: string
+    required:
+    - userID
+    type: object
+  http.updateRatingRequest:
+    properties:
+      avatar:
+        type: string
+      media_id:
+        type: integer
+      rating:
+        type: number
+      type:
+        type: string
+      userID:
+        type: string
+      username:
+        type: string
+    required:
+    - userID
+    type: object
+  models.BelongsTo:
+    properties:
+      backdrop_path:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      poster_path:
+        type: string
+    type: object
+  models.CreatedBy:
+    properties:
+      _id:
+        type: string
+      credit_id:
+        type: string
+      gender:
+        type: integer
+      name:
+        type: string
+      original_name:
+        type: string
+      profile_path:
+        type: string
+    type: object
+  models.Crew:
+    properties:
+      adult:
+        type: boolean
+      backdrop_path:
+        type: string
+      character:
+        type: string
+      credit_id:
+        type: string
+      episode_count:
+        type: integer
+      genre_ids:
+        items:
+          type: integer
+        type: array
+      id:
+        type: integer
+      order:
+        type: integer
+      original_language:
+        type: string
+      original_title:
+        type: string
+      overview:
+        type: string
+      poster_path:
+        type: string
+      release_date:
+        type: string
+      title:
+        type: string
+      video:
+        type: boolean
+      vote_average:
+        type: number
+      vote_count:
+        type: integer
+    type: object
+  models.EpisodeToAir:
+    properties:
+      air_date:
+        type: string
+      episode_number:
+        type: integer
+      episode_type:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      overview:
+        type: string
+      production_code:
+        type: string
+      runtime:
+        type: integer
+      season_number:
+        type: integer
+      show_id:
+        type: integer
+      still_path:
+        type: string
+      vote_average:
+        type: number
+      vote_count:
+        type: integer
+    type: object
+  models.KeyWord:
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+    type: object
+  models.KnownFor:
+    properties:
+      adult:
+        type: boolean
+      backdrop_path:
+        type: string
+      genre_ids:
+        items:
+          type: integer
+        type: array
+      id:
+        type: integer
+      media_type:
+        type: string
+      original_language:
+        type: string
+      original_title:
+        type: string
+      overview:
+        type: string
+      popularity:
+        type: number
+      poster_path:
+        type: string
+      release_date:
+        type: string
+      title:
+        type: string
+      video:
+        type: boolean
+      vote_average:
+        type: number
+      vote_count:
+        type: integer
+    type: object
+  models.Movie:
+    properties:
+      _id:
+        type: string
+      backdrop_path:
+        type: string
+      belongs_to_collection:
+        $ref: '#/definitions/models.BelongsTo'
+      budget:
+        type: integer
+      categories:
+        items:
+          type: string
+        type: array
+      credits:
+        $ref: '#/definitions/models.MovieCredits'
+      genres:
+        description: diff
+        items:
+          $ref: '#/definitions/models.MovieGenres'
+        type: array
+      homepage:
+        type: string
+      id:
+        type: integer
+      imdb_id:
+        type: string
+      keywords:
+        items:
+          $ref: '#/definitions/models.KeyWord'
+        type: array
+      original_country:
+        items:
+          type: string
+        type: array
+      original_language:
+        type: string
+      overview:
+        type: string
+      popularity:
+        type: number
+      poster_path:
+        type: string
+      production_companies:
+        items:
+          $ref: '#/definitions/models.ProductionCompanies'
+        type: array
+      production_countries:
+        items:
+          $ref: '#/definitions/models.ProductionCountries'
+        type: array
+      release_date:
+        type: string
+      revenue:
+        type: integer
+      runtime:
+        type: integer
+      spoken_languages:
+        items:
+          $ref: '#/definitions/models.SpokenLanguages'
+        type: array
+      status:
+        type: string
+      tagline:
+        type: string
+      title:
+        description: diff
+        type: string
+      tmdb_id:
+        type: integer
+      trailers:
+        items:
+          $ref: '#/definitions/models.Trailer'
+        type: array
+      video:
+        type: boolean
+      vote_average:
+        type: number
+      vote_count:
+        type: integer
+    type: object
+  models.MovieCredit:
+    properties:
+      cast:
+        items:
+          $ref: '#/definitions/models.Crew'
+        type: array
+      crew:
+        items:
+          $ref: '#/definitions/models.Crew'
+        type: array
+      id:
+        type: integer
+    type: object
+  models.MovieCredits:
+    properties:
+      cast:
+        items:
+          $ref: '#/definitions/models.MovieCrew'
+        type: array
+      crew:
+        items:
+          $ref: '#/definitions/models.MovieCrew'
+        type: array
+      id:
+        type: integer
+    type: object
+  models.MovieCrew:
+    properties:
+      adult:
+        type: boolean
+      cast_id:
+        type: integer
+      character:
+        type: string
+      credit_id:
+        type: string
+      gender:
+        type: integer
+      id:
+        type: integer
+      known_for_department:
+        type: string
+      name:
+        type: string
+      order:
+        type: integer
+      original_name:
+        type: string
+      popularity:
+        type: number
+      profile_path:
+        type: string
+    type: object
+  models.MovieGenre:
+    properties:
+      _id:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      tmdb_id:
+        type: integer
+    type: object
+  models.MovieGenres:
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+    type: object
+  models.MovieSummary:
+    properties:
+      _id:
+        type: string
+      adult:
+        type: boolean
+      backdrop_path:
+        type: string
+      genre_ids:
+        items:
+          type: integer
+        type: array
+      id:
+        type: integer
+      original_language:
+        type: string
+      original_title:
+        type: string
+      overview:
+        type: string
+      popularity:
+        type: number
+      poster_path:
+        type: string
+      release_date:
+        type: string
+      title:
+        type: string
+      tmdb_id:
+        type: integer
+      video:
+        type: boolean
+      vote_average:
+        type: number
+      vote_count:
+        type: integer
+    type: object
+  models.Networks:
+    properties:
+      id:
+        type: integer
+      logo_path:
+        type: string
+      name:
+        type: string
+      origin_country:
+        type: string
+    type: object
+  models.Person:
+    properties:
+      _id:
+        type: string
+      adult:
+        type: boolean
+      also_known_as:
+        items:
+          type: string
+        type: array
+      biography:
+        type: string
+      birthday:
+        type: string
+      deathday:
+        type: string
+      gender:
+        type: integer
+      homepage:
+        type: string
+      id:
+        type: integer
+      imdb_id:
+        type: string
+      know_for_department:
+        type: string
+      movie_credits:
+        $ref: '#/definitions/models.MovieCredit'
+      name:
+        type: string
+      original_name:
+        type: string
+      place_of_birth:
+        type: string
+      popularity:
+        type: number
+      profile_path:
+        type: string
+      tmdb_id:
+        type: integer
+      tv_credits:
+        $ref: '#/definitions/models.TVCredit'
+    type: object
+  models.PersonSummary:
+    properties:
+      _id:
+        type: string
+      adult:
+        type: boolean
+      gender:
+        type: integer
+      id:
+        type: integer
+      know_for_department:
+        type: string
+      known_for:
+        items:
+          $ref: '#/definitions/models.KnownFor'
+        type: array
+      name:
+        type: string
+      original_name:
+        type: string
+      popularity:
+        type: number
+      profile_path:
+        type: string
+      tmdb_id:
+        type: integer
+    type: object
+  models.ProductionCompanies:
+    properties:
+      id:
+        type: integer
+      logo_path:
+        type: string
+      name:
+        type: string
+      origin_country:
+        type: string
+    type: object
+  models.ProductionCountries:
+    properties:
+      iso_3166_1:
+        type: string
+      name:
+        type: string
+    type: object
+  models.SavedItems:
+    properties:
+      movie_id:
+        items:
+          type: integer
+        type: array
+      tv_show_id:
+        items:
+          type: integer
+        type: array
+      type:
+        type: string
+      user_id:
+        type: string
+    type: object
+  models.SpokenLanguages:
+    properties:
+      english_name:
+        type: string
+      iso_639_1:
+        type: string
+      name:
+        type: string
+    type: object
+  models.TVCredit:
+    properties:
+      cast:
+        items:
+          $ref: '#/definitions/models.Crew'
+        type: array
+      crew:
+        items:
+          $ref: '#/definitions/models.Crew'
+        type: array
+    type: object
+  models.TVGenre:
+    properties:
+      _id:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      tmdb_id:
+        type: integer
+    type: object
+  models.TVShow:
+    properties:
+      _id:
+        type: string
+      adult:
+        type: boolean
+      backdrop_path:
+        type: string
+      belongs_to_collection:
+        $ref: '#/definitions/models.BelongsTo'
+      created_by:
+        items:
+          $ref: '#/definitions/models.CreatedBy'
+        type: array
+      episode_run_time:
+        items:
+          type: integer
+        type: array
+      first_air_date:
+        type: string
+      genres:
+        description: diff
+        items:
+          $ref: '#/definitions/models.TVShowGenres'
+        type: array
+      homepage:
+        type: string
+      id:
+        type: integer
+      in_production:
+        type: boolean
+      languages:
+        items:
+          type: string
+        type: array
+      last_air_date:
+        type: string
+      last_episode_to_air:
+        $ref: '#/definitions/models.EpisodeToAir'
+      name:
+        type: string
+      networks:
+        items:
+          $ref: '#/definitions/models.Networks'
+        type: array
+      next_episode_to_air:
+        $ref: '#/definitions/models.EpisodeToAir'
+      number_of_episodes:
+        type: integer
+      number_of_seasons:
+        type: integer
+      origin_country:
+        items:
+          type: string
+        type: array
+      original_language:
+        type: string
+      original_name:
+        type: string
+      overview:
+        type: string
+      popularity:
+        type: number
+      poster_path:
+        type: string
+      production_companies:
+        items:
+          $ref: '#/definitions/models.ProductionCompanies'
+        type: array
+      production_countries:
+        items:
+          $ref: '#/definitions/models.ProductionCountries'
+        type: array
+      spoken_languages:
+        items:
+          $ref: '#/definitions/models.SpokenLanguages'
+        type: array
+      status:
+        type: string
+      tagline:
+        type: string
+      tmdb_id:
+        type: integer
+      type:
+        type: string
+      vote_average:
+        type: number
+      vote_count:
+        type: integer
+    type: object
+  models.TVShowGenres:
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+    type: object
+  models.TVSummary:
+    properties:
+      _id:
+        type: string
+      adult:
+        type: boolean
+      backdrop_path:
+        type: string
+      first_air_date:
+        type: string
+      genre_ids:
+        items:
+          type: integer
+        type: array
+      id:
+        type: integer
+      name:
+        type: string
+      original_country:
+        items:
+          type: string
+        type: array
+      original_language:
+        type: string
+      original_name:
+        type: string
+      overview:
+        type: string
+      popularity:
+        type: number
+      poster_path:
+        type: string
+      tmdb_id:
+        type: integer
+      vote_average:
+        type: number
+      vote_count:
+        type: integer
+    type: object
+  models.Trailer:
+    properties:
+      id:
+        type: string
+      iso_639_1:
+        type: string
+      iso_3166_1:
+        type: string
+      key:
+        type: string
+      name:
+        type: string
+      official:
+        type: boolean
+      published_at:
+        type: string
+      site:
+        type: string
+      size:
+        type: integer
+      type:
+        type: string
+    type: object
+  movie.GetMovieGenresOutput:
+    properties:
+      genres:
+        items:
+          $ref: '#/definitions/models.MovieGenre'
+        type: array
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: Movseek API
+  title: Movseek API
+  version: "1.0"
+paths:
+  /comments:
+    post:
+      consumes:
+      - application/json
+      description: Add comment
+      parameters:
+      - description: Add comment request
+        in: body
+        name: addCommentRequest
+        required: true
+        schema:
+          $ref: '#/definitions/http.addCommentRequest'
+      produces:
+      - application/json
+      responses: {}
+      summary: Add comment
+      tags:
+      - review
+  /comments/{user_id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete comment
+      parameters:
+      - description: User ID
+        in: path
+        name: user_id
+        required: true
+        type: string
+      - description: Media ID
+        in: query
+        name: media_id
+        required: true
+        type: integer
+      - description: Type
+        in: query
+        name: type
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses: {}
+      summary: Delete comment
+      tags:
+      - review
+    put:
+      consumes:
+      - application/json
+      description: Update comment
+      parameters:
+      - description: Update comment request
+        in: body
+        name: updateCommentRequest
+        required: true
+        schema:
+          $ref: '#/definitions/http.updateCommentRequest'
+      produces:
+      - application/json
+      responses: {}
+      summary: Update comment
+      tags:
+      - review
+  /comments/media/{media_id}:
+    get:
+      consumes:
+      - application/json
+      description: Get comments by media
+      parameters:
+      - description: Media ID
+        in: path
+        name: media_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses: {}
+      summary: Get comments by media
+      tags:
+      - review
+  /comments/user/{user_id}:
+    get:
+      consumes:
+      - application/json
+      description: Get comments by user
+      parameters:
+      - description: User ID
+        in: path
+        name: user_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses: {}
+      summary: Get comments by user
+      tags:
+      - review
+  /movie/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Get one movie
+      parameters:
+      - description: Movie ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Movie'
+      summary: Get one movie
+      tags:
+      - movie
+  /movie/{id}/credits:
+    get:
+      consumes:
+      - application/json
+      description: Get movie credits
+      parameters:
+      - description: Movie ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.MovieCredits'
+      summary: Get movie credits
+      tags:
+      - movie
+  /movie/{id}/keywords:
+    get:
+      consumes:
+      - application/json
+      description: Get movie keywords
+      parameters:
+      - description: Movie ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.KeyWord'
+            type: array
+      summary: Get movie keywords
+      tags:
+      - movie
+  /movie/{id}/videos:
+    get:
+      consumes:
+      - application/json
+      description: Get movie videos
+      parameters:
+      - description: Movie ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Trailer'
+            type: array
+      summary: Get movie videos
+      tags:
+      - movie
+  /movie/genres:
+    get:
+      consumes:
+      - application/json
+      description: Get movie genres
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/movie.GetMovieGenresOutput'
+      summary: Get movie genres
+      tags:
+      - movie
+  /movie/now-playing:
+    get:
+      consumes:
+      - application/json
+      description: Get now playing movies
+      parameters:
+      - description: Page
+        in: query
+        name: page
+        required: true
+        type: integer
+      - description: Per page
+        in: query
+        name: per_page
+        required: true
+        type: integer
+      - description: Time order
+        in: query
+        name: time_order
+        type: integer
+      - description: Popularity order
+        in: query
+        name: popularity_order
+        type: integer
+      - description: Vote order
+        in: query
+        name: vote_order
+        type: integer
+      - description: Title order
+        in: query
+        name: title_order
+        type: integer
+      - description: Start date
+        in: query
+        name: start_date
+        type: string
+      - description: End date
+        in: query
+        name: end_date
+        type: string
+      - collectionFormat: csv
+        description: Genre IDs
+        in: query
+        items:
+          type: integer
+        name: genre_ids
+        type: array
+      - description: Start average vote
+        in: query
+        name: start_average_vote
+        type: number
+      - description: End average vote
+        in: query
+        name: end_average_vote
+        type: number
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/http.getSummaryMoviesResponse'
+      summary: Get now playing movies
+      tags:
+      - movie
+  /movie/popular:
+    get:
+      consumes:
+      - application/json
+      description: Get popular movies
+      parameters:
+      - description: Page
+        in: query
+        name: page
+        required: true
+        type: integer
+      - description: Per page
+        in: query
+        name: per_page
+        required: true
+        type: integer
+      - description: Time order
+        in: query
+        name: time_order
+        type: integer
+      - description: Popularity order
+        in: query
+        name: popularity_order
+        type: integer
+      - description: Vote order
+        in: query
+        name: vote_order
+        type: integer
+      - description: Title order
+        in: query
+        name: title_order
+        type: integer
+      - description: Start date
+        in: query
+        name: start_date
+        type: string
+      - description: End date
+        in: query
+        name: end_date
+        type: string
+      - collectionFormat: csv
+        description: Genre IDs
+        in: query
+        items:
+          type: integer
+        name: genre_ids
+        type: array
+      - description: Start average vote
+        in: query
+        name: start_average_vote
+        type: number
+      - description: End average vote
+        in: query
+        name: end_average_vote
+        type: number
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/http.getSummaryMoviesResponse'
+      summary: Get popular movies
+      tags:
+      - movie
+  /movie/top-rated:
+    get:
+      consumes:
+      - application/json
+      description: Get top rated movies
+      parameters:
+      - description: Page
+        in: query
+        name: page
+        required: true
+        type: integer
+      - description: Per page
+        in: query
+        name: per_page
+        required: true
+        type: integer
+      - description: Time order
+        in: query
+        name: time_order
+        type: integer
+      - description: Popularity order
+        in: query
+        name: popularity_order
+        type: integer
+      - description: Vote order
+        in: query
+        name: vote_order
+        type: integer
+      - description: Title order
+        in: query
+        name: title_order
+        type: integer
+      - description: Start date
+        in: query
+        name: start_date
+        type: string
+      - description: End date
+        in: query
+        name: end_date
+        type: string
+      - collectionFormat: csv
+        description: Genre IDs
+        in: query
+        items:
+          type: integer
+        name: genre_ids
+        type: array
+      - description: Start average vote
+        in: query
+        name: start_average_vote
+        type: number
+      - description: End average vote
+        in: query
+        name: end_average_vote
+        type: number
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/http.getSummaryMoviesResponse'
+      summary: Get top rated movies
+      tags:
+      - movie
+  /movie/trailer/latest:
+    get:
+      consumes:
+      - application/json
+      description: Get lastest trailer
+      parameters:
+      - description: Page
+        in: query
+        name: page
+        required: true
+        type: integer
+      - description: Per page
+        in: query
+        name: per_page
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Trailer'
+            type: array
+      summary: Get lastest trailer
+      tags:
+      - movie
+  /movie/trending/{type}:
+    get:
+      consumes:
+      - application/json
+      description: Get trending movies
+      parameters:
+      - description: Type
+        in: path
+        name: type
+        required: true
+        type: string
+      - description: Page
+        in: query
+        name: page
+        required: true
+        type: integer
+      - description: Per page
+        in: query
+        name: per_page
+        required: true
+        type: integer
+      - description: Time order
+        in: query
+        name: time_order
+        type: integer
+      - description: Popularity order
+        in: query
+        name: popularity_order
+        type: integer
+      - description: Vote order
+        in: query
+        name: vote_order
+        type: integer
+      - description: Title order
+        in: query
+        name: title_order
+        type: integer
+      - description: Start date
+        in: query
+        name: start_date
+        type: string
+      - description: End date
+        in: query
+        name: end_date
+        type: string
+      - collectionFormat: csv
+        description: Genre IDs
+        in: query
+        items:
+          type: integer
+        name: genre_ids
+        type: array
+      - description: Start average vote
+        in: query
+        name: start_average_vote
+        type: number
+      - description: End average vote
+        in: query
+        name: end_average_vote
+        type: number
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/http.getSummaryMoviesResponse'
+      summary: Get trending movies
+      tags:
+      - movie
+  /movie/upcoming:
+    get:
+      consumes:
+      - application/json
+      description: Get upcoming movies
+      parameters:
+      - description: Page
+        in: query
+        name: page
+        required: true
+        type: integer
+      - description: Per page
+        in: query
+        name: per_page
+        required: true
+        type: integer
+      - description: Time order
+        in: query
+        name: time_order
+        type: integer
+      - description: Popularity order
+        in: query
+        name: popularity_order
+        type: integer
+      - description: Vote order
+        in: query
+        name: vote_order
+        type: integer
+      - description: Title order
+        in: query
+        name: title_order
+        type: integer
+      - description: Start date
+        in: query
+        name: start_date
+        type: string
+      - description: End date
+        in: query
+        name: end_date
+        type: string
+      - collectionFormat: csv
+        description: Genre IDs
+        in: query
+        items:
+          type: integer
+        name: genre_ids
+        type: array
+      - description: Start average vote
+        in: query
+        name: start_average_vote
+        type: number
+      - description: End average vote
+        in: query
+        name: end_average_vote
+        type: number
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/http.getSummaryMoviesResponse'
+      summary: Get upcoming movies
+      tags:
+      - movie
+  /person/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Get one person
+      parameters:
+      - description: Person ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Person'
+      summary: Get one person
+      tags:
+      - person
+  /person/{id}/credits/movie:
+    get:
+      consumes:
+      - application/json
+      description: Get person credits
+      parameters:
+      - description: Person ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/http.getListPeopleSummaryResponse'
+      summary: Get person credits
+      tags:
+      - person
+  /person/{id}/credits/tv:
+    get:
+      consumes:
+      - application/json
+      description: Get person TV credits
+      parameters:
+      - description: Person ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/http.getListPeopleSummaryResponse'
+      summary: Get person TV credits
+      tags:
+      - person
+  /person/popular:
+    get:
+      consumes:
+      - application/json
+      description: Get popular people
+      parameters:
+      - description: Page
+        in: query
+        name: page
+        type: integer
+      - description: Per Page
+        in: query
+        name: per_page
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/http.getListPeopleSummaryResponse'
+      summary: Get popular people
+      tags:
+      - person
+  /person/trending/{type}:
+    get:
+      consumes:
+      - application/json
+      description: Get trending people
+      parameters:
+      - description: Page
+        in: query
+        name: page
+        type: integer
+      - description: Per Page
+        in: query
+        name: per_page
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/http.getListPeopleSummaryResponse'
+      summary: Get trending people
+      tags:
+      - person
+  /ratings:
+    post:
+      consumes:
+      - application/json
+      description: Add rating
+      parameters:
+      - description: Add rating request
+        in: body
+        name: addRatingRequest
+        required: true
+        schema:
+          $ref: '#/definitions/http.addRatingRequest'
+      produces:
+      - application/json
+      responses: {}
+      summary: Add rating
+      tags:
+      - review
+  /ratings/{user_id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete rating
+      parameters:
+      - description: User ID
+        in: path
+        name: user_id
+        required: true
+        type: string
+      - description: Media ID
+        in: query
+        name: media_id
+        required: true
+        type: integer
+      - description: Type
+        in: query
+        name: type
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses: {}
+      summary: Delete rating
+      tags:
+      - review
+    put:
+      consumes:
+      - application/json
+      description: Update rating
+      parameters:
+      - description: Update rating request
+        in: body
+        name: updateRatingRequest
+        required: true
+        schema:
+          $ref: '#/definitions/http.updateRatingRequest'
+      produces:
+      - application/json
+      responses: {}
+      summary: Update rating
+      tags:
+      - review
+  /ratings/media/{media_id}:
+    get:
+      consumes:
+      - application/json
+      description: Get ratings by media
+      parameters:
+      - description: Media ID
+        in: path
+        name: media_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses: {}
+      summary: Get ratings by media
+      tags:
+      - review
+  /ratings/user/{user_id}:
+    get:
+      consumes:
+      - application/json
+      description: Get ratings by user
+      parameters:
+      - description: User ID
+        in: path
+        name: user_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses: {}
+      summary: Get ratings by user
+      tags:
+      - review
+  /saved-item/{user_id}:
+    get:
+      consumes:
+      - application/json
+      description: Get saved item
+      parameters:
+      - description: User ID
+        in: path
+        name: user_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.SavedItems'
+      summary: Get saved item
+      tags:
+      - saved-item
+  /saved-item/add:
+    put:
+      consumes:
+      - application/json
+      description: Add to saved item
+      parameters:
+      - description: Add to saved item request
+        in: body
+        name: addToSavedItemRequest
+        required: true
+        schema:
+          $ref: '#/definitions/http.addToSavedItemRequest'
+      produces:
+      - application/json
+      responses: {}
+      summary: Add to saved item
+      tags:
+      - saved-item
+  /saved-item/remove:
+    put:
+      consumes:
+      - application/json
+      description: Add to saved item
+      parameters:
+      - description: Remove from saved item request
+        in: body
+        name: removeFromSavedItemRequest
+        required: true
+        schema:
+          $ref: '#/definitions/http.removeFromSavedItemRequest'
+      produces:
+      - application/json
+      responses: {}
+      summary: Add to saved item
+      tags:
+      - saved-item
+  /search/movie:
+    get:
+      consumes:
+      - application/json
+      description: Search movies
+      parameters:
+      - description: Query
+        in: query
+        name: query
+        type: string
+      - description: Page
+        in: query
+        name: page
+        required: true
+        type: integer
+      - description: Per page
+        in: query
+        name: per_page
+        required: true
+        type: integer
+      - description: Time order
+        in: query
+        name: time_order
+        type: integer
+      - description: Popularity order
+        in: query
+        name: popularity_order
+        type: integer
+      - description: Vote order
+        in: query
+        name: vote_order
+        type: integer
+      - description: Title order
+        in: query
+        name: title_order
+        type: integer
+      - description: Start date
+        in: query
+        name: start_date
+        type: string
+      - description: End date
+        in: query
+        name: end_date
+        type: string
+      - collectionFormat: csv
+        description: Genre IDs
+        in: query
+        items:
+          type: integer
+        name: genre_ids
+        type: array
+      - description: Start average vote
+        in: query
+        name: start_average_vote
+        type: number
+      - description: End average vote
+        in: query
+        name: end_average_vote
+        type: number
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/http.searchMoviesResponse'
+      summary: Search movies
+      tags:
+      - movie
+  /search/person:
+    get:
+      consumes:
+      - application/json
+      description: Search people
+      parameters:
+      - description: Query
+        in: query
+        name: query
+        required: true
+        type: string
+      - description: Page
+        in: query
+        name: page
+        type: integer
+      - description: Per Page
+        in: query
+        name: per_page
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/http.getListPeopleResponse'
+      summary: Search people
+      tags:
+      - person
+  /tvshow/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Get one tv show
+      parameters:
+      - description: TV Show ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.TVShow'
+      summary: Get one tv show
+      tags:
+      - tv show
+  /tvshow/airing-today:
+    get:
+      consumes:
+      - application/json
+      description: Get airing today tv shows
+      parameters:
+      - description: Page
+        in: query
+        name: page
+        required: true
+        type: integer
+      - description: Per page
+        in: query
+        name: per_page
+        required: true
+        type: integer
+      - description: Time order
+        in: query
+        name: time_order
+        type: integer
+      - description: Popularity order
+        in: query
+        name: popularity_order
+        type: integer
+      - description: Vote order
+        in: query
+        name: vote_order
+        type: integer
+      - description: Name order
+        in: query
+        name: name_order
+        type: integer
+      - description: Start date
+        in: query
+        name: start_date
+        type: string
+      - description: End date
+        in: query
+        name: end_date
+        type: string
+      - collectionFormat: csv
+        description: Genre IDs
+        in: query
+        items:
+          type: integer
+        name: genre_ids
+        type: array
+      - description: Start average vote
+        in: query
+        name: start_average_vote
+        type: number
+      - description: End average vote
+        in: query
+        name: end_average_vote
+        type: number
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/http.getListTVShowSummaryResponse'
+      summary: Get airing today tv shows
+      tags:
+      - tv show
+  /tvshow/genres:
+    get:
+      consumes:
+      - application/json
+      description: Get tv show genres
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.TVGenre'
+            type: array
+      summary: Get tv show genres
+      tags:
+      - tv show
+  /tvshow/on-the-air:
+    get:
+      consumes:
+      - application/json
+      description: Get on the air tv shows
+      parameters:
+      - description: Page
+        in: query
+        name: page
+        required: true
+        type: integer
+      - description: Per page
+        in: query
+        name: per_page
+        required: true
+        type: integer
+      - description: Time order
+        in: query
+        name: time_order
+        type: integer
+      - description: Popularity order
+        in: query
+        name: popularity_order
+        type: integer
+      - description: Vote order
+        in: query
+        name: vote_order
+        type: integer
+      - description: Name order
+        in: query
+        name: name_order
+        type: integer
+      - description: Start date
+        in: query
+        name: start_date
+        type: string
+      - description: End date
+        in: query
+        name: end_date
+        type: string
+      - collectionFormat: csv
+        description: Genre IDs
+        in: query
+        items:
+          type: integer
+        name: genre_ids
+        type: array
+      - description: Start average vote
+        in: query
+        name: start_average_vote
+        type: number
+      - description: End average vote
+        in: query
+        name: end_average_vote
+        type: number
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/http.getListTVShowSummaryResponse'
+      summary: Get on the air tv shows
+      tags:
+      - tv show
+  /tvshow/popular:
+    get:
+      consumes:
+      - application/json
+      description: Get popular tv shows
+      parameters:
+      - description: Page
+        in: query
+        name: page
+        required: true
+        type: integer
+      - description: Per page
+        in: query
+        name: per_page
+        required: true
+        type: integer
+      - description: Time order
+        in: query
+        name: time_order
+        type: integer
+      - description: Popularity order
+        in: query
+        name: popularity_order
+        type: integer
+      - description: Vote order
+        in: query
+        name: vote_order
+        type: integer
+      - description: Name order
+        in: query
+        name: name_order
+        type: integer
+      - description: Start date
+        in: query
+        name: start_date
+        type: string
+      - description: End date
+        in: query
+        name: end_date
+        type: string
+      - collectionFormat: csv
+        description: Genre IDs
+        in: query
+        items:
+          type: integer
+        name: genre_ids
+        type: array
+      - description: Start average vote
+        in: query
+        name: start_average_vote
+        type: number
+      - description: End average vote
+        in: query
+        name: end_average_vote
+        type: number
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/http.getListTVShowSummaryResponse'
+      summary: Get popular tv shows
+      tags:
+      - tv show
+  /tvshow/search:
+    get:
+      consumes:
+      - application/json
+      description: Search tv shows
+      parameters:
+      - description: Search query
+        in: query
+        name: query
+        type: string
+      - description: Page
+        in: query
+        name: page
+        required: true
+        type: integer
+      - description: Per page
+        in: query
+        name: per_page
+        required: true
+        type: integer
+      - description: Time order
+        in: query
+        name: time_order
+        type: integer
+      - description: Popularity order
+        in: query
+        name: popularity_order
+        type: integer
+      - description: Vote order
+        in: query
+        name: vote_order
+        type: integer
+      - description: Name order
+        in: query
+        name: name_order
+        type: integer
+      - description: Start date
+        in: query
+        name: start_date
+        type: string
+      - description: End date
+        in: query
+        name: end_date
+        type: string
+      - collectionFormat: csv
+        description: Genre IDs
+        in: query
+        items:
+          type: integer
+        name: genre_ids
+        type: array
+      - description: Start average vote
+        in: query
+        name: start_average_vote
+        type: number
+      - description: End average vote
+        in: query
+        name: end_average_vote
+        type: number
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/http.getListTVShowsResponse'
+      summary: Search tv shows
+      tags:
+      - tv show
+  /tvshow/top-rated:
+    get:
+      consumes:
+      - application/json
+      description: Get top rated tv shows
+      parameters:
+      - description: Page
+        in: query
+        name: page
+        required: true
+        type: integer
+      - description: Per page
+        in: query
+        name: per_page
+        required: true
+        type: integer
+      - description: Time order
+        in: query
+        name: time_order
+        type: integer
+      - description: Popularity order
+        in: query
+        name: popularity_order
+        type: integer
+      - description: Vote order
+        in: query
+        name: vote_order
+        type: integer
+      - description: Name order
+        in: query
+        name: name_order
+        type: integer
+      - description: Start date
+        in: query
+        name: start_date
+        type: string
+      - description: End date
+        in: query
+        name: end_date
+        type: string
+      - collectionFormat: csv
+        description: Genre IDs
+        in: query
+        items:
+          type: integer
+        name: genre_ids
+        type: array
+      - description: Start average vote
+        in: query
+        name: start_average_vote
+        type: number
+      - description: End average vote
+        in: query
+        name: end_average_vote
+        type: number
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/http.getListTVShowSummaryResponse'
+      summary: Get top rated tv shows
+      tags:
+      - tv show
+  /tvshow/upcoming:
+    get:
+      consumes:
+      - application/json
+      description: Get upcoming tv shows
+      parameters:
+      - description: Page
+        in: query
+        name: page
+        required: true
+        type: integer
+      - description: Per page
+        in: query
+        name: per_page
+        required: true
+        type: integer
+      - description: Time order
+        in: query
+        name: time_order
+        type: integer
+      - description: Popularity order
+        in: query
+        name: popularity_order
+        type: integer
+      - description: Vote order
+        in: query
+        name: vote_order
+        type: integer
+      - description: Name order
+        in: query
+        name: name_order
+        type: integer
+      - description: Start date
+        in: query
+        name: start_date
+        type: string
+      - description: End date
+        in: query
+        name: end_date
+        type: string
+      - collectionFormat: csv
+        description: Genre IDs
+        in: query
+        items:
+          type: integer
+        name: genre_ids
+        type: array
+      - description: Start average vote
+        in: query
+        name: start_average_vote
+        type: number
+      - description: End average vote
+        in: query
+        name: end_average_vote
+        type: number
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/http.getListTVShowSummaryResponse'
+      summary: Get upcoming tv shows
+      tags:
+      - tv show
+swagger: "2.0"
