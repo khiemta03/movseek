@@ -14,7 +14,7 @@ type Movie struct {
 	Budget              int64                 `json:"budget" bson:"budget"`
 	Categories          []string              `json:"categories" bson:"categories"`
 	Homepage            string                `json:"homepage" bson:"homepage"`
-	Genres              []MovieGenres         `json:"genres" bson:"genres"`
+	Genres              []MovieGenres         `json:"genres" bson:"genres"` //diff
 	ID                  int64                 `json:"id" bson:"id"`
 	IMDBID              string                `json:"imdb_id" bson:"imdb_id"`
 	OriginalCountry     []string              `json:"original_country" bson:"original_country"`
@@ -30,7 +30,7 @@ type Movie struct {
 	Runtime             int64                 `json:"runtime" bson:"runtime"`
 	Status              string                `json:"status" bson:"status"`
 	Tagline             string                `json:"tagline" bson:"tagline"`
-	Title               string                `json:"title" bson:"title"`
+	Title               string                `json:"title" bson:"title"` //diff
 	Video               bool                  `json:"video" bson:"video"`
 	VoteAverage         float64               `json:"vote_average" bson:"vote_average"`
 	VoteCount           int64                 `json:"vote_count" bson:"vote_count"`
