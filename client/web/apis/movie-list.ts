@@ -20,3 +20,7 @@ export const fetchMovieUpcoming = (page: number) => {
 export const fetchGenresMovie = () => {
   return axiosInstance.get(TMDB_API.GENRES_MOVIE());
 };
+
+export const fetchLatestTrailersMovie = () => {
+  return axiosInstance.get(TMDB_API.MOVIE_LATEST_TRAILERS());
+};

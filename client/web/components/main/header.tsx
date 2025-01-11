@@ -2,7 +2,7 @@
 
 import { SignedIn, SignedOut, UserButton } from '@clerk/nextjs';
 import { Button } from '@/components/ui/button';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { Search, X } from 'lucide-react';
 
@@ -25,6 +25,7 @@ function DropdownItem({ href, label }: { href: string; label: string }) {
 
 const Header = ({ showSearch, setShowSearch, isSearchPage }: HeaderProps) => {
   const router = useRouter();
+  const pathname = usePathname();
 
   return (
     <header className="px-4 py-3 bg-primary">
@@ -126,7 +127,7 @@ const Header = ({ showSearch, setShowSearch, isSearchPage }: HeaderProps) => {
           <SignedOut>
             <Button
               variant="outline"
-              onClick={() => router.push('/sign-in')}
+              onClick={() => router.push(`/sign-in?redirect=${encodeURIComponent(pathname)}`)}
             >
               Sign In
             </Button>

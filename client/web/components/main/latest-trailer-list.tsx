@@ -3,12 +3,10 @@
 import { useEffect, useState } from 'react';
 import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext } from '@/components/ui/carousel';
 import Autoplay from 'embla-carousel-autoplay';
-import { fetchTrending } from '@/apis/trending';
 import { Video } from '@/models/movie-detail-types';
-import { fetchMovieVideos } from '@/apis/movie';
-import { selectPreferredVideo } from '@/utils/util-functions/detail-page';
 import TrailerCard from '@/components/main/trailer-card';
 import TrailerCardDummy from '@/components/main/trailer-card-dummy';
+import { fetchLatestTrailersMovie } from '@/apis/movie-list';
 
 interface LatestTrailerListProps {
   changeThumbnail: (thumbnail: string) => void;
@@ -24,22 +22,22 @@ const LatestTrailerList: React.FC<LatestTrailerListProps> = ({ changeThumbnail, 
     const fetchTrendingMovies = async () => {
       try {
         setLoading(true);
-        const moviesResponse = await fetchTrending('movie', 'day');
-        const data = (
-          await Promise.all(
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            moviesResponse.data.results.map(async (movie: Record<string, any>) => {
-              const videoResponse = await fetchMovieVideos(movie.id);
-              const trailer = selectPreferredVideo(videoResponse.data.results);
-              return {
-                trailer,
-                thumbnail: movie.poster_path,
-                title: movie.title,
-                id: movie.id,
-              };
-            }),
+        const trailersResponse = await fetchLatestTrailersMovie();
+        const trailers = trailersResponse.data.data;
+        const data = trailers
+          .filter(
+            (item: { trailer: Video; poster_path: string; title: string; id: number }) =>
+              item.trailer && item.poster_path,
           )
-        ).filter((item) => item.trailer);
+          .map((element: { trailer: Video; poster_path: string; title: string; id: number }) => {
+            return {
+              trailer: element.trailer,
+              thumbnail: element.poster_path,
+              title: element.title,
+              id: element.id,
+            };
+          });
+        console.log(data);
         setTrailers(data);
       } catch (err) {
         console.log(err);

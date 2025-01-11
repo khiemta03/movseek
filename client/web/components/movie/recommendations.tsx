@@ -1,10 +1,10 @@
 import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext } from '@/components/ui/carousel';
 import Autoplay from 'embla-carousel-autoplay';
 import { useEffect, useState } from 'react';
-import MovieSearchCard from '../search/movie-search-card';
+import MovieSearchCard from '@/components/search/movie-search-card';
 import { MovieListResults } from '@/models/movie-list-types';
 import { fetchMoviePopular, fetchMovieTopRated } from '@/apis/movie-list';
-import MovieCardDummpy from '../main/movie-card-dummy';
+import MovieCardDummpy from '@/components/main/movie-card-dummy';
 
 interface RecommendationListProps {
   baseOn: 'genres' | 'vectors-search';
@@ -20,10 +20,10 @@ const RecommendationList: React.FC<RecommendationListProps> = ({ baseOn, setTran
       setLoading(true);
       if (baseOn == 'genres') {
         const response = await fetchMoviePopular(1);
-        setMovieResults(response.data);
+        setMovieResults(response.data.data);
       } else {
         const response = await fetchMovieTopRated(1);
-        setMovieResults(response.data);
+        setMovieResults(response.data.data);
       }
     } catch (err) {
       console.log(err);

@@ -19,8 +19,11 @@ const KnownForList: React.FC<KnownForListProps> = ({ knownFors }) => {
       >
         <div className="flex space-x-8">
           <CarouselContent>
-            {knownFors.map((knownFor, index) => (
-              <CarouselItem key={index} className="basis-44 h-80">
+            {knownFors.slice(0, 60).map((knownFor, index) => (
+              <CarouselItem
+                key={index}
+                className="basis-44 h-80"
+              >
                 <KnownForCard knownFor={knownFor} />
               </CarouselItem>
             ))}

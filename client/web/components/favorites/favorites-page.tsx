@@ -7,13 +7,13 @@ import { User } from '@clerk/nextjs/server';
 import { formatTimestampWithSuffix } from '@/utils/util-functions/favorites-page';
 import Rating from '@/components/movie/rating';
 import { MovieListResults } from '@/models/movie-list-types';
-import { fetchMoviePopular } from '@/apis/movie-list';
 import Loading from '@/app/(main)/loading';
 import FavoriteMovieCard from '@/components/favorites/favorite-movie-card';
 import PaginationCustom from '@/components/favorites/pagination';
-import { fetchTVPopular } from '@/apis/tv-list';
 import { TVListResults } from '@/models/tv-list-types';
 import FavoriteTVCard from '@/components/favorites/favorite-tv-card';
+import { getFavoriteItem, getWatchlistItem } from '@/apis/saved-items';
+import { fetchSearchSpecificMovie } from '@/apis/search';
 
 interface FavoritesPageProps {
   user: User | null;
@@ -33,27 +33,81 @@ const FavoritesPage: React.FC<FavoritesPageProps> = ({ user }) => {
   const [isNewAcsess, setIsNewAcsess] = useState(true);
   const [mode, setMode] = useState<'movie' | 'tv'>(isValidType(type) ? type : 'movie');
   const [transitioning, setTransitioning] = useState(false);
+  const [movieWatchlist, setMovieWatchlist] = useState<number[]>([]);
+  const [tvWatchlist, setTVWatchlist] = useState<number[]>([]);
 
   const fetchData = async (page: string | null, isChangeMode: boolean) => {
     try {
       setLoading(true);
       if (mode == 'movie' || !isChangeMode) {
-        const movieResponse = await fetchMoviePopular(page != null ? parseInt(page) : 1);
-        setMovieResults(movieResponse.data);
+        const favoriteItemResponse = await getFavoriteItem(user?.id ?? '');
+        if (favoriteItemResponse.data.data.movie_id != null) {
+          const favoriteMovieQueryString = favoriteItemResponse.data.data.movie_id
+            .map((id: number) => `ids=${id}`)
+            .join('&');
+          const movieFavoriteResponse = await fetchSearchSpecificMovie(
+            favoriteMovieQueryString,
+            page != null ? parseInt(page) : 1,
+          );
+          setMovieResults(movieFavoriteResponse.data.data);
+        } else {
+          setMovieResults({
+            results: [],
+            page: 0,
+            total_pages: 0,
+            total_results: 0,
+          });
+        }
+        const watchlistItemResponse = await getWatchlistItem(user?.id ?? '');
+        setMovieWatchlist(watchlistItemResponse.data.data.movie_id ?? []);
+        if (mode == 'movie') {
+          setTransitioning(true);
+          setTimeout(() => {
+            setLoading(false);
+            setTransitioning(false);
+          }, 500);
+        }
       }
       if (mode == 'tv' || !isChangeMode) {
-        const tvResponse = await fetchTVPopular(page != null ? parseInt(page) : 1);
-        setTVResults(tvResponse.data);
+        const favoriteItemResponse = await getFavoriteItem(user?.id ?? '');
+        if (favoriteItemResponse.data.data.tv_show_id != null) {
+          const favoriteTVQueryString = favoriteItemResponse.data.data.tv_show_id
+            .map((id: number) => `ids=${id}`)
+            .join('&');
+          const tvFavoriteResponse = await fetchSearchSpecificMovie(
+            favoriteTVQueryString,
+            page != null ? parseInt(page) : 1,
+          );
+          setTVResults(tvFavoriteResponse.data.data);
+        } else {
+          setTVResults({
+            results: [],
+            page: 0,
+            total_pages: 0,
+            total_results: 0,
+          });
+        }
+        const watchlistItemResponse = await getWatchlistItem(user?.id ?? '');
+        setTVWatchlist(watchlistItemResponse.data.data.tv_show_id ?? []);
+        if (mode == 'tv') {
+          setTransitioning(true);
+          setTimeout(() => {
+            setLoading(false);
+            setTransitioning(false);
+          }, 500);
+        }
       }
     } catch (err) {
       console.log(err);
       setIsError(true);
     } finally {
-      setTransitioning(true);
-      setTimeout(() => {
-        setLoading(false);
-        setTransitioning(false);
-      }, 500);
+      if (isChangeMode) {
+        setTransitioning(true);
+        setTimeout(() => {
+          setLoading(false);
+          setTransitioning(false);
+        }, 500);
+      }
     }
   };
 
@@ -172,9 +226,10 @@ const FavoritesPage: React.FC<FavoritesPageProps> = ({ user }) => {
                               <FavoriteMovieCard
                                 key={index}
                                 movie={movie}
-                                isFavorite={index == 1}
-                                isWatchlist={index == 2}
+                                isFavorite={true}
+                                isWatchlist={movieWatchlist.includes(movie.id)}
                                 rated={index == 3 ? 50 : null}
+                                user_id={user?.id ?? ''}
                               />
                             ))}
                           </>
@@ -206,9 +261,10 @@ const FavoritesPage: React.FC<FavoritesPageProps> = ({ user }) => {
                               <FavoriteTVCard
                                 key={index}
                                 tv={tv}
-                                isFavorite={index == 1}
-                                isWatchlist={index == 2}
+                                isFavorite={true}
+                                isWatchlist={tvWatchlist.includes(tv.id)}
                                 rated={index == 3 ? 50 : null}
+                                user_id={user?.id ?? ''}
                               />
                             ))}
                           </>

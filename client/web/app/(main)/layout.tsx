@@ -27,7 +27,7 @@ const SearchParamsWrapper = () => {
     const trimmedQuery = newQuery.trim();
     const type = searchParams.get('type');
     if (trimmedQuery) {
-      router.push(`/search?query=${encodeURIComponent(trimmedQuery)}&type=${type}`);
+      router.push(`/search?query=${encodeURIComponent(trimmedQuery)}&type=${type ?? 'movie'}`);
     }
   };
 

@@ -14,10 +14,12 @@ import MainMovieInformationDummy from '@/components/movie/main-movie-information
 import Trailer from '@/components/movie/trailer';
 import RecommendationList from '@/components/movie/recommendations';
 import ReviewsAndRating from '@/components/movie/reviews-and-rating';
+import { useUser } from '@clerk/clerk-react';
 
 const MovieDetail = () => {
   const params = useParams();
   const { id } = params;
+  const { isSignedIn, user } = useUser();
   const [imageSrc, setImageSrc] = useState('/poster-default.svg');
   const [transitioning, setTransitioning] = useState(false);
   const [transitioningCast, setTransitioningCast] = useState(false);
@@ -138,6 +140,8 @@ const MovieDetail = () => {
             creadits={creadits}
             hasTrailer={videos.length > 0}
             toggleVideo={toggleVideo}
+            isSignedIn={isSignedIn ?? false}
+            user_id={user?.id ?? ''}
           />
 
           <div className="flex gap-6 container mx-auto mt-5 py-10">
@@ -203,10 +207,10 @@ const MovieDetail = () => {
                     transitioningRecommendation ? 'opacity-0' : 'opacity-100'
                   }`}
                 >
-                  {/* <RecommendationList
+                  <RecommendationList
                     baseOn={viewModeRecommendation}
                     setTransitioning={setTransitioningRecommendation}
-                  /> */}
+                  />
                 </div>
               </div>
             </div>

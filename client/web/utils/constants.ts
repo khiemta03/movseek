@@ -53,6 +53,7 @@ export const TMDB_API = {
   TV_VIDEOS_TMDB: (tvId: number) => `/tv/${tvId}/videos`,
 
   SEARCH_MOVIE: (query: string, page: number) => `/search/movie?query=${query}&page=${page}&per_page=18`,
+  SEARCH_SPECIFIC_MOVIE: (ids: string, page: number) => `/search/movie?page=${page}&per_page=10&${ids}`,
   SEARCH_TV: (query: string, page: number) => `/search/tv?query=${query}&page=${page}&per_page=18`,
   SEARCH_PERSON: (query: string, page: number) => `/search/person?query=${query}&page=${page}&per_page=18`,
 
@@ -70,9 +71,16 @@ export const TMDB_API = {
   MOVIE_NOW_PLAYING: (page: number) => `/movie/now-playing?page=${page}&per_page=18`,
   MOVIE_UPCOMING: (page: number) => `/movie/upcoming?page=${page}&per_page=18`,
 
+  MOVIE_LATEST_TRAILERS: () => `/movie/trailer/latest?page=2&per_page=15`,
+
   GENRES_TV: () => `/tvshow/genres`,
   TV_POPULAR: (page: number) => `/tvshow/popular?page=${page}&per_page=18`,
   TV_TOP_RATED: (page: number) => `/tvshow/top-rated?page=${page}&per_page=18`,
   TV_ON_THE_AIR: (page: number) => `/tvshow/on-the-air?page=${page}&per_page=18`,
   TV_AIRING_TODAY: (page: number) => `/tvshow/airing-today?page=${page}&per_page=18`,
+
+  ADD_SAVED_ITEM: () => `/saved-item/add`,
+  REMOVE_SAVED_ITEM: () => `/saved-item/remove`,
+  GET_FAVORITE_ITEM: (userId: string) => `/saved-item/${userId}?type=favorite`,
+  GET_WATCHLIST_ITEM: (userId: string) => `/saved-item/${userId}?type=watchlist`,
 };

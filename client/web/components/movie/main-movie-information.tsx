@@ -6,43 +6,137 @@ import { Heart, Bookmark } from 'lucide-react';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import type { Cast, Credits, Crew, Movie } from '@/models/movie-detail-types';
 import { convertMinutes, getCrewByJob } from '@/utils/util-functions/detail-page';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Rating from '@/components/movie/rating';
 import { useToast } from '@/hooks/use-toast';
+import { ToastAction } from '@/components/ui/toast';
+import { useRouter } from 'next/navigation';
+import { addSavedItem, getFavoriteItem, getWatchlistItem, removeSavedItem } from '@/apis/saved-items';
+import { usePathname } from 'next/navigation';
 
 interface MainMovieInformationProps {
   movie: Movie;
   creadits: Credits;
   toggleVideo: () => void;
   hasTrailer: boolean;
+  isSignedIn: boolean;
+  user_id: string;
 }
 
-const MainMovieInformation: React.FC<MainMovieInformationProps> = ({ movie, creadits, toggleVideo, hasTrailer }) => {
+const MainMovieInformation: React.FC<MainMovieInformationProps> = ({
+  movie,
+  creadits,
+  toggleVideo,
+  hasTrailer,
+  isSignedIn,
+  user_id,
+}) => {
+  const router = useRouter();
+  const pathname = usePathname();
   const { toast } = useToast();
   const [imageSrc, setImageSrc] = useState(TMDB_API.POSTER(movie.poster_path));
-  const [favorite, setFavorite] = useState(true);
-  const [watchlist, setwatchlist] = useState(true);
+  const [favorite, setFavorite] = useState(false);
+  const [watchlist, setWatchlist] = useState(false);
 
-  const handlClickFavorite = (favorite: boolean) => {
-    //call api here
-    setFavorite(!favorite);
-    toast({
-      title: 'Success',
-      description: `${movie.title} was ${favorite ? 'removed from' : 'added to'} your favourite list.`,
-      duration: 3000,
-      className: 'bg-green-600 text-white border border-gray-200',
-    });
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const favoriteItemResponse = await getFavoriteItem(user_id);
+        console.log(favoriteItemResponse.data.data.movie_id);
+        if (Array.isArray(favoriteItemResponse.data.data.movie_id)) {
+          if (favoriteItemResponse.data.data.movie_id.includes(parseInt(movie.id))) {
+            setFavorite(true);
+          } else {
+            setFavorite(false);
+          }
+        }
+        const watchlistItemResponse = await getWatchlistItem(user_id);
+        if (Array.isArray(watchlistItemResponse.data.data.movie_id)) {
+          if (watchlistItemResponse.data.data.movie_id.includes(parseInt(movie.id))) {
+            setWatchlist(true);
+          } else {
+            setWatchlist(false);
+          }
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    if (isSignedIn) {
+      fetchData();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const handlClickFavorite = async (favorite: boolean) => {
+    if (isSignedIn) {
+      if (!favorite) {
+        await addSavedItem(parseInt(movie.id), 'movie', 'favorite', user_id);
+      } else {
+        await removeSavedItem(parseInt(movie.id), 'movie', 'favorite', user_id);
+      }
+      setFavorite(!favorite);
+      toast({
+        title: 'Success',
+        description: `${movie.title} was ${favorite ? 'removed from' : 'added to'} your favourite list.`,
+        duration: 3000,
+        className: 'bg-green-600 text-white border border-gray-200',
+      });
+    } else {
+      toast({
+        title: 'Login Required',
+        description: 'You must log in to perform this action.',
+        duration: 3000,
+        className: 'bg-primary text-white border border-gray-200',
+        action: (
+          <ToastAction
+            altText="Go to login"
+            className="text-primary bg-white hover:bg-gray-200 px-3 py-1 rounded-lg"
+            onClick={() => {
+              router.push(`/sign-in?redirect=${encodeURIComponent(pathname)}`);
+            }}
+          >
+            Sign in
+          </ToastAction>
+        ),
+      });
+    }
   };
 
-  const handlClickWatchlist = (watchlist: boolean) => {
-    //call api here
-    setwatchlist(!watchlist);
-    toast({
-      title: 'Success',
-      description: `${movie.title} was ${watchlist ? 'removed from' : 'added to'} your watchlist.`,
-      duration: 3000,
-      className: 'bg-green-600 text-white border border-gray-200',
-    });
+  const handlClickWatchlist = async (watchlist: boolean) => {
+    if (isSignedIn) {
+      if (!watchlist) {
+        await addSavedItem(parseInt(movie.id), 'movie', 'watchlist', user_id);
+      } else {
+        await removeSavedItem(parseInt(movie.id), 'movie', 'watchlist', user_id);
+      }
+      setWatchlist(!watchlist);
+      toast({
+        title: 'Success',
+        description: `${movie.title} was ${watchlist ? 'removed from' : 'added to'} your watchlist.`,
+        duration: 3000,
+        className: 'bg-green-600 text-white border border-gray-200',
+      });
+    } else {
+      toast({
+        title: 'Login Required',
+        description: 'You must log in to perform this action.',
+        duration: 3000,
+        className: 'bg-primary text-white border border-gray-200',
+        action: (
+          <ToastAction
+            altText="Go to login"
+            className="text-primary bg-white hover:bg-gray-200 px-3 py-1 rounded-lg"
+            onClick={() => {
+              router.push(`/sign-in?redirect=${encodeURIComponent(pathname)}`);
+            }}
+          >
+            Sign in
+          </ToastAction>
+        ),
+      });
+    }
   };
 
   return (

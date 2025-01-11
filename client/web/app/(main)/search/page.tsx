@@ -32,23 +32,46 @@ export default function SearchPage() {
       if (mode == 'movie' || !isChangeMode) {
         const movieResponse = await fetchSearchMovie(query != null ? query : '', page != null ? parseInt(page) : 1);
         setMovieResults(movieResponse.data.data);
+        if (mode == 'movie') {
+          setTransitioning(true);
+          setTimeout(() => {
+            setLoading(false);
+            setTransitioning(false);
+          }, 500);
+        }
       }
       if (mode == 'tv' || !isChangeMode) {
         const tvResponse = await fetchSearchTV(query != null ? query : '', page != null ? parseInt(page) : 1);
         setTVResults(tvResponse.data.data);
+        if (mode == 'tv') {
+          setTransitioning(true);
+          setTimeout(() => {
+            setLoading(false);
+            setTransitioning(false);
+          }, 500);
+        }
       }
       if (mode == 'person' || !isChangeMode) {
         const personResponse = await fetchSearchPerson(query != null ? query : '', page != null ? parseInt(page) : 1);
         setPersonResults(personResponse.data.data);
+        if (mode == 'person') {
+          setTransitioning(true);
+          setTimeout(() => {
+            setLoading(false);
+            setTransitioning(false);
+          }, 500);
+        }
       }
     } catch (err) {
       console.log(err);
     } finally {
-      setTransitioning(true);
-      setTimeout(() => {
-        setLoading(false);
-        setTransitioning(false);
-      }, 500);
+      if (isChangeMode) {
+        setTransitioning(true);
+        setTimeout(() => {
+          setLoading(false);
+          setTransitioning(false);
+        }, 500);
+      }
     }
   };
 
@@ -101,7 +124,9 @@ export default function SearchPage() {
             >
               <div className="text-sm flex justify-between">
                 <div>Movies</div>
-                <div className="font-normal text-gray-500">{movieResults?.total_results || '—'}</div>
+                <div className="font-normal text-gray-500">
+                  {movieResults == null ? '—' : movieResults.total_results}
+                </div>
               </div>
             </div>
             <div
@@ -112,7 +137,7 @@ export default function SearchPage() {
             >
               <div className="text-sm flex justify-between">
                 <div>TV Shows</div>
-                <div className="font-normal text-gray-500">{tvResults?.total_results || '—'}</div>
+                <div className="font-normal text-gray-500">{tvResults == null ? '—' : tvResults.total_results}</div>
               </div>
             </div>
             <div
@@ -123,7 +148,9 @@ export default function SearchPage() {
             >
               <div className="text-sm flex justify-between">
                 <div>People</div>
-                <div className="font-normal text-gray-500">{personResults?.total_results || '—'}</div>
+                <div className="font-normal text-gray-500">
+                  {personResults == null ? '—' : personResults.total_results}
+                </div>
               </div>
             </div>
           </div>

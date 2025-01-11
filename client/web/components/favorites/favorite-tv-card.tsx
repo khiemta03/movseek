@@ -11,23 +11,29 @@ import { Heart, Bookmark, Star, CircleMinus } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Slider } from '@/components/ui/slider';
+import { addSavedItem, removeSavedItem } from '@/apis/saved-items';
 
 interface FavoriteTVCardProps {
   tv: TV;
   isFavorite: boolean;
   isWatchlist: boolean;
   rated: number | null;
+  user_id: string;
 }
 
-const FavoriteTVCard: React.FC<FavoriteTVCardProps> = ({ tv, isFavorite, isWatchlist, rated }) => {
+const FavoriteTVCard: React.FC<FavoriteTVCardProps> = ({ tv, isFavorite, isWatchlist, rated, user_id }) => {
   const { toast } = useToast();
   const [imageSrc, setImageSrc] = useState(TMDB_API.POSTER(tv.poster_path));
   const [favorite, setFavorite] = useState(isFavorite);
   const [watchlist, setwatchlist] = useState(isWatchlist);
   const [rating, setRating] = useState(rated);
 
-  const handlClickFavorite = (favorite: boolean) => {
-    //call api here
+  const handlClickFavorite = async (favorite: boolean) => {
+    if (!favorite) {
+      await addSavedItem(tv.id, 'tv_show', 'favorite', user_id);
+    } else {
+      await removeSavedItem(tv.id, 'tv_show', 'favorite', user_id);
+    }
     setFavorite(!favorite);
     toast({
       title: 'Success',
@@ -37,8 +43,12 @@ const FavoriteTVCard: React.FC<FavoriteTVCardProps> = ({ tv, isFavorite, isWatch
     });
   };
 
-  const handlClickWatchlist = (watchlist: boolean) => {
-    //call api here
+  const handlClickWatchlist = async (watchlist: boolean) => {
+    if (!watchlist) {
+      await addSavedItem(tv.id, 'tv_show', 'watchlist', user_id);
+    } else {
+      await removeSavedItem(tv.id, 'tv_show', 'watchlist', user_id);
+    }
     setwatchlist(!watchlist);
     toast({
       title: 'Success',

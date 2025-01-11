@@ -12,3 +12,7 @@ export const fetchSearchTV = (query: string, page: number) => {
 export const fetchSearchPerson = (query: string, page: number) => {
   return axiosInstance.get(TMDB_API.SEARCH_PERSON(query, page));
 };
+
+export const fetchSearchSpecificMovie = (ids: string, page: number) => {
+  return axiosInstance.get(TMDB_API.SEARCH_SPECIFIC_MOVIE(ids, page));
+};
