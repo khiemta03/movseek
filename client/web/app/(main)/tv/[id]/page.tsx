@@ -2,7 +2,7 @@
 
 import { useParams } from 'next/navigation';
 import { TMDB_API } from '@/utils/constants';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import type { Credits, Keyword, Video } from '@/models/movie-detail-types';
 import { handleMovieCredits, selectPreferredVideo } from '@/utils/util-functions/detail-page';
 import { Button } from '@/components/ui/button';
@@ -33,10 +33,6 @@ export default function TVDetail() {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [isDisplayFullCastAndCrew, setIsDisplayFullCastAndCrew] = useState<boolean>(false);
-  const [viewModeRecommendation, setViewModeRecommendation] = useState<'genres' | 'vectors-search'>('genres');
-  const [backgroundStyle, setBackgroundStyle] = useState({});
-  const buttonARef = useRef<HTMLButtonElement>(null);
-  const buttonBRef = useRef<HTMLButtonElement>(null);
 
   const [isVisible, setIsVisible] = useState(false);
 
@@ -104,23 +100,6 @@ export default function TVDetail() {
     }
   };
 
-  useEffect(() => {
-    const activeRef = viewModeRecommendation === 'genres' ? buttonARef.current : buttonBRef.current;
-    if (activeRef) {
-      const rect = activeRef.getBoundingClientRect();
-      setBackgroundStyle({
-        width: `${rect.width}px`,
-        transform: `translateX(${activeRef.offsetLeft}px)`,
-      });
-    }
-  }, [viewModeRecommendation]);
-
-  const handleModeChangeRecommendation = (mode: 'genres' | 'vectors-search') => {
-    if (mode !== viewModeRecommendation) {
-      setViewModeRecommendation(mode);
-    }
-  };
-
   if (error)
     return (
       <h1 className="container mx-auto mt-5 font-bold text-2xl">Uh-oh! Something went wrong. Please try later!!!</h1>
@@ -178,30 +157,6 @@ export default function TVDetail() {
               <div>
                 <div className="flex justify-between">
                   <h2 className="text-2xl font-bold mb-4">Recommendations</h2>
-                  <div className="relative items-center bg-white border-2 border-blue-500 mb-6 rounded-full w-fit">
-                    <div
-                      className="absolute h-9 w-[165.33px] z-0 top-0 left-0 bg-blue-500 rounded-full border-white border transition-all duration-300 ease-in-out"
-                      style={backgroundStyle}
-                    ></div>
-                    <button
-                      ref={buttonARef}
-                      onClick={() => handleModeChangeRecommendation('genres')}
-                      className={`relative z-10 px-4 text-sm py-2 rounded-full font-medium transition-all duration-300 ease-in-out ${
-                        viewModeRecommendation === 'genres' ? 'text-white' : 'text-black opacity-60'
-                      }`}
-                    >
-                      Base on genres
-                    </button>
-                    <button
-                      ref={buttonBRef}
-                      onClick={() => handleModeChangeRecommendation('vectors-search')}
-                      className={`relative z-10 px-4 text-sm py-2 rounded-full font-medium transition-all duration-300 ease-in-out ${
-                        viewModeRecommendation === 'vectors-search' ? 'text-white' : 'text-black opacity-60'
-                      }`}
-                    >
-                      Base on vectors search
-                    </button>
-                  </div>
                 </div>
                 <div
                   className={`transition-opacity duration-500 ${
@@ -209,7 +164,7 @@ export default function TVDetail() {
                   }`}
                 >
                   <RecommendationList
-                    baseOn={viewModeRecommendation}
+                    baseOn={'genres'}
                     setTransitioning={setTransitioningRecommendation}
                     tv={tv}
                     keywords={keywords}

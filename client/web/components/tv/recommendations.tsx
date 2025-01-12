@@ -5,9 +5,7 @@ import MovieCardDummpy from '@/components/main/movie-card-dummy';
 import { TVListResults } from '@/models/tv-list-types';
 import TVSearchCard from '../search/tv-search-card';
 import { Keyword, TV } from '@/models/tv-detail-types';
-import { fetchTVPopular, fetchTVTopRated } from '@/apis/tv-list';
-// import { buildQuery } from '@/utils/util-functions/detail-page';
-// import { fetchLLMRetriever } from '@/apis/llm-search';
+import { fetchTVPopular } from '@/apis/tv-list';
 
 interface RecommendationListProps {
   baseOn: 'genres' | 'vectors-search';
@@ -17,7 +15,7 @@ interface RecommendationListProps {
   keywords: Keyword[];
 }
 
-const RecommendationList: React.FC<RecommendationListProps> = ({ baseOn, setTransitioning, tv, keywords }) => {
+const RecommendationList: React.FC<RecommendationListProps> = ({ baseOn, setTransitioning, tv }) => {
   const [tvResults, setTVResults] = useState<TVListResults | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -28,12 +26,6 @@ const RecommendationList: React.FC<RecommendationListProps> = ({ baseOn, setTran
       setLoading(true);
       if (baseOn == 'genres') {
         const response = await fetchTVPopular(1, genreIdsParams);
-        setTVResults(response.data.data);
-      } else {
-        // console.log(buildQuery(movie, keywords));
-        // const llmResponse = await fetchLLMRetriever('movies', buildQuery(movie, keywords), 18, 0.5);
-        // console.log(llmResponse);
-        const response = await fetchTVTopRated(1, '');
         setTVResults(response.data.data);
       }
     } catch (err) {
