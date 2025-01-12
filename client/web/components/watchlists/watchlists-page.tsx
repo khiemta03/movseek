@@ -16,13 +16,13 @@ import { getFavoriteItem, getWatchlistItem } from '@/apis/saved-items';
 import { fetchSearchSpecificMovie, fetchSearchSpecificTV } from '@/apis/search';
 import { getRatingsByUser } from '@/apis/ratings';
 
-interface FavoritesPageProps {
+interface WatchlistsPageProps {
   user: User | null;
 }
 
 const isValidType = (value: string | null): value is 'movie' | 'tv' => ['movie', 'tv'].includes(value ? value : '');
 
-const FavoritesPage: React.FC<FavoritesPageProps> = ({ user }) => {
+const WatchlistsPage: React.FC<WatchlistsPageProps> = ({ user }) => {
   const searchParams = useSearchParams();
   const page = searchParams.get('page');
   const type = searchParams.get('type');
@@ -34,8 +34,8 @@ const FavoritesPage: React.FC<FavoritesPageProps> = ({ user }) => {
   const [isNewAcsess, setIsNewAcsess] = useState(true);
   const [mode, setMode] = useState<'movie' | 'tv'>(isValidType(type) ? type : 'movie');
   const [transitioning, setTransitioning] = useState(false);
-  const [movieWatchlist, setMovieWatchlist] = useState<number[]>([]);
-  const [tvWatchlist, setTVWatchlist] = useState<number[]>([]);
+  const [movieFavorites, setMovieFavorites] = useState<number[]>([]);
+  const [tvFavorites, setTVFavorites] = useState<number[]>([]);
   const [ratings, setRatings] = useState<
     { created_at: string; media_id: number; rating: number; type: 'movie' | 'tv_show' }[]
   >([]);
@@ -57,16 +57,16 @@ const FavoritesPage: React.FC<FavoritesPageProps> = ({ user }) => {
       const ratingsResponse = await getRatingsByUser(user?.id ?? '');
       setRatings(ratingsResponse.data.data.ratings);
       if (mode == 'movie' || !isChangeMode) {
-        const favoriteItemResponse = await getFavoriteItem(user?.id ?? '');
-        if (favoriteItemResponse.data.data.movie_id != null) {
-          const favoriteMovieQueryString = favoriteItemResponse.data.data.movie_id
+        const watchlistResponse = await getWatchlistItem(user?.id ?? '');
+        if (watchlistResponse.data.data.movie_id != null) {
+          const watchlistMovieQueryString = watchlistResponse.data.data.movie_id
             .map((id: number) => `ids=${id}`)
             .join('&');
-          const movieFavoriteResponse = await fetchSearchSpecificMovie(
-            favoriteMovieQueryString,
+          const movieWatchlistResponse = await fetchSearchSpecificMovie(
+            watchlistMovieQueryString,
             page != null ? parseInt(page) : 1,
           );
-          setMovieResults(movieFavoriteResponse.data.data);
+          setMovieResults(movieWatchlistResponse.data.data);
         } else {
           setMovieResults({
             results: [],
@@ -75,8 +75,8 @@ const FavoritesPage: React.FC<FavoritesPageProps> = ({ user }) => {
             total_results: 0,
           });
         }
-        const watchlistItemResponse = await getWatchlistItem(user?.id ?? '');
-        setMovieWatchlist(watchlistItemResponse.data.data.movie_id ?? []);
+        const favoriteItemResponse = await getFavoriteItem(user?.id ?? '');
+        setMovieFavorites(favoriteItemResponse.data.data.movie_id ?? []);
         if (mode == 'movie') {
           setTransitioning(true);
           setTimeout(() => {
@@ -86,16 +86,16 @@ const FavoritesPage: React.FC<FavoritesPageProps> = ({ user }) => {
         }
       }
       if (mode == 'tv' || !isChangeMode) {
-        const favoriteItemResponse = await getFavoriteItem(user?.id ?? '');
-        if (favoriteItemResponse.data.data.tv_show_id != null) {
-          const favoriteTVQueryString = favoriteItemResponse.data.data.tv_show_id
+        const watchlistItemResponse = await getWatchlistItem(user?.id ?? '');
+        if (watchlistItemResponse.data.data.tv_show_id != null) {
+          const watchlistTVQueryString = watchlistItemResponse.data.data.tv_show_id
             .map((id: number) => `ids=${id}`)
             .join('&');
-          const tvFavoriteResponse = await fetchSearchSpecificTV(
-            favoriteTVQueryString,
+          const tvWatchlistResponse = await fetchSearchSpecificTV(
+            watchlistTVQueryString,
             page != null ? parseInt(page) : 1,
           );
-          setTVResults(tvFavoriteResponse.data.data);
+          setTVResults(tvWatchlistResponse.data.data);
         } else {
           setTVResults({
             results: [],
@@ -104,8 +104,8 @@ const FavoritesPage: React.FC<FavoritesPageProps> = ({ user }) => {
             total_results: 0,
           });
         }
-        const watchlistItemResponse = await getWatchlistItem(user?.id ?? '');
-        setTVWatchlist(watchlistItemResponse.data.data.tv_show_id ?? []);
+        const favoriteItemResponse = await getFavoriteItem(user?.id ?? '');
+        setTVFavorites(favoriteItemResponse.data.data.tv_show_id ?? []);
         if (mode == 'tv') {
           setTransitioning(true);
           setTimeout(() => {
@@ -212,7 +212,7 @@ const FavoritesPage: React.FC<FavoritesPageProps> = ({ user }) => {
           <section className="container py-6">
             <div className="flex justify-between items-end content-center py-3 mb-5">
               <div className="flex items-start content-center gap-10">
-                <h1 className="text-4xl text-start font-bold mr-14">My Favorites</h1>
+                <h1 className="text-4xl text-start font-bold mr-14">My Watchlists</h1>
                 <div
                   className={`hover:cursor-pointer flex items-end gap-4 ${
                     mode == 'movie' && 'border-b-4 border-primary'
@@ -243,8 +243,8 @@ const FavoritesPage: React.FC<FavoritesPageProps> = ({ user }) => {
                               <FavoriteMovieCard
                                 key={index}
                                 movie={movie}
-                                isFavorite={true}
-                                isWatchlist={movieWatchlist.includes(movie.id)}
+                                isFavorite={movieFavorites.includes(movie.id)}
+                                isWatchlist={true}
                                 rated={findRatingByMediaAndType(movie.id, 'movie')}
                                 user_id={user?.id ?? ''}
                                 avatar={user?.imageUrl ?? ''}
@@ -257,12 +257,12 @@ const FavoritesPage: React.FC<FavoritesPageProps> = ({ user }) => {
                               currentPage={page != null ? parseInt(page) : 1}
                               totalPage={movieResults.total_pages}
                               type={mode}
-                              endpoint="/favorites"
+                              endpoint="/watchlists"
                             />
                           )}
                         </>
                       ) : (
-                        <div>{`You haven't added any favorite movies.`}</div>
+                        <div>{`You haven't added any watchlist movies.`}</div>
                       )
                     ) : (
                       <Loading />
@@ -280,8 +280,8 @@ const FavoritesPage: React.FC<FavoritesPageProps> = ({ user }) => {
                               <FavoriteTVCard
                                 key={index}
                                 tv={tv}
-                                isFavorite={true}
-                                isWatchlist={tvWatchlist.includes(tv.id)}
+                                isFavorite={tvFavorites.includes(tv.id)}
+                                isWatchlist={true}
                                 rated={findRatingByMediaAndType(tv.id, 'tv_show')}
                                 user_id={user?.id ?? ''}
                                 avatar={user?.imageUrl ?? ''}
@@ -294,12 +294,12 @@ const FavoritesPage: React.FC<FavoritesPageProps> = ({ user }) => {
                               currentPage={page != null ? parseInt(page) : 1}
                               totalPage={tvResults.total_pages}
                               type={mode}
-                              endpoint="/favorites"
+                              endpoint="/watchlists"
                             />
                           )}
                         </>
                       ) : (
-                        <div>{`You haven't added any favorite tv series.`}</div>
+                        <div>{`You haven't added any watchlist tv series.`}</div>
                       )
                     ) : (
                       <Loading />
@@ -315,4 +315,4 @@ const FavoritesPage: React.FC<FavoritesPageProps> = ({ user }) => {
   );
 };
 
-export default FavoritesPage;
+export default WatchlistsPage;
