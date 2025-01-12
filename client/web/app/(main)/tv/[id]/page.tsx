@@ -15,10 +15,12 @@ import MainTVInformation from '@/components/tv/main-tv-information';
 import { fetchTVDetail, fetchTVCredits, fetchTVKeywords, fetchTVVideos } from '@/apis/tv';
 import RecommendationList from '@/components/tv/recommendations';
 import ReviewsAndRating from '@/components/tv/reviews-and-rating';
+import { useUser } from '@clerk/nextjs';
 
 export default function TVDetail() {
   const params = useParams();
   const { id } = params;
+  const { isSignedIn, user } = useUser();
   const [imageSrc, setImageSrc] = useState('/poster-default.svg');
   const [transitioning, setTransitioning] = useState(false);
   const [transitioningCast, setTransitioningCast] = useState(false);
@@ -35,7 +37,7 @@ export default function TVDetail() {
   const [backgroundStyle, setBackgroundStyle] = useState({});
   const buttonARef = useRef<HTMLButtonElement>(null);
   const buttonBRef = useRef<HTMLButtonElement>(null);
-  
+
   const [isVisible, setIsVisible] = useState(false);
 
   const toggleVideo = () => setIsVisible(!isVisible);
@@ -119,7 +121,6 @@ export default function TVDetail() {
     }
   };
 
-
   if (error)
     return (
       <h1 className="container mx-auto mt-5 font-bold text-2xl">Uh-oh! Something went wrong. Please try later!!!</h1>
@@ -140,6 +141,8 @@ export default function TVDetail() {
             creadits={creadits}
             hasTrailer={videos.length > 0}
             toggleVideo={toggleVideo}
+            isSignedIn={isSignedIn ?? false}
+            user_id={user?.id ?? ''}
           />
 
           <div className="flex gap-6 container mx-auto mt-5 py-10">
