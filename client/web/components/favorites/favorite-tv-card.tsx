@@ -12,6 +12,7 @@ import { useToast } from '@/hooks/use-toast';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Slider } from '@/components/ui/slider';
 import { addSavedItem, removeSavedItem } from '@/apis/saved-items';
+import { addRating, deleteRating, updateRating } from '@/apis/ratings';
 
 interface FavoriteTVCardProps {
   tv: TV;
@@ -19,46 +20,77 @@ interface FavoriteTVCardProps {
   isWatchlist: boolean;
   rated: number | null;
   user_id: string;
+  avatar: string;
+  username: string;
 }
 
-const FavoriteTVCard: React.FC<FavoriteTVCardProps> = ({ tv, isFavorite, isWatchlist, rated, user_id }) => {
+const FavoriteTVCard: React.FC<FavoriteTVCardProps> = ({
+  tv,
+  isFavorite,
+  isWatchlist,
+  rated,
+  user_id,
+  avatar,
+  username,
+}) => {
   const { toast } = useToast();
   const [imageSrc, setImageSrc] = useState(TMDB_API.POSTER(tv.poster_path));
   const [favorite, setFavorite] = useState(isFavorite);
   const [watchlist, setwatchlist] = useState(isWatchlist);
-  const [rating, setRating] = useState(rated);
+  const [rating, setRating] = useState<number | null>(rated ? rated * 10 : null);
+  const [originRating, setOriginRating] = useState<number | null>(rated ? rated * 10 : null);
 
   const handlClickFavorite = async (favorite: boolean) => {
-    if (!favorite) {
-      await addSavedItem(tv.id, 'tv_show', 'favorite', user_id);
-    } else {
-      await removeSavedItem(tv.id, 'tv_show', 'favorite', user_id);
+    try {
+      if (!favorite) {
+        await addSavedItem(tv.id, 'tv_show', 'favorite', user_id);
+      } else {
+        await removeSavedItem(tv.id, 'tv_show', 'favorite', user_id);
+      }
+      setFavorite(!favorite);
+      toast({
+        title: 'Success',
+        description: `${tv.name} was ${favorite ? 'removed from' : 'added to'} your favourite list.`,
+        duration: 3000,
+        className: 'bg-green-600 text-white border border-gray-200',
+      });
+    } catch (error) {
+      toast({
+        title: 'Error',
+        description: 'An error occurred. Please try again later.',
+        duration: 3000,
+        className: 'bg-red-600 text-white border border-gray-200',
+      });
+      console.error(error);
     }
-    setFavorite(!favorite);
-    toast({
-      title: 'Success',
-      description: `${tv.name} was ${favorite ? 'removed from' : 'added to'} your favourite list.`,
-      duration: 3000,
-      className: 'bg-green-600 text-white border border-gray-200',
-    });
   };
 
   const handlClickWatchlist = async (watchlist: boolean) => {
-    if (!watchlist) {
-      await addSavedItem(tv.id, 'tv_show', 'watchlist', user_id);
-    } else {
-      await removeSavedItem(tv.id, 'tv_show', 'watchlist', user_id);
+    try {
+      if (!watchlist) {
+        await addSavedItem(tv.id, 'tv_show', 'watchlist', user_id);
+      } else {
+        await removeSavedItem(tv.id, 'tv_show', 'watchlist', user_id);
+      }
+      setwatchlist(!watchlist);
+      toast({
+        title: 'Success',
+        description: `${tv.name} was ${watchlist ? 'removed from' : 'added to'} your watchlist.`,
+        duration: 3000,
+        className: 'bg-green-600 text-white border border-gray-200',
+      });
+    } catch (error) {
+      toast({
+        title: 'Error',
+        description: 'An error occurred. Please try again later.',
+        duration: 3000,
+        className: 'bg-red-600 text-white border border-gray-200',
+      });
+      console.error(error);
     }
-    setwatchlist(!watchlist);
-    toast({
-      title: 'Success',
-      description: `${tv.name} was ${watchlist ? 'removed from' : 'added to'} your watchlist.`,
-      duration: 3000,
-      className: 'bg-green-600 text-white border border-gray-200',
-    });
   };
 
-  const handlClearMyVote = (rating: number | null) => {
+  const handlClearMyVote = async (rating: number | null) => {
     if (rating == null) {
       toast({
         title: 'Warning',
@@ -68,17 +100,27 @@ const FavoriteTVCard: React.FC<FavoriteTVCardProps> = ({ tv, isFavorite, isWatch
       });
       return;
     }
-    //call api here
-    setRating(null);
-    toast({
-      title: 'Success',
-      description: `Your rating has been cleared.`,
-      duration: 3000,
-      className: 'bg-green-600 text-white border border-gray-200',
-    });
+    try {
+      await deleteRating(user_id, tv.id, 'tv_show');
+      setRating(null);
+      toast({
+        title: 'Success',
+        description: `Your rating has been cleared.`,
+        duration: 3000,
+        className: 'bg-green-600 text-white border border-gray-200',
+      });
+    } catch (error) {
+      toast({
+        title: 'Error',
+        description: 'An error occurred. Please try again later.',
+        duration: 3000,
+        className: 'bg-red-600 text-white border border-gray-200',
+      });
+      console.error(error);
+    }
   };
 
-  const handlVote = (rating: number | null) => {
+  const handlVote = async (rating: number | null) => {
     if (rating == null) {
       toast({
         title: 'Warning',
@@ -88,14 +130,28 @@ const FavoriteTVCard: React.FC<FavoriteTVCardProps> = ({ tv, isFavorite, isWatch
       });
       return;
     }
-    //call api here
-    setRating(rating);
-    toast({
-      title: 'Success',
-      description: `Your rating has been saved.`,
-      duration: 3000,
-      className: 'bg-green-600 text-white border border-gray-200',
-    });
+    try {
+      if (originRating == null) {
+        await addRating(avatar, tv.id, rating / 10, 'tv_show', user_id, username);
+      } else {
+        await updateRating(avatar, rating / 10, tv.id, 'tv_show', user_id, username);
+      }
+      setOriginRating(rating);
+      toast({
+        title: 'Success',
+        description: `Your rating has been saved.`,
+        duration: 3000,
+        className: 'bg-green-600 text-white border border-gray-200',
+      });
+    } catch (error) {
+      toast({
+        title: 'Error',
+        description: 'An error occurred. Please try again later.',
+        duration: 3000,
+        className: 'bg-red-600 text-white border border-gray-200',
+      });
+      console.error(error);
+    }
   };
 
   return (
@@ -184,6 +240,7 @@ const FavoriteTVCard: React.FC<FavoriteTVCardProps> = ({ tv, isFavorite, isWatch
                       <Button
                         size={'sm'}
                         onClick={() => handlVote(rating)}
+                        disabled={originRating == rating}
                       >
                         Vote
                       </Button>

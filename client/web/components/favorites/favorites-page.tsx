@@ -14,6 +14,7 @@ import { TVListResults } from '@/models/tv-list-types';
 import FavoriteTVCard from '@/components/favorites/favorite-tv-card';
 import { getFavoriteItem, getWatchlistItem } from '@/apis/saved-items';
 import { fetchSearchSpecificMovie, fetchSearchSpecificTV } from '@/apis/search';
+import { getRatingsByUser } from '@/apis/ratings';
 
 interface FavoritesPageProps {
   user: User | null;
@@ -35,10 +36,27 @@ const FavoritesPage: React.FC<FavoritesPageProps> = ({ user }) => {
   const [transitioning, setTransitioning] = useState(false);
   const [movieWatchlist, setMovieWatchlist] = useState<number[]>([]);
   const [tvWatchlist, setTVWatchlist] = useState<number[]>([]);
+  const [ratings, setRatings] = useState<
+    { created_at: string; media_id: number; rating: number; type: 'movie' | 'tv_show' }[]
+  >([]);
+
+  const calculateAverageRating = (type: 'movie' | 'tv_show') => {
+    const filteredRatings = ratings.filter((rating) => rating.type === type);
+    if (filteredRatings.length === 0) return null;
+    const totalRating = filteredRatings.reduce((sum, rating) => sum + rating.rating, 0);
+    return totalRating / filteredRatings.length;
+  };
+
+  const findRatingByMediaAndType = (media_id: number, type: 'movie' | 'tv_show') => {
+    return ratings.find((rating) => rating.media_id === media_id && rating.type === type)?.rating || null;
+  };
 
   const fetchData = async (page: string | null, isChangeMode: boolean) => {
     try {
       setLoading(true);
+      const ratingsResponse = await getRatingsByUser(user?.id ?? '');
+      setRatings(ratingsResponse.data.data.ratings);
+      console.log(ratingsResponse);
       if (mode == 'movie' || !isChangeMode) {
         const favoriteItemResponse = await getFavoriteItem(user?.id ?? '');
         if (favoriteItemResponse.data.data.movie_id != null) {
@@ -171,7 +189,7 @@ const FavoritesPage: React.FC<FavoritesPageProps> = ({ user }) => {
             </div>
             <div className="flex gap-8 items-center">
               <div className="relative w-fit">
-                <Rating rating={10} />
+                <Rating rating={calculateAverageRating('movie') ?? 0} />
               </div>
               <div className="flex flex-col items-start text-lg font-bold mr-4">
                 <div>Average</div>
@@ -179,7 +197,7 @@ const FavoritesPage: React.FC<FavoritesPageProps> = ({ user }) => {
               </div>
               <div className="border-l-2 border-white h-14 mx-2"></div>
               <div className="relative w-fit">
-                <Rating rating={10} />
+                <Rating rating={calculateAverageRating('tv_show') ?? 0} />
               </div>
               <div className="flex flex-col items-start text-lg font-bold mr-4">
                 <div>Average</div>
@@ -228,8 +246,10 @@ const FavoritesPage: React.FC<FavoritesPageProps> = ({ user }) => {
                                 movie={movie}
                                 isFavorite={true}
                                 isWatchlist={movieWatchlist.includes(movie.id)}
-                                rated={index == 3 ? 50 : null}
+                                rated={findRatingByMediaAndType(movie.id, 'movie')}
                                 user_id={user?.id ?? ''}
+                                avatar={user?.imageUrl ?? ''}
+                                username={(user?.firstName ?? '') + ' ' + (user?.lastName ?? '')}
                               />
                             ))}
                           </>
@@ -263,8 +283,10 @@ const FavoritesPage: React.FC<FavoritesPageProps> = ({ user }) => {
                                 tv={tv}
                                 isFavorite={true}
                                 isWatchlist={tvWatchlist.includes(tv.id)}
-                                rated={index == 3 ? 50 : null}
+                                rated={findRatingByMediaAndType(tv.id, 'tv_show')}
                                 user_id={user?.id ?? ''}
+                                avatar={user?.imageUrl ?? ''}
+                                username={(user?.firstName ?? '') + ' ' + (user?.lastName ?? '')}
                               />
                             ))}
                           </>
