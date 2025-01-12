@@ -68,7 +68,10 @@ func (repo implRepository) GetOneTVShow(ctx context.Context, tvID int64) (models
 func (repo implRepository) ListTVShows(ctx context.Context, input tvshow.ListTVsOptions) ([]models.TVShow, error) {
 	col := repo.getTVShowCollection()
 
-	queryFilter := repo.buildListTVShowsQuery(input.Filter, input.Query)
+	queryFilter, err := repo.buildListTVShowsQuery(input.Filter, input.Query)
+	if err != nil {
+		return []models.TVShow{}, err
+	}
 
 	findOptions := repo.buildGetTVShowFindOptions(input.Filter)
 
@@ -89,7 +92,10 @@ func (repo implRepository) ListTVShows(ctx context.Context, input tvshow.ListTVs
 func (repo implRepository) CountTVShows(ctx context.Context, input tvshow.ListTVsOptions) (int64, error) {
 	col := repo.getTVShowCollection()
 
-	queryFilter := repo.buildListTVShowsQuery(input.Filter, input.Query)
+	queryFilter, err := repo.buildListTVShowsQuery(input.Filter, input.Query)
+	if err != nil {
+		return 0, err
+	}
 
 	count, err := col.CountDocuments(ctx, queryFilter)
 	if err != nil {
@@ -102,7 +108,10 @@ func (repo implRepository) CountTVShows(ctx context.Context, input tvshow.ListTV
 func (repo implRepository) GetUpcomingTVShows(ctx context.Context, input tvshow.GetUpcomingTVsOptions) ([]models.TVSummary, error) {
 	col := repo.getUpcomingCollection()
 
-	queryFilter := repo.buildListTVShowsQuery(input.Filter, "")
+	queryFilter, err := repo.buildListTVShowsQuery(input.Filter, "")
+	if err != nil {
+		return []models.TVSummary{}, err
+	}
 
 	findOptions := repo.buildGetTVShowFindOptions(input.Filter)
 
@@ -123,7 +132,10 @@ func (repo implRepository) GetUpcomingTVShows(ctx context.Context, input tvshow.
 func (repo implRepository) CountUpcomingTVShows(ctx context.Context, input tvshow.GetUpcomingTVsOptions) (int64, error) {
 	col := repo.getUpcomingCollection()
 
-	queryFilter := repo.buildListTVShowsQuery(input.Filter, "")
+	queryFilter, err := repo.buildListTVShowsQuery(input.Filter, "")
+	if err != nil {
+		return 0, err
+	}
 
 	count, err := col.CountDocuments(ctx, queryFilter)
 	if err != nil {
@@ -136,7 +148,10 @@ func (repo implRepository) CountUpcomingTVShows(ctx context.Context, input tvsho
 func (repo implRepository) GetOnTheAirTVShows(ctx context.Context, input tvshow.GetOnTheAirTVsOptions) ([]models.TVSummary, error) {
 	col := repo.getOnTheAirCollection()
 
-	queryFilter := repo.buildListTVShowsQuery(input.Filter, "")
+	queryFilter, err := repo.buildListTVShowsQuery(input.Filter, "")
+	if err != nil {
+		return []models.TVSummary{}, err
+	}
 
 	findOptions := repo.buildGetTVShowFindOptions(input.Filter)
 
@@ -157,7 +172,10 @@ func (repo implRepository) GetOnTheAirTVShows(ctx context.Context, input tvshow.
 func (repo implRepository) GetAiringTodayTVShows(ctx context.Context, input tvshow.GetAiringTodayTVsOptions) ([]models.TVSummary, error) {
 	col := repo.getAiringTodayCollection()
 
-	queryFilter := repo.buildListTVShowsQuery(input.Filter, "")
+	queryFilter, err := repo.buildListTVShowsQuery(input.Filter, "")
+	if err != nil {
+		return []models.TVSummary{}, err
+	}
 
 	findOptions := repo.buildGetTVShowFindOptions(input.Filter)
 
@@ -178,7 +196,10 @@ func (repo implRepository) GetAiringTodayTVShows(ctx context.Context, input tvsh
 func (repo implRepository) CountOnTheAirTVShows(ctx context.Context, input tvshow.GetOnTheAirTVsOptions) (int64, error) {
 	col := repo.getOnTheAirCollection()
 
-	queryFilter := repo.buildListTVShowsQuery(input.Filter, "")
+	queryFilter, err := repo.buildListTVShowsQuery(input.Filter, "")
+	if err != nil {
+		return 0, err
+	}
 
 	count, err := col.CountDocuments(ctx, queryFilter)
 	if err != nil {
@@ -191,7 +212,10 @@ func (repo implRepository) CountOnTheAirTVShows(ctx context.Context, input tvsho
 func (repo implRepository) CountAiringTodayTVShows(ctx context.Context, input tvshow.GetAiringTodayTVsOptions) (int64, error) {
 	col := repo.getAiringTodayCollection()
 
-	queryFilter := repo.buildListTVShowsQuery(input.Filter, "")
+	queryFilter, err := repo.buildListTVShowsQuery(input.Filter, "")
+	if err != nil {
+		return 0, err
+	}
 
 	count, err := col.CountDocuments(ctx, queryFilter)
 	if err != nil {
@@ -204,7 +228,10 @@ func (repo implRepository) CountAiringTodayTVShows(ctx context.Context, input tv
 func (repo implRepository) GetTopRatedTVShows(ctx context.Context, input tvshow.GetTopRatedTVsOptions) ([]models.TVSummary, error) {
 	col := repo.getTopRatedCollection()
 
-	queryFilter := repo.buildListTVShowsQuery(input.Filter, "")
+	queryFilter, err := repo.buildListTVShowsQuery(input.Filter, "")
+	if err != nil {
+		return []models.TVSummary{}, err
+	}
 
 	findOptions := repo.buildGetTVShowFindOptions(input.Filter)
 
@@ -225,7 +252,10 @@ func (repo implRepository) GetTopRatedTVShows(ctx context.Context, input tvshow.
 func (repo implRepository) CountTopRatedTVShows(ctx context.Context, input tvshow.GetTopRatedTVsOptions) (int64, error) {
 	col := repo.getTopRatedCollection()
 
-	queryFilter := repo.buildListTVShowsQuery(input.Filter, "")
+	queryFilter, err := repo.buildListTVShowsQuery(input.Filter, "")
+	if err != nil {
+		return 0, err
+	}
 
 	count, err := col.CountDocuments(ctx, queryFilter)
 	if err != nil {
@@ -238,7 +268,10 @@ func (repo implRepository) CountTopRatedTVShows(ctx context.Context, input tvsho
 func (repo implRepository) GetPopularTVShows(ctx context.Context, input tvshow.GetPopularTVsOptions) ([]models.TVSummary, error) {
 	col := repo.getPopularCollection()
 
-	queryFilter := repo.buildListTVShowsQuery(input.Filter, "")
+	queryFilter, err := repo.buildListTVShowsQuery(input.Filter, "")
+	if err != nil {
+		return []models.TVSummary{}, err
+	}
 
 	findOptions := repo.buildGetTVShowFindOptions(input.Filter)
 
@@ -259,7 +292,10 @@ func (repo implRepository) GetPopularTVShows(ctx context.Context, input tvshow.G
 func (repo implRepository) CountPopularTVShows(ctx context.Context, input tvshow.GetPopularTVsOptions) (int64, error) {
 	col := repo.getPopularCollection()
 
-	queryFilter := repo.buildListTVShowsQuery(input.Filter, "")
+	queryFilter, err := repo.buildListTVShowsQuery(input.Filter, "")
+	if err != nil {
+		return 0, err
+	}
 
 	count, err := col.CountDocuments(ctx, queryFilter)
 	if err != nil {

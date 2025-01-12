@@ -46,7 +46,7 @@ func (repo implRepository) buildFilter(input tvshow.GetTVFilter) bson.M {
 	return queryFilter
 }
 
-func (repo implRepository) buildListTVShowsQuery(input tvshow.GetTVFilter, query string) bson.M {
+func (repo implRepository) buildListTVShowsQuery(input tvshow.GetTVFilter, query string) (bson.M, error) {
 	queryFilter := repo.buildFilter(input)
 	if query != "" {
 		queryFilter["$or"] = []bson.M{
@@ -77,7 +77,23 @@ func (repo implRepository) buildListTVShowsQuery(input tvshow.GetTVFilter, query
 		}
 	}
 
-	return queryFilter
+	if len(input.IDs) > 0 {
+		queryFilter["id"] = bson.M{"$in": input.IDs}
+	}
+
+	if len(input.ObjectIDs) > 0 {
+		objectIDs := make([]primitive.ObjectID, len(input.ObjectIDs))
+		for i, id := range input.ObjectIDs {
+			objectID, err := primitive.ObjectIDFromHex(id)
+			if err != nil {
+				return bson.M{}, err
+			}
+			objectIDs[i] = objectID
+		}
+		queryFilter["_id"] = bson.M{"$in": objectIDs}
+	}
+
+	return queryFilter, nil
 }
 
 func (repo implRepository) buildGetTVShowFindOptions(input tvshow.GetTVFilter) *options.FindOptions {
