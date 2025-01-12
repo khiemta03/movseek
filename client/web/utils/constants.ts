@@ -92,8 +92,8 @@ export const TMDB_API = {
   DELETE_REVIEWS: (userId: string, mediaId: number, type: string) =>
     `/comments/user/${userId}?media_id=${mediaId}&type=${type}`,
 
-  ADD_RATING: () => `/ratings`,
-  GET_RATINGS_BY_MEDIA: (mediaId: number) => `/ratings/media/${mediaId}`,
+  ADD_RATING: () => `/ratings/`,
+  GET_RATINGS_BY_MEDIA: (mediaId: number, type: string) => `/ratings/media/${mediaId}?type=${type}`,
   GET_RATINGS_BY_USER: (userId: string) => `/ratings/user/${userId}`,
   UPDATE_RATINGS: (userId: string) => `/ratings/user/${userId}`,
   DELETE_RATINGS: (userId: string, mediaId: number, type: string) =>

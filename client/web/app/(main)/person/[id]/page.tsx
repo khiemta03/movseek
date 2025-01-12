@@ -70,7 +70,7 @@ const MovieDetail = () => {
                   src={person.profile_path ? imageSrc : '/default-male-avatar.svg'}
                   alt={person.name}
                   layout="fill"
-                  objectFit="contain"
+                  style={{ objectFit: 'contain' }}
                   onError={() => setImageSrc('/default-male-avatar.svg')}
                 />
               </div>

@@ -18,7 +18,7 @@ const CastAndCrewImage: React.FC<CastAndCrewImageProps> = ({ image, name, gender
         src={image ? imageSrc : gender == 1 ? '/default-female-avatar.svg' : '/default-male-avatar.svg'}
         alt={name}
         layout="fill"
-        objectFit="cover"
+        style={{ objectFit: 'cover' }}
         onError={() => setImageSrc(gender == 1 ? '/default-female-avatar.svg' : '/default-male-avatar.svg')}
       />
     </div>

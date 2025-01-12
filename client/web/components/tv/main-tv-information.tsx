@@ -156,7 +156,8 @@ const MainTVInformation: React.FC<MainTVInformationProps> = ({
               src={tv.poster_path ? imageSrc : '/poster-default.svg'}
               alt={tv.name}
               layout="fill"
-              objectFit="contain"
+              priority
+              style={{ objectFit: 'contain' }}
               onError={() => setImageSrc('/poster-default.svg')}
             />
           </div>

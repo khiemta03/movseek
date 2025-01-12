@@ -156,7 +156,8 @@ const MainMovieInformation: React.FC<MainMovieInformationProps> = ({
               src={movie.poster_path ? imageSrc : '/poster-default.svg'}
               alt={movie.title}
               layout="fill"
-              objectFit="contain"
+              priority
+              style={{ objectFit: 'contain' }}
               onError={() => setImageSrc('/poster-default.svg')}
             />
           </div>

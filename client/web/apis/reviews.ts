@@ -40,7 +40,7 @@ export const updateComment = (
     comment,
     media_id,
     type,
-    userID: user_id,
+    user_id,
     username,
   });
 };

@@ -19,8 +19,8 @@ export const addRating = (
   });
 };
 
-export const getRatingsByMedia = (media_id: number) => {
-  return axiosInstance.get(TMDB_API.GET_RATINGS_BY_MEDIA(media_id));
+export const getRatingsByMedia = (media_id: number, type: 'movie' | 'tv_show') => {
+  return axiosInstance.get(TMDB_API.GET_RATINGS_BY_MEDIA(media_id, type));
 };
 
 export const getRatingsByUser = (user_id: string) => {
@@ -45,6 +45,6 @@ export const updateRating = (
   });
 };
 
-export const deleteComment = (user_id: string, media_id: number, type: string) => {
+export const deleteRating = (user_id: string, media_id: number, type: 'movie' | 'tv_show') => {
   return axiosInstance.delete(TMDB_API.DELETE_RATINGS(user_id, media_id, type));
 };
