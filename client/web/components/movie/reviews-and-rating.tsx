@@ -13,7 +13,7 @@ import { addComment, deleteComment, getCommentsByMedia, updateComment } from '@/
 import { Review } from '@/models/review-types';
 import { Rating } from '@/models/rating-types';
 import { addRating, deleteRating, getRatingsByMedia, updateRating } from '@/apis/ratings';
-import ReviewCard from './review-card';
+import ReviewCard from '@/components/movie/review-card';
 
 interface ReviewsAndRatingProps {
   movie: Movie;

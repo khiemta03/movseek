@@ -14,8 +14,8 @@ import AltTVInformation from '@/components/tv/alt-tv-information';
 import MainTVInformation from '@/components/tv/main-tv-information';
 import { fetchTVDetail, fetchTVCredits, fetchTVKeywords, fetchTVVideos } from '@/apis/tv';
 import RecommendationList from '@/components/tv/recommendations';
-import ReviewsAndRating from '@/components/tv/reviews-and-rating';
 import { useUser } from '@clerk/nextjs';
+import ReviewsAndRating from '@/components/tv/reviews-and-rating';
 
 export default function TVDetail() {
   const params = useParams();
@@ -149,8 +149,11 @@ export default function TVDetail() {
               <div>
                 <h2 className="text-2xl font-bold mb-4">Reviews And Rating</h2>
                 <ReviewsAndRating
-                  rated={null}
-                  review={''}
+                  tv={tv}
+                  isSignedIn={isSignedIn ?? false}
+                  user_id={user?.id ?? ''}
+                  avatar={user?.imageUrl ?? ''}
+                  username={(user?.firstName ?? '') + ' ' + (user?.lastName ?? '')}
                 />
               </div>
               <hr className="my-14 border-t border-gray-300" />
