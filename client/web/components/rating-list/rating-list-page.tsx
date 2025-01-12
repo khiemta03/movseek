@@ -59,10 +59,16 @@ const RatinglistPage: React.FC<RatinglistPageProps> = ({ user }) => {
       const ratingsResponse = await getRatingsByUser(user?.id ?? '');
       setRatings(ratingsResponse.data.data.ratings);
       if (mode == 'movie' || !isChangeMode) {
-        if (ratingsResponse.data.data.ratings != null) {
+        if (ratingsResponse.data.data.ratings != null && ratingsResponse.data.data.ratings.length > 0) {
           const ratinglistMovieQueryString = ratingsResponse.data.data.ratings
-            .filter((rating: { created_at: string; media_id: number; rating: number; type: 'movie' | 'tv_show' }) => rating.type == 'movie')
-            .map((rating: { created_at: string; media_id: number; rating: number; type: 'movie' | 'tv_show' }) => `ids=${rating.media_id}`)
+            .filter(
+              (rating: { created_at: string; media_id: number; rating: number; type: 'movie' | 'tv_show' }) =>
+                rating.type == 'movie',
+            )
+            .map(
+              (rating: { created_at: string; media_id: number; rating: number; type: 'movie' | 'tv_show' }) =>
+                `ids=${rating.media_id}`,
+            )
             .join('&');
           const movieRatingResponse = await fetchSearchSpecificMovie(
             ratinglistMovieQueryString,
@@ -90,10 +96,16 @@ const RatinglistPage: React.FC<RatinglistPageProps> = ({ user }) => {
         }
       }
       if (mode == 'tv' || !isChangeMode) {
-        if (ratingsResponse.data.data.ratings != null) {
+        if (ratingsResponse.data.data.ratings != null && ratingsResponse.data.data.ratings.length > 0) {
           const ratinglistTVQueryString = ratingsResponse.data.data.ratings
-            .filter((rating: { created_at: string; media_id: number; rating: number; type: 'movie' | 'tv_show' }) => rating.type == 'tv_show')
-            .map((rating: { created_at: string; media_id: number; rating: number; type: 'movie' | 'tv_show' }) => `ids=${rating.media_id}`)
+            .filter(
+              (rating: { created_at: string; media_id: number; rating: number; type: 'movie' | 'tv_show' }) =>
+                rating.type == 'tv_show',
+            )
+            .map(
+              (rating: { created_at: string; media_id: number; rating: number; type: 'movie' | 'tv_show' }) =>
+                `ids=${rating.media_id}`,
+            )
             .join('&');
           const tvRatingResponse = await fetchSearchSpecificTV(
             ratinglistTVQueryString,
@@ -133,7 +145,6 @@ const RatinglistPage: React.FC<RatinglistPageProps> = ({ user }) => {
       }
     }
   };
-
 
   useEffect(() => {
     fetchData(page, false);

@@ -58,7 +58,7 @@ const FavoritesPage: React.FC<FavoritesPageProps> = ({ user }) => {
       setRatings(ratingsResponse.data.data.ratings);
       if (mode == 'movie' || !isChangeMode) {
         const favoriteItemResponse = await getFavoriteItem(user?.id ?? '');
-        if (favoriteItemResponse.data.data.movie_id != null) {
+        if (favoriteItemResponse.data.data.movie_id != null && favoriteItemResponse.data.data.movie_id.length > 0) {
           const favoriteMovieQueryString = favoriteItemResponse.data.data.movie_id
             .map((id: number) => `ids=${id}`)
             .join('&');
@@ -87,7 +87,7 @@ const FavoritesPage: React.FC<FavoritesPageProps> = ({ user }) => {
       }
       if (mode == 'tv' || !isChangeMode) {
         const favoriteItemResponse = await getFavoriteItem(user?.id ?? '');
-        if (favoriteItemResponse.data.data.tv_show_id != null) {
+        if (favoriteItemResponse.data.data.tv_show_id != null && favoriteItemResponse.data.data.tv_show_id.length > 0) {
           const favoriteTVQueryString = favoriteItemResponse.data.data.tv_show_id
             .map((id: number) => `ids=${id}`)
             .join('&');

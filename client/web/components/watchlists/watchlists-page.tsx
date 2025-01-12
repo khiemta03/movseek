@@ -58,7 +58,7 @@ const WatchlistsPage: React.FC<WatchlistsPageProps> = ({ user }) => {
       setRatings(ratingsResponse.data.data.ratings);
       if (mode == 'movie' || !isChangeMode) {
         const watchlistResponse = await getWatchlistItem(user?.id ?? '');
-        if (watchlistResponse.data.data.movie_id != null) {
+        if (watchlistResponse.data.data.movie_id != null && watchlistResponse.data.data.movie_id.length > 0) {
           const watchlistMovieQueryString = watchlistResponse.data.data.movie_id
             .map((id: number) => `ids=${id}`)
             .join('&');
@@ -87,7 +87,10 @@ const WatchlistsPage: React.FC<WatchlistsPageProps> = ({ user }) => {
       }
       if (mode == 'tv' || !isChangeMode) {
         const watchlistItemResponse = await getWatchlistItem(user?.id ?? '');
-        if (watchlistItemResponse.data.data.tv_show_id != null) {
+        if (
+          watchlistItemResponse.data.data.tv_show_id != null &&
+          watchlistItemResponse.data.data.tv_show_id.length > 0
+        ) {
           const watchlistTVQueryString = watchlistItemResponse.data.data.tv_show_id
             .map((id: number) => `ids=${id}`)
             .join('&');
