@@ -22,14 +22,18 @@ type filter struct {
 }
 
 type searchTVShowsRequest struct {
-	Query  string `form:"query"`
-	Filter filter `form:"filter"`
+	Query     string   `form:"query"`
+	IDs       []int64  `form:"ids"`
+	ObjectIDs []string `form:"object_ids"`
+	Filter    filter   `form:"filter"`
 }
 
 func (req searchTVShowsRequest) toInput() tvshow.ListTVsInput {
 	filter := tvshow.GetTVFilter{
 		Page:             req.Filter.Page,
 		PerPage:          req.Filter.PerPage,
+		IDs:              req.IDs,
+		ObjectIDs:        req.ObjectIDs,
 		StartDate:        req.Filter.StartDate,
 		EndDate:          req.Filter.EndDate,
 		GenreIDs:         req.Filter.GenreIDs,
