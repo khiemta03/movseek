@@ -17,31 +17,34 @@ func (repo implRepository) buildMovieQuery(movieID int64) (bson.M, error) {
 }
 
 func (repo implRepository) buildFilter(input movie.GetMovieFilter) bson.M {
-	queryFilter := bson.M{
-		"release_date": bson.M{
-			"$lte": date.GetCurrentDate(),
-		},
-	}
+	queryFilter := bson.M{}
 
+	releaseDateFilter := bson.M{
+		"$lte": date.GetCurrentDate(),
+	}
 	if input.StartDate != "" {
-		queryFilter["release_date"] = bson.M{"$gte": input.StartDate}
+		releaseDateFilter["$gte"] = input.StartDate
 	}
-
 	if input.EndDate != "" {
-		queryFilter["release_date"] = bson.M{"$lte": input.EndDate}
+		releaseDateFilter["$lte"] = input.EndDate
 	}
+	queryFilter["release_date"] = releaseDateFilter
 
 	if input.GenreIDs != nil {
 		queryFilter["genre_ids"] = bson.M{"$in": input.GenreIDs}
 	}
 
+	voteAverageFilter := bson.M{}
+
 	if input.StartAverageVote > 0 {
-		queryFilter["vote_average"] = bson.M{"$gte": input.StartAverageVote}
+		voteAverageFilter["$gte"] = input.StartAverageVote
 	}
 
 	if input.EndAverageVote > 0 {
-		queryFilter["vote_average"] = bson.M{"$lte": input.EndAverageVote}
+		voteAverageFilter["$lte"] = input.EndAverageVote
 	}
+
+	queryFilter["vote_average"] = voteAverageFilter
 
 	return queryFilter
 }
