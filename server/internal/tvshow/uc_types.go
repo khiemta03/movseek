@@ -3,8 +3,10 @@ package tvshow
 import "github.com/tmplam/movseek/internal/models"
 
 type GetTVFilter struct {
-	Page    int `json:"page"`
-	PerPage int `json:"per_page"`
+	Page      int      `json:"page"`
+	PerPage   int      `json:"per_page"`
+	IDs       []int64  `json:"ids"`
+	ObjectIDs []string `json:"object_ids"`
 
 	StartDate        string  `form:"start_date"`
 	EndDate          string  `form:"end_date"`
