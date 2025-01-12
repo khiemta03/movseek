@@ -17,31 +17,35 @@ func (repo implRepository) buildTVShowQuery(tvID int64) (bson.M, error) {
 }
 
 func (repo implRepository) buildFilter(input tvshow.GetTVFilter) bson.M {
-	queryFilter := bson.M{
-		"first_air_date": bson.M{
-			"$lte": date.GetCurrentDate(),
-		},
-	}
+	queryFilter := bson.M{}
 
+	releaseDateFilter := bson.M{
+		"$lte": date.GetCurrentDate(),
+	}
 	if input.StartDate != "" {
-		queryFilter["first_air_date"] = bson.M{"$gte": input.StartDate}
+		releaseDateFilter["$gte"] = input.StartDate
 	}
 
 	if input.EndDate != "" {
-		queryFilter["first_air_date"] = bson.M{"$lte": input.EndDate}
+		releaseDateFilter["$lte"] = input.EndDate
 	}
+	queryFilter["first_air_date"] = releaseDateFilter
 
 	if input.GenreIDs != nil {
 		queryFilter["genre_ids"] = bson.M{"$in": input.GenreIDs}
 	}
 
+	voteAverageFilter := bson.M{}
+
 	if input.StartAverageVote > 0 {
-		queryFilter["vote_average"] = bson.M{"$gte": input.StartAverageVote}
+		voteAverageFilter["$gte"] = input.StartAverageVote
 	}
 
 	if input.EndAverageVote > 0 {
-		queryFilter["vote_average"] = bson.M{"$lte": input.EndAverageVote}
+		voteAverageFilter["$lte"] = input.EndAverageVote
 	}
+
+	queryFilter["vote_average"] = voteAverageFilter
 
 	return queryFilter
 }

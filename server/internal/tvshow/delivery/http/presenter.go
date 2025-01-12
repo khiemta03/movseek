@@ -3,6 +3,7 @@ package http
 import (
 	"github.com/tmplam/movseek/internal/models"
 	"github.com/tmplam/movseek/internal/tvshow"
+	"github.com/tmplam/movseek/pkg"
 )
 
 type filter struct {
@@ -37,8 +38,8 @@ func (req searchTVShowsRequest) toInput() tvshow.ListTVsInput {
 		StartDate:        req.Filter.StartDate,
 		EndDate:          req.Filter.EndDate,
 		GenreIDs:         req.Filter.GenreIDs,
-		StartAverageVote: req.Filter.StartAverageVote,
-		EndAverageVote:   req.Filter.EndAverageVote,
+		StartAverageVote: pkg.CalculateScore(req.Filter.StartAverageVote),
+		EndAverageVote:   pkg.CalculateScore(req.Filter.EndAverageVote),
 		TimeOrder:        req.Filter.TimeOrder,
 		PopularityOrder:  req.Filter.PopularityOrder,
 		VoteOrder:        req.Filter.VoteOrder,
@@ -62,8 +63,8 @@ func (req getUpcomingTVShowsRequest) toInput() tvshow.GetUpcomingTVsInput {
 		StartDate:        req.StartDate,
 		EndDate:          req.EndDate,
 		GenreIDs:         req.GenreIDs,
-		StartAverageVote: req.StartAverageVote,
-		EndAverageVote:   req.EndAverageVote,
+		StartAverageVote: pkg.CalculateScore(req.StartAverageVote),
+		EndAverageVote:   pkg.CalculateScore(req.EndAverageVote),
 		TimeOrder:        req.TimeOrder,
 		PopularityOrder:  req.PopularityOrder,
 		VoteOrder:        req.VoteOrder,
@@ -86,8 +87,8 @@ func (req getOnTheAirTVShowsRequest) toInput() tvshow.GetOnTheAirTVsInput {
 		StartDate:        req.StartDate,
 		EndDate:          req.EndDate,
 		GenreIDs:         req.GenreIDs,
-		StartAverageVote: req.StartAverageVote,
-		EndAverageVote:   req.EndAverageVote,
+		StartAverageVote: pkg.CalculateScore(req.StartAverageVote),
+		EndAverageVote:   pkg.CalculateScore(req.EndAverageVote),
 		TimeOrder:        req.TimeOrder,
 		PopularityOrder:  req.PopularityOrder,
 		VoteOrder:        req.VoteOrder,
@@ -110,8 +111,8 @@ func (req getAiringTodayTVShowsRequest) toInput() tvshow.GetAiringTodayTVsInput 
 		StartDate:        req.StartDate,
 		EndDate:          req.EndDate,
 		GenreIDs:         req.GenreIDs,
-		StartAverageVote: req.StartAverageVote,
-		EndAverageVote:   req.EndAverageVote,
+		StartAverageVote: pkg.CalculateScore(req.StartAverageVote),
+		EndAverageVote:   pkg.CalculateScore(req.EndAverageVote),
 		TimeOrder:        req.TimeOrder,
 		PopularityOrder:  req.PopularityOrder,
 		VoteOrder:        req.VoteOrder,
@@ -134,8 +135,8 @@ func (req getTopRatedTVShowsRequest) toInput() tvshow.GetTopRatedTVsInput {
 		StartDate:        req.StartDate,
 		EndDate:          req.EndDate,
 		GenreIDs:         req.GenreIDs,
-		StartAverageVote: req.StartAverageVote,
-		EndAverageVote:   req.EndAverageVote,
+		StartAverageVote: pkg.CalculateScore(req.StartAverageVote),
+		EndAverageVote:   pkg.CalculateScore(req.EndAverageVote),
 		TimeOrder:        req.TimeOrder,
 		PopularityOrder:  req.PopularityOrder,
 		VoteOrder:        req.VoteOrder,
@@ -158,8 +159,8 @@ func (req getPopularTVShowsRequest) toInput() tvshow.GetPopularTVsInput {
 		StartDate:        req.StartDate,
 		EndDate:          req.EndDate,
 		GenreIDs:         req.GenreIDs,
-		StartAverageVote: req.StartAverageVote,
-		EndAverageVote:   req.EndAverageVote,
+		StartAverageVote: pkg.CalculateScore(req.StartAverageVote),
+		EndAverageVote:   pkg.CalculateScore(req.EndAverageVote),
 		TimeOrder:        req.TimeOrder,
 		PopularityOrder:  req.PopularityOrder,
 		VoteOrder:        req.VoteOrder,
