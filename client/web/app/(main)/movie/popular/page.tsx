@@ -115,7 +115,6 @@ export default function MoviePopularPage() {
   };
 
   const handleFilterSort = () => {
-    console.log(initFilterSortState, filterSortState);
     router.push(buildRoute('/movie/popular', filterSortState));
   };
 

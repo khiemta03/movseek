@@ -116,7 +116,6 @@ export default function TVTopRatedPage() {
   };
 
   const handleFilterSort = () => {
-    console.log(initFilterSortState, filterSortState);
     router.push(buildRoute('/tv/top-rated', filterSortState));
   };
 

@@ -115,7 +115,6 @@ export default function MovieNowPlayingPage() {
   };
 
   const handleFilterSort = () => {
-    console.log(initFilterSortState, filterSortState);
     router.push(buildRoute('/movie/now-playing', filterSortState));
   };
 

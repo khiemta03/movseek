@@ -56,6 +56,7 @@ const MovieDetail = () => {
         const data = pickMovieFields(movieResponse.data.data);
         setImageSrc(TMDB_API.POSTER(data.poster_path));
         setMovie(data);
+        console.log(data);
 
         const creditsResponse = await fetchMovieCredits(idMovie);
         setCredits(handleMovieCredits(creditsResponse.data.data));
@@ -210,6 +211,8 @@ const MovieDetail = () => {
                   <RecommendationList
                     baseOn={viewModeRecommendation}
                     setTransitioning={setTransitioningRecommendation}
+                    movie={movie}
+                    keywords={keywords}
                   />
                 </div>
               </div>

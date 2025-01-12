@@ -115,7 +115,6 @@ export default function MovieTopRatedPage() {
   };
 
   const handleFilterSort = () => {
-    console.log(initFilterSortState, filterSortState);
     router.push(buildRoute('/movie/top-rated', filterSortState));
   };
 

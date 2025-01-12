@@ -83,4 +83,7 @@ export const TMDB_API = {
   REMOVE_SAVED_ITEM: () => `/saved-item/remove`,
   GET_FAVORITE_ITEM: (userId: string) => `/saved-item/${userId}?type=favorite`,
   GET_WATCHLIST_ITEM: (userId: string) => `/saved-item/${userId}?type=watchlist`,
+
+  LLM_RETRIEVER: (collection_name: string, query: string, amount: number, threshold: number) =>
+    `/retriever?llm_api_key=${process.env.NEXT_PUBLIC_LLM_API_KEY}&collection_name=${collection_name}&query=${query}&amount=${amount}&threshold=${threshold}`,
 };

@@ -116,7 +116,6 @@ export default function TVAiringTodayPage() {
   };
 
   const handleFilterSort = () => {
-    console.log(initFilterSortState, filterSortState);
     router.push(buildRoute('/tv/airing-today', filterSortState));
   };
 

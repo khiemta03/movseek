@@ -115,7 +115,6 @@ export default function MovieUpcomingPage() {
   };
 
   const handleFilterSort = () => {
-    console.log(initFilterSortState, filterSortState);
     router.push(buildRoute('/movie/upcoming', filterSortState));
   };
 

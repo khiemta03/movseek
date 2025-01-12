@@ -116,7 +116,6 @@ export default function TVPopularPage() {
   };
 
   const handleFilterSort = () => {
-    console.log(initFilterSortState, filterSortState);
     router.push(buildRoute('/tv/popular', filterSortState));
   };
 

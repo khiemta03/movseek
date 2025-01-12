@@ -5,24 +5,35 @@ import MovieSearchCard from '@/components/search/movie-search-card';
 import { MovieListResults } from '@/models/movie-list-types';
 import { fetchMoviePopular, fetchMovieTopRated } from '@/apis/movie-list';
 import MovieCardDummpy from '@/components/main/movie-card-dummy';
+import { Keyword, Movie } from '@/models/movie-detail-types';
+// import { buildQuery } from '@/utils/util-functions/detail-page';
+// import { fetchLLMRetriever } from '@/apis/llm-search';
 
 interface RecommendationListProps {
   baseOn: 'genres' | 'vectors-search';
   setTransitioning: (transition: boolean) => void;
+  // genres: Genre[];
+  movie: Movie;
+  keywords: Keyword[];
 }
 
-const RecommendationList: React.FC<RecommendationListProps> = ({ baseOn, setTransitioning }) => {
+const RecommendationList: React.FC<RecommendationListProps> = ({ baseOn, setTransitioning, movie, keywords }) => {
   const [movieResults, setMovieResults] = useState<MovieListResults | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
+
+  const genreIdsParams = movie.genres.map((genre) => `genre_ids=${genre.id}`).join('&');
 
   const fetchRecommendationMovies = async (baseOn: 'genres' | 'vectors-search') => {
     try {
       setLoading(true);
       if (baseOn == 'genres') {
-        const response = await fetchMoviePopular(1);
+        const response = await fetchMoviePopular(1, genreIdsParams);
         setMovieResults(response.data.data);
       } else {
-        const response = await fetchMovieTopRated(1);
+        // console.log(buildQuery(movie, keywords));
+        // const llmResponse = await fetchLLMRetriever('movies', buildQuery(movie, keywords), 18, 0.5);
+        // console.log(llmResponse);
+        const response = await fetchMovieTopRated(1, '');
         setMovieResults(response.data.data);
       }
     } catch (err) {

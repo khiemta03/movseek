@@ -116,7 +116,6 @@ export default function TVOnTheAirPage() {
   };
 
   const handleFilterSort = () => {
-    console.log(initFilterSortState, filterSortState);
     router.push(buildRoute('/tv/on-the-air', filterSortState));
   };
 

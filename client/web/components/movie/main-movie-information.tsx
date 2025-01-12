@@ -42,7 +42,6 @@ const MainMovieInformation: React.FC<MainMovieInformationProps> = ({
     const fetchData = async () => {
       try {
         const favoriteItemResponse = await getFavoriteItem(user_id);
-        console.log(favoriteItemResponse.data.data.movie_id);
         if (Array.isArray(favoriteItemResponse.data.data.movie_id)) {
           if (favoriteItemResponse.data.data.movie_id.includes(parseInt(movie.id))) {
             setFavorite(true);

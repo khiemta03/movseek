@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Crew, CrewGroupedByDepartment, Video } from '@/models/movie-detail-types';
+import { Crew, CrewGroupedByDepartment, Keyword, Movie, Video } from '@/models/movie-detail-types';
 
 function convertMinutes(minutes: number): string {
   const hours = Math.floor(minutes / 60);
@@ -93,6 +93,39 @@ function selectPreferredVideo(results: Video[]) {
   return results[0];
 }
 
+const buildQuery = (movie: Movie, keywords: Keyword[]): string => {
+  const { genres, release_date, vote_average } = movie;
+
+  let query = '';
+
+  // Genres
+  if (genres && genres.length > 0) {
+    const genreNames = genres.map((genre) => genre.name).join(' and ');
+    query += `${genreNames} movies `;
+  }
+  query += ', ';
+  // Keywords: Thêm các từ khóa vào query
+  if (keywords && keywords.length > 0) {
+    query += `with keywords like ${keywords.map((keyword) => keyword.name).join(' and ')} `;
+  }
+  query += ', ';
+
+  // Release year
+  const releaseYear = new Date(release_date).getFullYear();
+  if (releaseYear) {
+    query += `released in ${releaseYear} `;
+  }
+  query += ', ';
+
+  // Rating: Chuyển đổi từ vote_average
+  const rating = vote_average >= 7 ? 'highly rated' : vote_average >= 5 ? 'medium rated' : 'low rated';
+  if (rating) {
+    query += `that are ${rating}`;
+  }
+
+  return query.trim();
+};
+
 export {
   getSizeOfCrew,
   formatCurrency,
@@ -101,4 +134,5 @@ export {
   pickMovieFields,
   handleMovieCredits,
   selectPreferredVideo,
+  buildQuery,
 };
