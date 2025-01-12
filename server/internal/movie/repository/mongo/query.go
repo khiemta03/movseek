@@ -1,6 +1,8 @@
 package mongo
 
 import (
+	"fmt"
+
 	"github.com/tmplam/movseek/internal/movie"
 	"github.com/tmplam/movseek/pkg/date"
 	"go.mongodb.org/mongo-driver/bson"
@@ -44,7 +46,11 @@ func (repo implRepository) buildFilter(input movie.GetMovieFilter) bson.M {
 		voteAverageFilter["$lte"] = input.EndAverageVote
 	}
 
-	queryFilter["vote_average"] = voteAverageFilter
+	if len(voteAverageFilter) > 0 {
+		queryFilter["vote_average"] = voteAverageFilter
+	}
+
+	fmt.Println(queryFilter)
 
 	return queryFilter
 }
