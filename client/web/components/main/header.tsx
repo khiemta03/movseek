@@ -118,6 +118,10 @@ const Header = ({ showSearch, setShowSearch, isSearchPage }: HeaderProps) => {
                   href="/watchlists"
                   label="Watchlists"
                 />
+                <DropdownItem
+                  href="/rating-list"
+                  label="Rating list"
+                />
               </div>
             </div>
           </nav>
