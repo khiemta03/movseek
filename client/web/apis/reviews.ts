@@ -45,6 +45,6 @@ export const updateComment = (
   });
 };
 
-export const deleteComment = (user_id: string, media_id: number, type: string) => {
+export const deleteComment = (user_id: string, media_id: number, type: 'movie' | 'tv_show') => {
   return axiosInstance.delete(TMDB_API.DELETE_REVIEWS(user_id, media_id, type));
 };

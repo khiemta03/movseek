@@ -177,7 +177,7 @@ export default function TVTopRatedPage() {
                   )}
                 </div>
               ) : (
-                <div className="font-bold w-full text-center">There are no tv series to display.</div>
+                <div className="font-bold w-4/5 text-center">There are no tv series to display.</div>
               )}
             </>
           ) : (

@@ -9,7 +9,8 @@ import { Movie } from '@/models/movie-detail-types';
 import { ToastAction } from '@/components/ui/toast';
 import { useRouter } from 'next/navigation';
 import { usePathname } from 'next/navigation';
-import { addComment, getCommentsByMedia } from '@/apis/reviews';
+import { addComment, deleteComment, getCommentsByMedia, updateComment } from '@/apis/reviews';
+import { Review } from '@/models/review-types';
 
 interface ReviewsAndRatingProps {
   movie: Movie;
@@ -27,7 +28,7 @@ const ReviewsAndRating: React.FC<ReviewsAndRatingProps> = ({ movie, isSignedIn, 
   const [isRated, setIsRated] = useState<boolean>(false);
   const [myComment, setMyComment] = useState<string>('');
   const [isCommented, setIsCommented] = useState<boolean>(false);
-  const [reviews, setReviews] = useState([]);
+  const [reviews, setReviews] = useState<Review[]>([]);
   const [ratings, setRatings] = useState([]);
 
   const handleCommentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -41,10 +42,15 @@ const ReviewsAndRating: React.FC<ReviewsAndRatingProps> = ({ movie, isSignedIn, 
     const fetchData = async () => {
       try {
         const commentsResponse = await getCommentsByMedia(parseInt(movie.id), 'movie');
-        console.log(commentsResponse.data.data.comments);
+        console.log('>>>', commentsResponse.data.data.comments);
         if (Array.isArray(commentsResponse.data.data.comments)) {
           setReviews(commentsResponse.data.data.comments);
-          // if (commentsResponse.data.data.comments.includes(user_id)) {
+          const comments: Review[] = commentsResponse.data.data.comments;
+          const comment = comments.find((comment) => comment.user_id === user_id);
+          console.log(comment);
+          // if (index >= 0) {
+          //   setIsCommented(true);
+          //   setMyComment(comments[index].comment);
           // }
         }
         // const watchlistItemResponse = await getWatchlistItem(user_id);
@@ -114,22 +120,19 @@ const ReviewsAndRating: React.FC<ReviewsAndRatingProps> = ({ movie, isSignedIn, 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     // if (myComment.trim() === '' && myRating == null) return;
-    // Kiểm tra trạng thái đăng nhập
     if (isSignedIn) {
       try {
-        // Xử lý comment
         if (myComment.trim() !== '') {
           if (isCommented) {
-            // Nếu đã có comment, sửa comment
-            // await updateComment(existingComment.id, comment, user_id);
-            // toast({
-            //   title: 'Success',
-            //   description: 'Your comment has been updated.',
-            //   duration: 3000,
-            //   className: 'bg-green-600 text-white border border-gray-200',
-            // });
+            const response = await updateComment(avatar, myComment, parseInt(movie.id), 'movie', user_id, username);
+            console.log(response);
+            toast({
+              title: 'Success',
+              description: 'Your comment has been updated.',
+              duration: 3000,
+              className: 'bg-green-600 text-white border border-gray-200',
+            });
           } else {
-            // Nếu chưa có comment, thêm comment mới
             const response = await addComment(avatar, myComment, parseInt(movie.id), 'movie', user_id, username);
             console.log(response);
             toast({
@@ -140,14 +143,13 @@ const ReviewsAndRating: React.FC<ReviewsAndRatingProps> = ({ movie, isSignedIn, 
             });
           }
         } else if (isCommented) {
-          // Nếu không có comment mới và đã có comment trước đó, xóa comment
-          // await deleteComment(existingComment.id, user_id);
-          // toast({
-          //   title: 'Success',
-          //   description: 'Your comment has been deleted.',
-          //   duration: 3000,
-          //   className: 'bg-red-600 text-white border border-gray-200',
-          // });
+          await deleteComment(user_id, parseInt(movie.id), 'movie');
+          toast({
+            title: 'Success',
+            description: 'Your comment has been deleted.',
+            duration: 3000,
+            className: 'bg-red-600 text-white border border-gray-200',
+          });
         }
 
         // Xử lý rating

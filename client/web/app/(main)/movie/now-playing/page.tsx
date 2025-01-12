@@ -176,7 +176,7 @@ export default function MovieNowPlayingPage() {
                   )}
                 </div>
               ) : (
-                <div className="font-bold w-full text-center">There are no movies to display.</div>
+                <div className="font-bold w-4/5 text-center">There are no movies to display.</div>
               )}
             </>
           ) : (

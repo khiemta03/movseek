@@ -85,19 +85,19 @@ export const TMDB_API = {
   GET_FAVORITE_ITEM: (userId: string) => `/saved-item/${userId}?type=favorite`,
   GET_WATCHLIST_ITEM: (userId: string) => `/saved-item/${userId}?type=watchlist`,
 
-  ADD_REVIEW: () => `/comments`,
+  ADD_REVIEW: () => `/comments/`,
   GET_REVIEWS_BY_MEDIA: (mediaId: number, type: string) => `/comments/media/${mediaId}?type=${type}`,
   GET_REVIEWS_BY_USER: (userId: string) => `/comments/user/${userId}`,
-  UPDATE_REVIEWS: (userId: string) => `/comments/${userId}`,
+  UPDATE_REVIEWS: (userId: string) => `/comments/user/${userId}`,
   DELETE_REVIEWS: (userId: string, mediaId: number, type: string) =>
-    `/comments/${userId}?media_id=${mediaId}&type=${type}`,
+    `/comments/user/${userId}?media_id=${mediaId}&type=${type}`,
 
   ADD_RATING: () => `/ratings`,
   GET_RATINGS_BY_MEDIA: (mediaId: number) => `/ratings/media/${mediaId}`,
   GET_RATINGS_BY_USER: (userId: string) => `/ratings/user/${userId}`,
-  UPDATE_RATINGS: (userId: string) => `/ratings/${userId}`,
+  UPDATE_RATINGS: (userId: string) => `/ratings/user/${userId}`,
   DELETE_RATINGS: (userId: string, mediaId: number, type: string) =>
-    `/ratings/${userId}?media_id=${mediaId}&type=${type}`,
+    `/ratings/user/${userId}?media_id=${mediaId}&type=${type}`,
 
   LLM_RETRIEVER: (collection_name: string, query: string, amount: number, threshold: number) =>
     `/retriever/?llm_api_key=${process.env.NEXT_PUBLIC_LLM_API_KEY}&collection_name=${collection_name}&query=${query}&amount=${amount}&threshold=${threshold}`,

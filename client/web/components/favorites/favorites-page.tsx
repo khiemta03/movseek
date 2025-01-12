@@ -74,12 +74,10 @@ const FavoritesPage: React.FC<FavoritesPageProps> = ({ user }) => {
           const favoriteTVQueryString = favoriteItemResponse.data.data.tv_show_id
             .map((id: number) => `ids=${id}`)
             .join('&');
-          // console.log(favoriteTVQueryString);
           const tvFavoriteResponse = await fetchSearchSpecificTV(
             favoriteTVQueryString,
             page != null ? parseInt(page) : 1,
           );
-          console.log(tvFavoriteResponse.data.data);
           setTVResults(tvFavoriteResponse.data.data);
         } else {
           setTVResults({

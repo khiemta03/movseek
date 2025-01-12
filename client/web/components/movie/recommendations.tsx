@@ -35,7 +35,6 @@ const RecommendationList: React.FC<RecommendationListProps> = ({ baseOn, setTran
         const object_ids = llmResponse.data.data.result;
         const query = object_ids.map((id: string) => `object_ids=${id}`).join('&');
         const response = await fetchSearchSpecificMovie(query, 1);
-        console.log(response);
         setMovieResults(response.data.data);
       }
     } catch (err) {
