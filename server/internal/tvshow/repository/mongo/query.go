@@ -45,7 +45,9 @@ func (repo implRepository) buildFilter(input tvshow.GetTVFilter) bson.M {
 		voteAverageFilter["$lte"] = input.EndAverageVote
 	}
 
-	queryFilter["vote_average"] = voteAverageFilter
+	if len(voteAverageFilter) > 0 {
+		queryFilter["vote_average"] = voteAverageFilter
+	}
 
 	return queryFilter
 }
