@@ -19,8 +19,8 @@ export const addComment = (
   });
 };
 
-export const getCommentsByMedia = (media_id: number) => {
-  return axiosInstance.get(TMDB_API.GET_REVIEWS_BY_MEDIA(media_id));
+export const getCommentsByMedia = (media_id: number, type: 'movie' | 'tv_show') => {
+  return axiosInstance.get(TMDB_API.GET_REVIEWS_BY_MEDIA(media_id, type));
 };
 
 export const getCommentsByUser = (user_id: string) => {

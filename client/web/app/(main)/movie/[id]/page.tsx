@@ -170,8 +170,11 @@ const MovieDetail = () => {
               <div>
                 <h2 className="text-2xl font-bold mb-4">Reviews And Rating</h2>
                 <ReviewsAndRating
-                  rated={null}
-                  review={''}
+                  movie={movie}
+                  isSignedIn={isSignedIn ?? false}
+                  user_id={user?.id ?? ''}
+                  avatar={user?.imageUrl ?? ''}
+                  username={(user?.firstName ?? '') + ' ' + (user?.lastName ?? '')}
                 />
               </div>
               <hr className="my-14 border-t border-gray-300" />

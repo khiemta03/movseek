@@ -53,9 +53,9 @@ export const TMDB_API = {
   TV_VIDEOS_TMDB: (tvId: number) => `/tv/${tvId}/videos`,
 
   SEARCH_MOVIE: (query: string, page: number) => `/search/movie?query=${query}&page=${page}&per_page=18`,
-  SEARCH_SPECIFIC_MOVIE: (ids: string, page: number) => `/search/movie?page=${page}&per_page=10&${ids}`,
+  SEARCH_SPECIFIC_MOVIE: (ids: string, page: number) => `/search/movie?page=${page}&per_page=18&${ids}`,
   SEARCH_TV: (query: string, page: number) => `/search/tv?query=${query}&page=${page}&per_page=18`,
-  SEARCH_SPECIFIC_TV: (ids: string, page: number) => `/search/tv?page=${page}&per_page=10&${ids}`,
+  SEARCH_SPECIFIC_TV: (ids: string, page: number) => `/search/tv?page=${page}&per_page=18&${ids}`,
   SEARCH_PERSON: (query: string, page: number) => `/search/person?query=${query}&page=${page}&per_page=18`,
 
   POSTER: (poster: string) => `https://image.tmdb.org/t/p/original/${poster}`,
@@ -86,7 +86,7 @@ export const TMDB_API = {
   GET_WATCHLIST_ITEM: (userId: string) => `/saved-item/${userId}?type=watchlist`,
 
   ADD_REVIEW: () => `/comments`,
-  GET_REVIEWS_BY_MEDIA: (mediaId: number) => `/comments/media/${mediaId}`,
+  GET_REVIEWS_BY_MEDIA: (mediaId: number, type: string) => `/comments/media/${mediaId}?type=${type}`,
   GET_REVIEWS_BY_USER: (userId: string) => `/comments/user/${userId}`,
   UPDATE_REVIEWS: (userId: string) => `/comments/${userId}`,
   DELETE_REVIEWS: (userId: string, mediaId: number, type: string) =>
@@ -100,5 +100,6 @@ export const TMDB_API = {
     `/ratings/${userId}?media_id=${mediaId}&type=${type}`,
 
   LLM_RETRIEVER: (collection_name: string, query: string, amount: number, threshold: number) =>
-    `/retriever?llm_api_key=${process.env.NEXT_PUBLIC_LLM_API_KEY}&collection_name=${collection_name}&query=${query}&amount=${amount}&threshold=${threshold}`,
+    `/retriever/?llm_api_key=${process.env.NEXT_PUBLIC_LLM_API_KEY}&collection_name=${collection_name}&query=${query}&amount=${amount}&threshold=${threshold}`,
+  LLM_NAVIGATE: (query: string) => `/navigate/?llm_api_key=${process.env.NEXT_PUBLIC_LLM_API_KEY}&query=${query}`,
 };

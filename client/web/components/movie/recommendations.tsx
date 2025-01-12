@@ -3,11 +3,12 @@ import Autoplay from 'embla-carousel-autoplay';
 import { useEffect, useState } from 'react';
 import MovieSearchCard from '@/components/search/movie-search-card';
 import { MovieListResults } from '@/models/movie-list-types';
-import { fetchMoviePopular, fetchMovieTopRated } from '@/apis/movie-list';
+import { fetchMoviePopular } from '@/apis/movie-list';
 import MovieCardDummpy from '@/components/main/movie-card-dummy';
 import { Keyword, Movie } from '@/models/movie-detail-types';
-// import { buildQuery } from '@/utils/util-functions/detail-page';
-// import { fetchLLMRetriever } from '@/apis/llm-search';
+import { buildQuery } from '@/utils/util-functions/detail-page';
+import { fetchLLMRetriever } from '@/apis/llm-search';
+import { fetchSearchSpecificMovie } from '@/apis/search';
 
 interface RecommendationListProps {
   baseOn: 'genres' | 'vectors-search';
@@ -30,10 +31,11 @@ const RecommendationList: React.FC<RecommendationListProps> = ({ baseOn, setTran
         const response = await fetchMoviePopular(1, genreIdsParams);
         setMovieResults(response.data.data);
       } else {
-        // console.log(buildQuery(movie, keywords));
-        // const llmResponse = await fetchLLMRetriever('movies', buildQuery(movie, keywords), 18, 0.5);
-        // console.log(llmResponse);
-        const response = await fetchMovieTopRated(1, '');
+        const llmResponse = await fetchLLMRetriever('movies', buildQuery(movie, keywords), 18, 0.5);
+        const object_ids = llmResponse.data.data.result;
+        const query = object_ids.map((id: string) => `object_ids=${id}`).join('&');
+        const response = await fetchSearchSpecificMovie(query, 1);
+        console.log(response);
         setMovieResults(response.data.data);
       }
     } catch (err) {
