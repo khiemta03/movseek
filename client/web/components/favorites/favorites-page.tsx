@@ -13,7 +13,7 @@ import PaginationCustom from '@/components/favorites/pagination';
 import { TVListResults } from '@/models/tv-list-types';
 import FavoriteTVCard from '@/components/favorites/favorite-tv-card';
 import { getFavoriteItem, getWatchlistItem } from '@/apis/saved-items';
-import { fetchSearchSpecificMovie } from '@/apis/search';
+import { fetchSearchSpecificMovie, fetchSearchSpecificTV } from '@/apis/search';
 
 interface FavoritesPageProps {
   user: User | null;
@@ -74,10 +74,12 @@ const FavoritesPage: React.FC<FavoritesPageProps> = ({ user }) => {
           const favoriteTVQueryString = favoriteItemResponse.data.data.tv_show_id
             .map((id: number) => `ids=${id}`)
             .join('&');
-          const tvFavoriteResponse = await fetchSearchSpecificMovie(
+          // console.log(favoriteTVQueryString);
+          const tvFavoriteResponse = await fetchSearchSpecificTV(
             favoriteTVQueryString,
             page != null ? parseInt(page) : 1,
           );
+          console.log(tvFavoriteResponse.data.data);
           setTVResults(tvFavoriteResponse.data.data);
         } else {
           setTVResults({
