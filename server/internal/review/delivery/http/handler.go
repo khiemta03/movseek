@@ -1,6 +1,8 @@
 package http
 
 import (
+	"fmt"
+
 	"github.com/gin-gonic/gin"
 	"github.com/tmplam/movseek/pkg/response"
 )
@@ -38,12 +40,14 @@ func (h handlerImpl) addComment(c *gin.Context) {
 func (h handlerImpl) updateComment(c *gin.Context) {
 	req, err := h.processUpdateCommentRequest(c)
 	if err != nil {
+		fmt.Println("1: ", err)
 		response.BadRequest(c)
 		return
 	}
 
 	err = h.uc.UpdateComment(c.Request.Context(), req.toInput())
 	if err != nil {
+		fmt.Println("2: ", err)
 		response.BadRequest(c)
 		return
 	}
@@ -199,7 +203,7 @@ func (h handlerImpl) getRatingsByMedia(c *gin.Context) {
 // @Accept json
 // @Produce json
 // @Param user_id path string true "User ID"
-// @Router /comments/user/{user_id} [get]	
+// @Router /comments/user/{user_id} [get]
 func (h handlerImpl) getCommentsByUser(c *gin.Context) {
 	req, err := h.processGetCommentsByUserIDRequest(c)
 	if err != nil {

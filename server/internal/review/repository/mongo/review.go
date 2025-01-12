@@ -6,6 +6,7 @@ import (
 	"github.com/tmplam/movseek/internal/models"
 	"github.com/tmplam/movseek/internal/review"
 	"github.com/tmplam/movseek/pkg/mongo"
+	"go.mongodb.org/mongo-driver/bson"
 )
 
 const (
@@ -39,7 +40,7 @@ func (repo implRepository) UpdateComment(ctx context.Context, input review.Updat
 	queryFilter := repo.buildScopeQuery(input.Scope)
 	update := repo.buildUpdateComment(input)
 
-	_, err := col.UpdateOne(ctx, queryFilter, update)
+	_, err := col.UpdateOne(ctx, queryFilter, bson.M{"$set": update})
 	if err != nil {
 		return err
 	}
@@ -79,7 +80,7 @@ func (repo implRepository) UpdateRating(ctx context.Context, input review.Update
 	queryFilter := repo.buildScopeQuery(input.Scope)
 	update := repo.buildUpdateRating(input)
 
-	_, err := col.UpdateOne(ctx, queryFilter, update)
+	_, err := col.UpdateOne(ctx, queryFilter, bson.M{"$set": update})
 	if err != nil {
 		return err
 	}
