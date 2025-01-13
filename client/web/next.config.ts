@@ -4,7 +4,7 @@ const nextConfig: NextConfig = {
   /* config options here */
   images: {
     domains: ['image.tmdb.org', 'img.clerk.com'], // Thêm domain của ảnh
-    unoptimized: false,
+    unoptimized: true,
   },
 };
 
