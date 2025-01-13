@@ -308,10 +308,15 @@ func (repo implRepository) CountPopularMovies(ctx context.Context, input movie.G
 	return int(count), nil
 }
 
-func (repo implRepository) GetMovieGenres(ctx context.Context) ([]models.MovieGenre, error) {
+func (repo implRepository) GetMovieGenres(ctx context.Context, objectIDs []string) ([]models.MovieGenre, error) {
 	col := repo.getGenresCollection()
 
-	cursor, err := col.Find(ctx, bson.M{})
+	queryFilter, err := repo.buildGetMovieGenresQuery(objectIDs)
+	if err != nil {
+		return []models.MovieGenre{}, err
+	}
+
+	cursor, err := col.Find(ctx, queryFilter)
 	if err != nil {
 		return []models.MovieGenre{}, err
 	}

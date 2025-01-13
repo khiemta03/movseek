@@ -40,6 +40,19 @@ func (uc implUsecase) GetMovieKeywords(ctx context.Context, movieID int64) ([]mo
 }
 
 func (uc implUsecase) ListMovies(ctx context.Context, input movie.ListMoviesInput) (movie.ListMoviesOutput, error) {
+	var genres []models.MovieGenre
+	if len(input.Filter.GenreObjectIDs) > 0 {
+		var err error
+		genres, err = uc.repo.GetMovieGenres(ctx, input.Filter.GenreObjectIDs)
+		if err != nil {
+			return movie.ListMoviesOutput{}, err
+		}
+	}
+
+	for _, g := range genres {
+		input.Filter.GenreIDs = append(input.Filter.GenreIDs, int64(g.ID))
+	}
+
 	total, err := uc.repo.CountMovies(ctx, movie.ListMoviesOptions{
 		Query:  input.Query,
 		Filter: input.Filter,
@@ -200,7 +213,7 @@ func (uc implUsecase) GetNowPlayingMovies(ctx context.Context, input movie.GetNo
 }
 
 func (uc implUsecase) GetMovieGenres(ctx context.Context) (movie.GetMovieGenresOutput, error) {
-	genres, err := uc.repo.GetMovieGenres(ctx)
+	genres, err := uc.repo.GetMovieGenres(ctx, nil)
 	if err != nil {
 		return movie.GetMovieGenresOutput{}, err
 	}

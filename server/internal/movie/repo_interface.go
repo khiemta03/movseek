@@ -20,6 +20,6 @@ type Repository interface {
 	CountNowPlayingMovies(ctx context.Context, input GetNowPlayingMoviesOptions) (int, error)
 	GetPopularMovies(ctx context.Context, input GetPopularMoviesOptions) ([]models.MovieSummary, error)
 	CountPopularMovies(ctx context.Context, input GetPopularMoviesOptions) (int, error)
-	GetMovieGenres(ctx context.Context) ([]models.MovieGenre, error)
+	GetMovieGenres(ctx context.Context, objectIDs []string) ([]models.MovieGenre, error)
 	GetLastestTrailer(ctx context.Context, input GetLastestTrailerInput) ([]GetLastestTrailerResponse, error)
 }

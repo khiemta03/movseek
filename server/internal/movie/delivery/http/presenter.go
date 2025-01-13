@@ -9,13 +9,14 @@ import (
 )
 
 type filter struct {
-	Page             int     `form:"page" binding:"required"`
-	PerPage          int     `form:"per_page" binding:"required"`
-	StartDate        string  `form:"start_date"`
-	EndDate          string  `form:"end_date"`
-	GenreIDs         []int64 `form:"genre_ids"`
-	StartAverageVote float64 `form:"start_average_vote"`
-	EndAverageVote   float64 `form:"end_average_vote"`
+	Page             int      `form:"page" binding:"required"`
+	PerPage          int      `form:"per_page" binding:"required"`
+	StartDate        string   `form:"start_date"`
+	EndDate          string   `form:"end_date"`
+	GenreIDs         []int64  `form:"genre_ids"`
+	GenreObjectIDs   []string `form:"genre_object_ids"`
+	StartAverageVote float64  `form:"start_average_vote"`
+	EndAverageVote   float64  `form:"end_average_vote"`
 	// sort order
 	TimeOrder       int `form:"time_order"`
 	PopularityOrder int `form:"popularity_order"`
@@ -47,6 +48,7 @@ func (req searchMoviesRequest) toInput() movie.ListMoviesInput {
 		StartDate:        req.Filter.StartDate,
 		EndDate:          req.Filter.EndDate,
 		GenreIDs:         req.Filter.GenreIDs,
+		GenreObjectIDs:   req.Filter.GenreObjectIDs,
 		StartAverageVote: pkg.CalculateScore(req.Filter.StartAverageVote),
 		EndAverageVote:   pkg.CalculateScore(req.Filter.EndAverageVote),
 		TimeOrder:        req.Filter.TimeOrder,
@@ -100,6 +102,7 @@ func (req getUpcomingMoviesRequest) toInput() movie.GetUpcomingMoviesInput {
 		StartDate:        req.StartDate,
 		EndDate:          req.EndDate,
 		GenreIDs:         req.GenreIDs,
+		GenreObjectIDs:   req.GenreObjectIDs,
 		StartAverageVote: pkg.CalculateScore(req.StartAverageVote),
 		EndAverageVote:   pkg.CalculateScore(req.EndAverageVote),
 		TimeOrder:        req.TimeOrder,
@@ -133,6 +136,7 @@ func (req getTrendingMoviesRequest) toInput() movie.GetTrendingMoviesInput {
 		StartDate:        req.StartDate,
 		EndDate:          req.EndDate,
 		GenreIDs:         req.GenreIDs,
+		GenreObjectIDs:   req.GenreObjectIDs,
 		StartAverageVote: pkg.CalculateScore(req.StartAverageVote),
 		EndAverageVote:   pkg.CalculateScore(req.EndAverageVote),
 		TimeOrder:        req.TimeOrder,
@@ -158,6 +162,7 @@ func (req getTopRatedMoviesRequest) toInput() movie.GetTopRatedMoviesInput {
 		StartDate:        req.StartDate,
 		EndDate:          req.EndDate,
 		GenreIDs:         req.GenreIDs,
+		GenreObjectIDs:   req.GenreObjectIDs,
 		StartAverageVote: pkg.CalculateScore(req.StartAverageVote),
 		EndAverageVote:   pkg.CalculateScore(req.EndAverageVote),
 		TimeOrder:        req.TimeOrder,
@@ -182,6 +187,7 @@ func (req getPopularMoviesRequest) toInput() movie.GetPopularMoviesInput {
 		StartDate:        req.StartDate,
 		EndDate:          req.EndDate,
 		GenreIDs:         req.GenreIDs,
+		GenreObjectIDs:   req.GenreObjectIDs,
 		StartAverageVote: pkg.CalculateScore(req.StartAverageVote),
 		EndAverageVote:   pkg.CalculateScore(req.EndAverageVote),
 		TimeOrder:        req.TimeOrder,
@@ -206,6 +212,7 @@ func (req getNowPlayingMoviesRequest) toInput() movie.GetNowPlayingMoviesInput {
 		StartDate:        req.StartDate,
 		EndDate:          req.EndDate,
 		GenreIDs:         req.GenreIDs,
+		GenreObjectIDs:   req.GenreObjectIDs,
 		StartAverageVote: pkg.CalculateScore(req.StartAverageVote),
 		EndAverageVote:   pkg.CalculateScore(req.EndAverageVote),
 		TimeOrder:        req.TimeOrder,
