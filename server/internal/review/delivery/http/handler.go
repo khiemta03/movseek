@@ -1,8 +1,6 @@
 package http
 
 import (
-	"fmt"
-
 	"github.com/gin-gonic/gin"
 	"github.com/tmplam/movseek/pkg/response"
 )
@@ -40,14 +38,12 @@ func (h handlerImpl) addComment(c *gin.Context) {
 func (h handlerImpl) updateComment(c *gin.Context) {
 	req, err := h.processUpdateCommentRequest(c)
 	if err != nil {
-		fmt.Println("1: ", err)
 		response.BadRequest(c)
 		return
 	}
 
 	err = h.uc.UpdateComment(c.Request.Context(), req.toInput())
 	if err != nil {
-		fmt.Println("2: ", err)
 		response.BadRequest(c)
 		return
 	}

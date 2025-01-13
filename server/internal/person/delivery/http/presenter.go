@@ -8,8 +8,9 @@ import (
 )
 
 type filter struct {
-	Page    int `form:"page" binding:"required"`
-	PerPage int `form:"per_page" binding:"required"`
+	Page    int     `form:"page" binding:"required"`
+	PerPage int     `form:"per_page" binding:"required"`
+	IDs     []int64 `form:"ids"`
 }
 
 type searchPeopleRequest struct {
@@ -23,6 +24,7 @@ func (req searchPeopleRequest) toInput() person.ListPeopleInput {
 		Filter: person.GetPersonFilter{
 			Page:    req.Page,
 			PerPage: req.PerPage,
+			IDs:     req.IDs,
 		},
 	}
 }
