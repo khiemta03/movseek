@@ -17,30 +17,48 @@ func (repo implRepository) buildMovieQuery(movieID int64) (bson.M, error) {
 }
 
 func (repo implRepository) buildFilter(input movie.GetMovieFilter) bson.M {
-	queryFilter := bson.M{
-		"release_date": bson.M{
-			"$lte": date.GetCurrentDate(),
-		},
-	}
+	queryFilter := bson.M{}
 
+	releaseDateFilter := bson.M{
+		"$lte": date.GetCurrentDate(),
+	}
 	if input.StartDate != "" {
-		queryFilter["release_date"] = bson.M{"$gte": input.StartDate}
+		releaseDateFilter["$gte"] = input.StartDate
 	}
-
 	if input.EndDate != "" {
-		queryFilter["release_date"] = bson.M{"$lte": input.EndDate}
+		releaseDateFilter["$lte"] = input.EndDate
 	}
+	queryFilter["release_date"] = releaseDateFilter
 
 	if input.GenreIDs != nil {
-		queryFilter["genre_ids"] = bson.M{"$in": input.GenreIDs}
+		queryFilter["$or"] = []bson.M{
+			{
+				"genres": bson.M{
+					"$elemMatch": bson.M{
+						"id": bson.M{"$in": input.GenreIDs},
+					},
+				},
+			},
+			{
+				"genre_ids": bson.M{
+					"$in": input.GenreIDs,
+				},
+			},
+		}
 	}
 
+	voteAverageFilter := bson.M{}
+
 	if input.StartAverageVote > 0 {
-		queryFilter["vote_average"] = bson.M{"$gte": input.StartAverageVote}
+		voteAverageFilter["$gte"] = input.StartAverageVote
 	}
 
 	if input.EndAverageVote > 0 {
-		queryFilter["vote_average"] = bson.M{"$lte": input.EndAverageVote}
+		voteAverageFilter["$lte"] = input.EndAverageVote
+	}
+
+	if len(voteAverageFilter) > 0 {
+		queryFilter["vote_average"] = voteAverageFilter
 	}
 
 	return queryFilter
@@ -123,4 +141,22 @@ func (repo implRepository) buildGetMovieFindOptions(input movie.GetMovieFilter) 
 	}
 
 	return findOptions
+}
+
+func (repo implRepository) buildGetMovieGenresQuery(objectIDs []string) (bson.M, error) {
+	queryFilter := bson.M{}
+
+	if len(objectIDs) > 0 {
+		res := make([]primitive.ObjectID, len(objectIDs))
+		for i, id := range objectIDs {
+			objectID, err := primitive.ObjectIDFromHex(id)
+			if err != nil {
+				return bson.M{}, err
+			}
+			res[i] = objectID
+		}
+		queryFilter["_id"] = bson.M{"$in": res}
+	}
+
+	return queryFilter, nil
 }

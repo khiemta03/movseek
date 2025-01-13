@@ -33,6 +33,10 @@ func (repo implRepository) buildListPeopleQuery(input person.ListPeopleOptions) 
 		}
 	}
 
+	if len(input.Filter.IDs) > 0 {
+		queryFilter["id"] = bson.M{"$in": input.Filter.IDs}
+	}
+
 	return queryFilter
 }
 

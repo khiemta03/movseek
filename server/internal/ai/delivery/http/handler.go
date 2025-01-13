@@ -99,9 +99,6 @@ func (h handlerImpl) navigate(c *gin.Context) {
 
 	httpReq.Header.Set("accept", "application/json")
 
-	fmt.Println(httpReq)
-	fmt.Println(httpReq.Body)
-
 	client := &http.Client{}
 	resp, err := client.Do(httpReq)
 	if err != nil {

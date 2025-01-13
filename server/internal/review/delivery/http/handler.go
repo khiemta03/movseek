@@ -199,7 +199,7 @@ func (h handlerImpl) getRatingsByMedia(c *gin.Context) {
 // @Accept json
 // @Produce json
 // @Param user_id path string true "User ID"
-// @Router /comments/user/{user_id} [get]	
+// @Router /comments/user/{user_id} [get]
 func (h handlerImpl) getCommentsByUser(c *gin.Context) {
 	req, err := h.processGetCommentsByUserIDRequest(c)
 	if err != nil {

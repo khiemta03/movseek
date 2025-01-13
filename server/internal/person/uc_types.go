@@ -3,8 +3,9 @@ package person
 import "github.com/tmplam/movseek/internal/models"
 
 type GetPersonFilter struct {
-	Page    int `json:"page"`
-	PerPage int `json:"per_page"`
+	Page    int     `json:"page"`
+	PerPage int     `json:"per_page"`
+	IDs     []int64 `json:"ids"`
 }
 
 type Pagination struct {
