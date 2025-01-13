@@ -2,7 +2,13 @@
 
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { fetchSearchMovie, fetchSearchPerson, fetchSearchTV } from '@/apis/search';
+import {
+  fetchSearchMovie,
+  fetchSearchPerson,
+  fetchSearchSpecificMovie,
+  fetchSearchSpecificPerson,
+  fetchSearchTV,
+} from '@/apis/search';
 import type { SearchMovieResults, SearchPersonResults, SearchTVResults } from '@/models/search-types';
 import MovieSearchCard from '@/components/search/movie-search-card';
 import PaginationCustom from '@/components/search/pagination';
@@ -18,6 +24,9 @@ export default function SearchPage() {
   const query = searchParams.get('query');
   const page = searchParams.get('page');
   const type = searchParams.get('type');
+  const object_ids = searchParams.getAll('object_ids');
+  const genre_object_ids = searchParams.getAll('genre_object_ids');
+  const ids = searchParams.getAll('ids');
   const [mode, setMode] = useState<'movie' | 'person' | 'tv'>(isValidType(type) ? type : 'movie');
   const [transitioning, setTransitioning] = useState(false);
   const [movieResults, setMovieResults] = useState<SearchMovieResults | null>(null);
@@ -29,37 +38,69 @@ export default function SearchPage() {
   const fetchData = async (page: string | null, isChangeMode: boolean) => {
     try {
       setLoading(true);
-      if (mode == 'movie' || !isChangeMode) {
-        const movieResponse = await fetchSearchMovie(query != null ? query : '', page != null ? parseInt(page) : 1);
-        setMovieResults(movieResponse.data.data);
+      if (
+        (object_ids && object_ids.length > 0) ||
+        (genre_object_ids && genre_object_ids.length > 0) ||
+        (ids && ids.length > 0)
+      ) {
         if (mode == 'movie') {
-          setTransitioning(true);
-          setTimeout(() => {
-            setLoading(false);
-            setTransitioning(false);
-          }, 500);
+          const data = object_ids.length > 0 ? object_ids : genre_object_ids;
+          const movieResponse = await fetchSearchSpecificMovie(
+            data.map((id) => `${object_ids.length > 0 ? 'object_ids' : 'genre_object_ids'}=${id}`).join('&'),
+            1,
+          );
+          setMovieResults(movieResponse.data.data);
+          if (mode == 'movie') {
+            setTransitioning(true);
+            setTimeout(() => {
+              setLoading(false);
+              setTransitioning(false);
+            }, 500);
+          }
+        } else if (mode == 'person') {
+          const personResponse = await fetchSearchSpecificPerson(ids.map((id) => `ids=${id}`).join('&'), 1);
+          setPersonResults(personResponse.data.data);
+          if (mode == 'person') {
+            setTransitioning(true);
+            setTimeout(() => {
+              setLoading(false);
+              setTransitioning(false);
+            }, 500);
+          }
         }
-      }
-      if (mode == 'tv' || !isChangeMode) {
-        const tvResponse = await fetchSearchTV(query != null ? query : '', page != null ? parseInt(page) : 1);
-        setTVResults(tvResponse.data.data);
-        if (mode == 'tv') {
-          setTransitioning(true);
-          setTimeout(() => {
-            setLoading(false);
-            setTransitioning(false);
-          }, 500);
+      } else {
+        if (mode == 'movie' || !isChangeMode) {
+          const movieResponse = await fetchSearchMovie(query != null ? query : '', page != null ? parseInt(page) : 1);
+          setMovieResults(movieResponse.data.data);
+          if (mode == 'movie') {
+            setTransitioning(true);
+            setTimeout(() => {
+              setLoading(false);
+              setTransitioning(false);
+            }, 500);
+          }
         }
-      }
-      if (mode == 'person' || !isChangeMode) {
-        const personResponse = await fetchSearchPerson(query != null ? query : '', page != null ? parseInt(page) : 1);
-        setPersonResults(personResponse.data.data);
-        if (mode == 'person') {
-          setTransitioning(true);
-          setTimeout(() => {
-            setLoading(false);
-            setTransitioning(false);
-          }, 500);
+        if (mode == 'tv' || !isChangeMode) {
+          const tvResponse = await fetchSearchTV(query != null ? query : '', page != null ? parseInt(page) : 1);
+          setTVResults(tvResponse.data.data);
+          if (mode == 'tv') {
+            setTransitioning(true);
+            setTimeout(() => {
+              setLoading(false);
+              setTransitioning(false);
+            }, 500);
+          }
+        }
+        if (mode == 'person' || !isChangeMode) {
+          const personResponse = await fetchSearchPerson(query != null ? query : '', page != null ? parseInt(page) : 1);
+          setPersonResults(personResponse.data.data);
+          if (mode == 'person') {
+            setTransitioning(true);
+            setTimeout(() => {
+              setLoading(false);
+              setTransitioning(false);
+            }, 500);
+          }
         }
       }
     } catch (err) {
@@ -113,7 +154,7 @@ export default function SearchPage() {
         <div className="w-1/5 text-lg">
           <h2 className="mb-2 font-bold">Search Results For</h2>
           <div className="mb-6">
-            <span className="italic mr-5">{`"${query}"`}</span>
+            <span className="italic mr-5">{`${query ? `${query}` : 'routing'}`}</span>
           </div>
           <div className="flex flex-col gap-4">
             <div

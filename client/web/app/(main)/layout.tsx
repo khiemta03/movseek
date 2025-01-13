@@ -48,7 +48,7 @@ const SearchParamsWrapper = () => {
       </Button>
       <input
         type="text"
-        placeholder="Search movies..."
+        placeholder="Search for a movie, tv show, person"
         value={newQuery}
         onChange={(e) => setNewQuery(e.target.value)}
         onKeyDown={handleKeyDown}

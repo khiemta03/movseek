@@ -124,6 +124,15 @@ const Header = ({ showSearch, setShowSearch, isSearchPage }: HeaderProps) => {
                 />
               </div>
             </div>
+
+            <div className="relative group border border-white rounded-md px-1 hover:bg-white hover:text-primary">
+              <Link
+                href="/llm-finder"
+                // className="hover:underline"
+              >
+                LLM Finder
+              </Link>
+            </div>
           </nav>
         </div>
 

@@ -35,7 +35,7 @@ const PopularList = ({ popularType }: PopularListProps) => {
       try {
         setLoading(true);
         if (popularType == 'theaters') {
-          const response = await fetchMoviePopular(1);
+          const response = await fetchMoviePopular(1, '');
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           const data = response.data.data.results.map((movie: Record<string, any>) => ({
             id: movie.id,
@@ -46,7 +46,7 @@ const PopularList = ({ popularType }: PopularListProps) => {
           }));
           setMovies(data);
         } else {
-          const response = await fetchTVPopular(1);
+          const response = await fetchTVPopular(1, '');
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           const data = response.data.data.results.map((tv: Record<string, any>) => ({
             id: tv.id,

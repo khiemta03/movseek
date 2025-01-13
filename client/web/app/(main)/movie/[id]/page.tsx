@@ -138,7 +138,7 @@ const MovieDetail = () => {
           <MainMovieInformation
             movie={movie}
             creadits={creadits}
-            hasTrailer={videos.length > 0}
+            hasTrailer={videos && videos?.length > 0}
             toggleVideo={toggleVideo}
             isSignedIn={isSignedIn ?? false}
             user_id={user?.id ?? ''}

@@ -59,6 +59,7 @@ const RatinglistPage: React.FC<RatinglistPageProps> = ({ user }) => {
       const ratingsResponse = await getRatingsByUser(user?.id ?? '');
       setRatings(ratingsResponse.data.data.ratings);
       if (mode == 'movie' || !isChangeMode) {
+        console.log('>>> ', ratingsResponse.data.data.ratings);
         if (ratingsResponse.data.data.ratings != null && ratingsResponse.data.data.ratings.length > 0) {
           const ratinglistMovieQueryString = ratingsResponse.data.data.ratings
             .filter(
@@ -70,11 +71,20 @@ const RatinglistPage: React.FC<RatinglistPageProps> = ({ user }) => {
                 `ids=${rating.media_id}`,
             )
             .join('&');
-          const movieRatingResponse = await fetchSearchSpecificMovie(
-            ratinglistMovieQueryString,
-            page != null ? parseInt(page) : 1,
-          );
-          setMovieResults(movieRatingResponse.data.data);
+          if (ratinglistMovieQueryString != '') {
+            const movieRatingResponse = await fetchSearchSpecificMovie(
+              ratinglistMovieQueryString,
+              page != null ? parseInt(page) : 1,
+            );
+            setMovieResults(movieRatingResponse.data.data);
+          } else {
+            setMovieResults({
+              results: [],
+              page: 0,
+              total_pages: 0,
+              total_results: 0,
+            });
+          }
         } else {
           setMovieResults({
             results: [],
@@ -107,11 +117,20 @@ const RatinglistPage: React.FC<RatinglistPageProps> = ({ user }) => {
                 `ids=${rating.media_id}`,
             )
             .join('&');
-          const tvRatingResponse = await fetchSearchSpecificTV(
-            ratinglistTVQueryString,
-            page != null ? parseInt(page) : 1,
-          );
-          setTVResults(tvRatingResponse.data.data);
+          if (ratinglistTVQueryString != '') {
+            const tvRatingResponse = await fetchSearchSpecificTV(
+              ratinglistTVQueryString,
+              page != null ? parseInt(page) : 1,
+            );
+            setTVResults(tvRatingResponse.data.data);
+          } else {
+            setTVResults({
+              results: [],
+              page: 0,
+              total_pages: 0,
+              total_results: 0,
+            });
+          }
         } else {
           setTVResults({
             results: [],

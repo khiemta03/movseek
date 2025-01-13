@@ -90,10 +90,10 @@ export default function Home() {
             <div className="relative w-full max-w-5xl">
               <input
                 type="text"
-                placeholder="Search for a movie, tv show, person..."
+                placeholder="Search for movie, tv show, person"
                 onChange={(e) => setSearchQuery(e.target.value)}
                 onKeyDown={handleKeyDown}
-                className="w-full py-3 pl-5 pr-20 rounded-full shadow-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary text-lg"
+                className="w-full py-3 pl-5 pr-28 rounded-full shadow-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary text-lg"
               />
               <button
                 onClick={handleSearch}
