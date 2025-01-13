@@ -13,13 +13,18 @@ import { TV } from '@/models/tv-detail-types';
 import AltTVInformation from '@/components/tv/alt-tv-information';
 import MainTVInformation from '@/components/tv/main-tv-information';
 import { fetchTVDetail, fetchTVCredits, fetchTVKeywords, fetchTVVideos } from '@/apis/tv';
+import RecommendationList from '@/components/tv/recommendations';
+import { useUser } from '@clerk/nextjs';
+import ReviewsAndRating from '@/components/tv/reviews-and-rating';
 
 export default function TVDetail() {
   const params = useParams();
   const { id } = params;
+  const { isSignedIn, user } = useUser();
   const [imageSrc, setImageSrc] = useState('/poster-default.svg');
   const [transitioning, setTransitioning] = useState(false);
   const [transitioningCast, setTransitioningCast] = useState(false);
+  const [transitioningRecommendation, setTransitioningRecommendation] = useState(false);
   const [idTV, setIdTV] = useState<number>(0);
   const [tv, setTV] = useState<TV | null>(null);
   const [creadits, setCredits] = useState<Credits | null>(null);
@@ -28,6 +33,7 @@ export default function TVDetail() {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [isDisplayFullCastAndCrew, setIsDisplayFullCastAndCrew] = useState<boolean>(false);
+
   const [isVisible, setIsVisible] = useState(false);
 
   const toggleVideo = () => setIsVisible(!isVisible);
@@ -44,7 +50,7 @@ export default function TVDetail() {
       try {
         setLoading(true);
         const tvResponse = await fetchTVDetail(idTV);
-        const data = tvResponse.data;
+        const data = tvResponse.data.data;
         setImageSrc(TMDB_API.POSTER(data.poster_path));
         setTV(data);
 
@@ -84,7 +90,7 @@ export default function TVDetail() {
     };
   }, [isVisible]);
 
-  const handleModeChange = (mode: boolean) => {
+  const handleModeChangeCast = (mode: boolean) => {
     if (mode !== isDisplayFullCastAndCrew) {
       setTransitioningCast(true);
       setTimeout(() => {
@@ -114,31 +120,60 @@ export default function TVDetail() {
             creadits={creadits}
             hasTrailer={videos.length > 0}
             toggleVideo={toggleVideo}
+            isSignedIn={isSignedIn ?? false}
+            user_id={user?.id ?? ''}
           />
 
           <div className="flex gap-6 container mx-auto mt-5 py-10">
-            <div
-              className={`relative w-4/5 transition-opacity duration-300 ${
-                transitioningCast ? 'opacity-0' : 'opacity-100'
-              }`}
-            >
-              {creadits.cast.length >= 6 && (
+            <div className={`relative w-4/5`}>
+              <div className={`transition-opacity duration-300 ${transitioningCast ? 'opacity-0' : 'opacity-100'}`}>
+                {creadits.cast.length >= 6 && (
+                  <div className="flex justify-between">
+                    {!isDisplayFullCastAndCrew && <h2 className="text-2xl font-bold mb-4">Top Billed Cast</h2>}
+                    <div></div>
+                    <Button
+                      onClick={() => handleModeChangeCast(!isDisplayFullCastAndCrew)}
+                      className="text-xl border border-gray-400"
+                      variant="outline"
+                    >
+                      {isDisplayFullCastAndCrew ? 'View less' : 'View Full Cast & Crew'}
+                    </Button>
+                  </div>
+                )}
+                <CastList
+                  credits={creadits}
+                  isfull={isDisplayFullCastAndCrew}
+                />
+              </div>
+              <hr className="my-14 border-t border-gray-300" />
+              <div>
+                <h2 className="text-2xl font-bold mb-4">Reviews And Rating</h2>
+                <ReviewsAndRating
+                  tv={tv}
+                  isSignedIn={isSignedIn ?? false}
+                  user_id={user?.id ?? ''}
+                  avatar={user?.imageUrl ?? ''}
+                  username={(user?.firstName ?? '') + ' ' + (user?.lastName ?? '')}
+                />
+              </div>
+              <hr className="my-14 border-t border-gray-300" />
+              <div>
                 <div className="flex justify-between">
-                  {!isDisplayFullCastAndCrew && <h2 className="text-2xl font-bold mb-4">Top Billed Cast</h2>}
-                  <div></div>
-                  <Button
-                    onClick={() => handleModeChange(!isDisplayFullCastAndCrew)}
-                    className="text-xl border border-gray-400"
-                    variant="outline"
-                  >
-                    {isDisplayFullCastAndCrew ? 'View less' : 'View Full Cast & Crew'}
-                  </Button>
+                  <h2 className="text-2xl font-bold mb-4">Recommendations</h2>
                 </div>
-              )}
-              <CastList
-                credits={creadits}
-                isfull={isDisplayFullCastAndCrew}
-              />
+                <div
+                  className={`transition-opacity duration-500 ${
+                    transitioningRecommendation ? 'opacity-0' : 'opacity-100'
+                  }`}
+                >
+                  <RecommendationList
+                    baseOn={'genres'}
+                    setTransitioning={setTransitioningRecommendation}
+                    tv={tv}
+                    keywords={keywords}
+                  />
+                </div>
+              </div>
             </div>
             <div className="w-1/5">
               <AltTVInformation

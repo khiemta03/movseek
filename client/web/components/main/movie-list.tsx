@@ -35,7 +35,7 @@ const MovieList = ({ mediaType, timeWindow }: MovieListProps) => {
         setLoading(true);
         const response = await fetchTrending(mediaType, timeWindow);
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const data = response.data.results.map((movie: Record<string, any>) => ({
+        const data = response.data.data.results.map((movie: Record<string, any>) => ({
           id: movie.id,
           title: movie.title,
           poster: movie.poster_path,
@@ -122,12 +122,18 @@ const MovieList = ({ mediaType, timeWindow }: MovieListProps) => {
               <CarouselContent>
                 {loading
                   ? moviesDummy.map((movie, index) => (
-                      <CarouselItem key={index} className="basis-44 h-80">
+                      <CarouselItem
+                        key={index}
+                        className="basis-44 h-80"
+                      >
                         <MovieCardDummpy />
                       </CarouselItem>
                     ))
                   : movies.map((movie, index) => (
-                      <CarouselItem key={index} className="basis-44 h-80">
+                      <CarouselItem
+                        key={index}
+                        className="basis-44 h-80"
+                      >
                         <MovieCard
                           id={movie.id}
                           title={movie.title}
@@ -153,7 +159,10 @@ const MovieList = ({ mediaType, timeWindow }: MovieListProps) => {
         ) : (
           <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-8 gap-4">
             {movies.map((movie, index) => (
-              <div key={index} className="h-80">
+              <div
+                key={index}
+                className="h-80"
+              >
                 <MovieCard
                   id={movie.id}
                   title={movie.title}

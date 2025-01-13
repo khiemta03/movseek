@@ -36,7 +36,7 @@ const Rating: React.FC<RatingProps> = ({ rating }) => {
   };
 
   return (
-    <div className="flex items-center justify-center w-14 h-14 rounded-full">
+    <div className="flex items-center justify-center w-16 h-16 rounded-full">
       <div
         className="absolute inset-0 rounded-full"
         style={{

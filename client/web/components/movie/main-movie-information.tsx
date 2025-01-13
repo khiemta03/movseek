@@ -2,22 +2,141 @@ import Image from 'next/image';
 import { TMDB_API } from '@/utils/constants';
 import { formatDate } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
-import { Heart, List } from 'lucide-react';
+import { Heart, Bookmark } from 'lucide-react';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import type { Cast, Credits, Crew, Movie } from '@/models/movie-detail-types';
 import { convertMinutes, getCrewByJob } from '@/utils/util-functions/detail-page';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Rating from '@/components/movie/rating';
+import { useToast } from '@/hooks/use-toast';
+import { ToastAction } from '@/components/ui/toast';
+import { useRouter } from 'next/navigation';
+import { addSavedItem, getFavoriteItem, getWatchlistItem, removeSavedItem } from '@/apis/saved-items';
+import { usePathname } from 'next/navigation';
 
 interface MainMovieInformationProps {
   movie: Movie;
   creadits: Credits;
   toggleVideo: () => void;
   hasTrailer: boolean;
+  isSignedIn: boolean;
+  user_id: string;
 }
 
-const MainMovieInformation: React.FC<MainMovieInformationProps> = ({ movie, creadits, toggleVideo, hasTrailer }) => {
+const MainMovieInformation: React.FC<MainMovieInformationProps> = ({
+  movie,
+  creadits,
+  toggleVideo,
+  hasTrailer,
+  isSignedIn,
+  user_id,
+}) => {
+  const router = useRouter();
+  const pathname = usePathname();
+  const { toast } = useToast();
   const [imageSrc, setImageSrc] = useState(TMDB_API.POSTER(movie.poster_path));
+  const [favorite, setFavorite] = useState(false);
+  const [watchlist, setWatchlist] = useState(false);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const favoriteItemResponse = await getFavoriteItem(user_id);
+        if (Array.isArray(favoriteItemResponse.data.data.movie_id)) {
+          if (favoriteItemResponse.data.data.movie_id.includes(parseInt(movie.id))) {
+            setFavorite(true);
+          } else {
+            setFavorite(false);
+          }
+        }
+        const watchlistItemResponse = await getWatchlistItem(user_id);
+        if (Array.isArray(watchlistItemResponse.data.data.movie_id)) {
+          if (watchlistItemResponse.data.data.movie_id.includes(parseInt(movie.id))) {
+            setWatchlist(true);
+          } else {
+            setWatchlist(false);
+          }
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    if (isSignedIn) {
+      fetchData();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const handlClickFavorite = async (favorite: boolean) => {
+    if (isSignedIn) {
+      if (!favorite) {
+        await addSavedItem(parseInt(movie.id), 'movie', 'favorite', user_id);
+      } else {
+        await removeSavedItem(parseInt(movie.id), 'movie', 'favorite', user_id);
+      }
+      setFavorite(!favorite);
+      toast({
+        title: 'Success',
+        description: `${movie.title} was ${favorite ? 'removed from' : 'added to'} your favourite list.`,
+        duration: 3000,
+        className: 'bg-green-600 text-white border border-gray-200',
+      });
+    } else {
+      toast({
+        title: 'Login Required',
+        description: 'You must log in to perform this action.',
+        duration: 3000,
+        className: 'bg-primary text-white border border-gray-200',
+        action: (
+          <ToastAction
+            altText="Go to login"
+            className="text-primary bg-white hover:bg-gray-200 px-3 py-1 rounded-lg"
+            onClick={() => {
+              router.push(`/sign-in?redirect=${encodeURIComponent(pathname)}`);
+            }}
+          >
+            Sign in
+          </ToastAction>
+        ),
+      });
+    }
+  };
+
+  const handlClickWatchlist = async (watchlist: boolean) => {
+    if (isSignedIn) {
+      if (!watchlist) {
+        await addSavedItem(parseInt(movie.id), 'movie', 'watchlist', user_id);
+      } else {
+        await removeSavedItem(parseInt(movie.id), 'movie', 'watchlist', user_id);
+      }
+      setWatchlist(!watchlist);
+      toast({
+        title: 'Success',
+        description: `${movie.title} was ${watchlist ? 'removed from' : 'added to'} your watchlist.`,
+        duration: 3000,
+        className: 'bg-green-600 text-white border border-gray-200',
+      });
+    } else {
+      toast({
+        title: 'Login Required',
+        description: 'You must log in to perform this action.',
+        duration: 3000,
+        className: 'bg-primary text-white border border-gray-200',
+        action: (
+          <ToastAction
+            altText="Go to login"
+            className="text-primary bg-white hover:bg-gray-200 px-3 py-1 rounded-lg"
+            onClick={() => {
+              router.push(`/sign-in?redirect=${encodeURIComponent(pathname)}`);
+            }}
+          >
+            Sign in
+          </ToastAction>
+        ),
+      });
+    }
+  };
 
   return (
     <div
@@ -37,14 +156,15 @@ const MainMovieInformation: React.FC<MainMovieInformationProps> = ({ movie, crea
               src={movie.poster_path ? imageSrc : '/poster-default.svg'}
               alt={movie.title}
               layout="fill"
-              objectFit="contain"
+              priority
+              style={{ objectFit: 'contain' }}
               onError={() => setImageSrc('/poster-default.svg')}
             />
           </div>
 
           <div className="flex flex-col justify-around items-start ml-10">
             <div>
-              <h1 className="text-3xl font-bold">{movie.original_title}</h1>
+              <h1 className="text-3xl font-bold">{movie.title}</h1>
               <div className="flex flex-row gap-6 text-sm">
                 {movie.release_date && <div>{formatDate(movie.release_date)}</div>}
                 {movie.genres.length > 0 && (
@@ -74,27 +194,45 @@ const MainMovieInformation: React.FC<MainMovieInformationProps> = ({ movie, crea
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger asChild>
-                    <Button variant="secondary" size="icon" className="rounded-full p-6 mr-4">
-                      <Heart className="text-red-500 font-bold" />
+                    <Button
+                      variant="secondary"
+                      size="icon"
+                      className={`rounded-full border border-gray-200 ${
+                        favorite ? 'bg-red-400 hover:bg-red-500' : 'hover:bg-red-400'
+                      } p-6 mr-4`}
+                      onClick={() => handlClickFavorite(favorite)}
+                    >
+                      <Heart className="text-red-400 font-bold fill-white" />
                     </Button>
                   </TooltipTrigger>
-                  <TooltipContent>Mark as favorite</TooltipContent>
+                  <TooltipContent>{`${favorite ? 'Remove from favorite list' : 'Mark as favorite'}`}</TooltipContent>
                 </Tooltip>
               </TooltipProvider>
 
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger asChild>
-                    <Button variant="secondary" size="icon" className="rounded-full p-6 mr-4">
-                      <List />
+                    <Button
+                      variant="secondary"
+                      size="icon"
+                      className={`rounded-full border border-gray-200 ${
+                        watchlist ? 'bg-sky-600 hover:bg-sky-700' : 'hover:bg-sky-600'
+                      } p-6 mr-4`}
+                      onClick={() => handlClickWatchlist(watchlist)}
+                    >
+                      <Bookmark className="text-sky-600 font-bold fill-white" />
                     </Button>
                   </TooltipTrigger>
-                  <TooltipContent>Add to your watchlist</TooltipContent>
+                  <TooltipContent>{`${watchlist ? 'Remove from watchlist' : 'Add to your watchlist'}`}</TooltipContent>
                 </Tooltip>
               </TooltipProvider>
 
               {hasTrailer && (
-                <Button onClick={toggleVideo} className="border" variant="ghost">
+                <Button
+                  onClick={toggleVideo}
+                  className="border"
+                  variant="ghost"
+                >
                   ▶ Play trailer
                 </Button>
               )}
@@ -111,7 +249,10 @@ const MainMovieInformation: React.FC<MainMovieInformationProps> = ({ movie, crea
                 <div>
                   <h1 className="text-md font-bold mb-1">Driector</h1>
                   {getCrewByJob(creadits.crew, 'Directing', 'Director').map((crew: Crew) => (
-                    <div key={crew.id} className="text-sm">
+                    <div
+                      key={crew.id}
+                      className="text-sm"
+                    >
                       ● {crew.name}
                     </div>
                   ))}
@@ -121,7 +262,10 @@ const MainMovieInformation: React.FC<MainMovieInformationProps> = ({ movie, crea
                 <div>
                   <h1 className="text-md font-bold mb-1">Writer</h1>
                   {getCrewByJob(creadits.crew, 'Writing', 'Writer').map((crew: Crew) => (
-                    <div key={crew.id} className="text-sm">
+                    <div
+                      key={crew.id}
+                      className="text-sm"
+                    >
                       ● {crew.name}
                     </div>
                   ))}
@@ -131,7 +275,10 @@ const MainMovieInformation: React.FC<MainMovieInformationProps> = ({ movie, crea
                 <div>
                   <h1 className="text-md font-bold mb-1">Top Cast</h1>
                   {creadits.cast.slice(0, 3).map((crew: Cast) => (
-                    <div key={crew.id} className="text-sm">
+                    <div
+                      key={crew.id}
+                      className="text-sm"
+                    >
                       ● {crew.name}
                     </div>
                   ))}

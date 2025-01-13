@@ -20,7 +20,7 @@ export default function PersonPage() {
       try {
         setLoading(true);
         const peopleResponse = await fetchPeoplePopular(page != null ? parseInt(page) : 1);
-        setPeopleResults(peopleResponse.data);
+        setPeopleResults(peopleResponse.data.data);
       } catch (err) {
         console.log(err);
         setIsError(true);
@@ -48,7 +48,10 @@ export default function PersonPage() {
               <div>
                 <div className="mb-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
                   {peopleResults.results.map((person, index) => (
-                    <PersonCard key={index} person={person} />
+                    <PersonCard
+                      key={index}
+                      person={person}
+                    />
                   ))}
                 </div>
 
@@ -61,7 +64,7 @@ export default function PersonPage() {
                 )}
               </div>
             ) : (
-              <div className="font-bold w-full text-center">There are no person to display.</div>
+              <div className="font-bold w-4/5 text-center">There are no person to display.</div>
             )}
           </>
         ) : (

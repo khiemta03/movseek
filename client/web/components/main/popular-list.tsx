@@ -7,7 +7,7 @@ import Autoplay from 'embla-carousel-autoplay';
 import MovieCardDummpy from '@/components/main/movie-card-dummy';
 import { fetchMoviePopular } from '@/apis/movie-list';
 import { fetchTVPopular } from '@/apis/tv-list';
-import TVCard from './tv-card';
+import TVCard from '@/components/main/tv-card';
 
 interface PopularListProps {
   popularType: 'theaters' | 'tv-series';
@@ -35,9 +35,9 @@ const PopularList = ({ popularType }: PopularListProps) => {
       try {
         setLoading(true);
         if (popularType == 'theaters') {
-          const response = await fetchMoviePopular(1);
+          const response = await fetchMoviePopular(1, '');
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          const data = response.data.results.map((movie: Record<string, any>) => ({
+          const data = response.data.data.results.map((movie: Record<string, any>) => ({
             id: movie.id,
             title: movie.title,
             poster: movie.poster_path,
@@ -46,9 +46,9 @@ const PopularList = ({ popularType }: PopularListProps) => {
           }));
           setMovies(data);
         } else {
-          const response = await fetchTVPopular(1);
+          const response = await fetchTVPopular(1, '');
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          const data = response.data.results.map((tv: Record<string, any>) => ({
+          const data = response.data.data.results.map((tv: Record<string, any>) => ({
             id: tv.id,
             title: tv.name,
             poster: tv.poster_path,
@@ -136,12 +136,18 @@ const PopularList = ({ popularType }: PopularListProps) => {
               <CarouselContent>
                 {loading
                   ? moviesDummy.map((movie, index) => (
-                      <CarouselItem key={index} className="basis-44 h-80">
+                      <CarouselItem
+                        key={index}
+                        className="basis-44 h-80"
+                      >
                         <MovieCardDummpy />
                       </CarouselItem>
                     ))
                   : movies.map((movie, index) => (
-                      <CarouselItem key={index} className="basis-44 h-80">
+                      <CarouselItem
+                        key={index}
+                        className="basis-44 h-80"
+                      >
                         {popularType == 'theaters' ? (
                           <MovieCard
                             id={movie.id}
@@ -177,7 +183,10 @@ const PopularList = ({ popularType }: PopularListProps) => {
         ) : (
           <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-8 gap-4">
             {movies.map((movie, index) => (
-              <div key={index} className="h-80">
+              <div
+                key={index}
+                className="h-80"
+              >
                 {popularType == 'theaters' ? (
                   <MovieCard
                     id={movie.id}

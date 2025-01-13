@@ -1,6 +1,6 @@
 import type { Credits } from '@/models/people-types';
 import { ChevronDown, XIcon } from 'lucide-react';
-import Department from './department';
+import Department from '@/components/person/department';
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { getDepartmentArray, groupAndSortByDepartment } from '@/utils/util-functions/people-detail-page';
@@ -78,7 +78,7 @@ const DepartmentList: React.FC<DepartmentListProps> = ({ credits, knownForDepart
                     <DropdownItem
                       key={index}
                       number={department.count}
-                      label={department.name}
+                      label={department.name == 'undefined' ? 'Others' : department.name}
                       onClick={() => handleDepartmentSelect(department.name)}
                     />
                   ))}
@@ -90,7 +90,10 @@ const DepartmentList: React.FC<DepartmentListProps> = ({ credits, knownForDepart
             type: selectedType,
             filterDepartment: selectedDepartment,
           }).map((element, index) => (
-            <Department key={index} props={element} />
+            <Department
+              key={index}
+              props={element}
+            />
           ))}
         </div>
       </div>

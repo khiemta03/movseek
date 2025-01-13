@@ -27,7 +27,7 @@ const PersonSearchCard: React.FC<PersonSearchCardProps> = ({ person }) => {
                 src={imageSrc}
                 alt={person.name}
                 className="h-60 object-cover hover:cursor-pointer"
-                objectFit="cover"
+                style={{ objectFit: 'cover' }}
                 width={400}
                 height={400 * 1.618}
                 onError={() => setImageSrc('poster-default.svg')}

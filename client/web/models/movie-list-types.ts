@@ -44,10 +44,6 @@ interface FilterSortState {
     from: number;
     to: number;
   };
-  runTime: {
-    from: number;
-    to: number;
-  };
 }
 
 export type { MoviePopular, MovieList, MovieListResults, GenresMovie, GenresMovieResults, FilterSortState };

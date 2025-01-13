@@ -56,7 +56,7 @@ const TVSearchCard: React.FC<TVSearchCardProps> = ({ tv }) => {
     //             src={imageSrc}
     //             alt={tv.name}
     //             className="h-60 object-cover hover:cursor-pointer"
-    //             objectFit="cover"
+    //             style={{ objectFit: "cover" }}
     //             width={400}
     //             height={400 * 1.618}
     //             onError={() => setImageSrc('poster-default.svg')}
@@ -98,7 +98,7 @@ const TVSearchCard: React.FC<TVSearchCardProps> = ({ tv }) => {
                 src={tv.poster_path ? imageSrc : '/poster-default.svg'}
                 alt={tv.name}
                 className="h-60 object-cover hover:cursor-pointer"
-                objectFit="cover"
+                style={{ objectFit: 'cover' }}
                 width={400}
                 height={400 * 1.618}
                 onError={() => setImageSrc('/poster-default.svg')}
