@@ -2,6 +2,7 @@ package httpserver
 
 import (
 	"fmt"
+	"log"
 	"os"
 	"os/signal"
 	"syscall"
@@ -25,8 +26,14 @@ func (srv HTTPServer) Run() {
 	srv.mapHandlers()
 	srv.gin.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
+	certFile := "certificate.pem"
+	keyFile := "private.key"
+
 	go func() {
-		srv.gin.Run(fmt.Sprintf(":%d", srv.port))
+		err := srv.gin.RunTLS(fmt.Sprintf(":%d", srv.port), certFile, keyFile)
+		if err != nil {
+			log.Fatalf("Failed to start HTTPS server: %v", err)
+		}
 	}()
 
 	ch := make(chan os.Signal, 1)
