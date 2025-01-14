@@ -145,8 +145,17 @@ export default function SearchPage() {
         const llmResponse = await fetchLLMRetriever('movies', querySearch, amount, threshold);
         const object_ids = llmResponse.data.data.result;
         const query = object_ids.map((id: string) => `object_ids=${id}`).join('&');
-        const response = await fetchSearchSpecificMovie(query, 1);
-        setMovieResults(response.data.data);
+        if (query != '') {
+          const response = await fetchSearchSpecificMovie(query, 1);
+          setMovieResults(response.data.data);
+        } else {
+          setMovieResults({
+            page: 1,
+            results: [],
+            total_pages: 0,
+            total_results: 0,
+          });
+        }
       }
     } catch (err) {
       console.log(err);
