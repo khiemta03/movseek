@@ -4,7 +4,6 @@ import React, { useState } from 'react';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { TMDB_API } from '@/utils/constants';
 import Link from 'next/link';
-import { Movie } from '@/models/search-types';
 import Rating from '@/components/favorites/rating';
 import { Button } from '@/components/ui/button';
 import { Heart, Bookmark, Star, CircleMinus } from 'lucide-react';
@@ -13,15 +12,21 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import { Slider } from '@/components/ui/slider';
 import { addSavedItem, removeSavedItem } from '@/apis/saved-items';
 import { addRating, deleteRating, updateRating } from '@/apis/ratings';
+import { ToastAction } from '@/components/ui/toast';
+import { MovieList } from '@/models/movie-list-types';
+import { usePathname } from 'next/navigation';
+import { TVList } from '@/models/tv-list-types';
 
 interface FavoriteMovieCardProps {
-  movie: Movie;
+  movie: MovieList;
   isFavorite: boolean;
   isWatchlist: boolean;
   rated: number | null;
   user_id: string;
   avatar: string;
   username: string;
+  changeRating: () => void;
+  changeItem: (item: MovieList | TVList) => void;
 }
 
 const FavoriteMovieCard: React.FC<FavoriteMovieCardProps> = ({
@@ -32,8 +37,11 @@ const FavoriteMovieCard: React.FC<FavoriteMovieCardProps> = ({
   user_id,
   avatar,
   username,
+  changeRating,
+  changeItem,
 }) => {
   const { toast } = useToast();
+  const pathname = usePathname();
   const [imageSrc, setImageSrc] = useState(TMDB_API.POSTER(movie.poster_path));
   const [favorite, setFavorite] = useState(isFavorite);
   const [watchlist, setwatchlist] = useState(isWatchlist);
@@ -43,17 +51,43 @@ const FavoriteMovieCard: React.FC<FavoriteMovieCardProps> = ({
   const handlClickFavorite = async (favorite: boolean) => {
     try {
       if (!favorite) {
-        await addSavedItem(movie.id, 'movie', 'favorite', user_id);
+        if (pathname != '/favorites') {
+          await addSavedItem(movie.id, 'movie', 'favorite', user_id);
+        }
       } else {
         await removeSavedItem(movie.id, 'movie', 'favorite', user_id);
+        if (pathname == '/favorites') {
+          changeItem(movie);
+        }
       }
       setFavorite(!favorite);
-      toast({
-        title: 'Success',
-        description: `${movie.title} was ${favorite ? 'removed from' : 'added to'} your favourite list.`,
-        duration: 3000,
-        className: 'bg-green-600 text-white border border-gray-200',
-      });
+      if (pathname == '/favorites') {
+        toast({
+          title: 'Success',
+          description: `${movie.title} was ${favorite ? 'removed from' : 'added to'} your favourite list.`,
+          duration: 3000,
+          className: 'bg-green-600 text-white border border-gray-200',
+          action: (
+            <ToastAction
+              altText="Undo"
+              className="text-black bg-white hover:bg-gray-200 px-3 py-1 rounded-lg"
+              onClick={async () => {
+                await addSavedItem(movie.id, 'movie', 'favorite', user_id);
+                changeItem(movie);
+              }}
+            >
+              Undo
+            </ToastAction>
+          ),
+        });
+      } else {
+        toast({
+          title: 'Success',
+          description: `${movie.title} was ${favorite ? 'removed from' : 'added to'} your favourite list.`,
+          duration: 3000,
+          className: 'bg-green-600 text-white border border-gray-200',
+        });
+      }
     } catch (error) {
       toast({
         title: 'Error',
@@ -68,17 +102,44 @@ const FavoriteMovieCard: React.FC<FavoriteMovieCardProps> = ({
   const handlClickWatchlist = async (watchlist: boolean) => {
     try {
       if (!watchlist) {
-        await addSavedItem(movie.id, 'movie', 'watchlist', user_id);
+        if (pathname != '/watchlists') {
+          await addSavedItem(movie.id, 'movie', 'watchlist', user_id);
+        }
       } else {
         await removeSavedItem(movie.id, 'movie', 'watchlist', user_id);
+        if (pathname == '/watchlists') {
+          changeItem(movie);
+        }
       }
       setwatchlist(!watchlist);
-      toast({
-        title: 'Success',
-        description: `${movie.title} was ${watchlist ? 'removed from' : 'added to'} your watchlist.`,
-        duration: 3000,
-        className: 'bg-green-600 text-white border border-gray-200',
-      });
+
+      if (pathname == '/watchlists') {
+        toast({
+          title: 'Success',
+          description: `${movie.title} was ${watchlist ? 'removed from' : 'added to'} your watchlist.`,
+          duration: 3000,
+          className: 'bg-green-600 text-white border border-gray-200',
+          action: (
+            <ToastAction
+              altText="Undo"
+              className="text-black bg-white hover:bg-gray-200 px-3 py-1 rounded-lg"
+              onClick={async () => {
+                await addSavedItem(movie.id, 'movie', 'watchlist', user_id);
+                changeItem(movie);
+              }}
+            >
+              Undo
+            </ToastAction>
+          ),
+        });
+      } else {
+        toast({
+          title: 'Success',
+          description: `${movie.title} was ${watchlist ? 'removed from' : 'added to'} your watchlist.`,
+          duration: 3000,
+          className: 'bg-green-600 text-white border border-gray-200',
+        });
+      }
     } catch (error) {
       toast({
         title: 'Error',
@@ -103,12 +164,14 @@ const FavoriteMovieCard: React.FC<FavoriteMovieCardProps> = ({
     try {
       await deleteRating(user_id, movie.id, 'movie');
       setRating(null);
+      setOriginRating(null);
       toast({
         title: 'Success',
         description: `Your rating has been cleared.`,
         duration: 3000,
         className: 'bg-green-600 text-white border border-gray-200',
       });
+      changeRating();
     } catch (error) {
       toast({
         title: 'Error',
@@ -143,6 +206,7 @@ const FavoriteMovieCard: React.FC<FavoriteMovieCardProps> = ({
         duration: 3000,
         className: 'bg-green-600 text-white border border-gray-200',
       });
+      changeRating();
     } catch (error) {
       toast({
         title: 'Error',

@@ -6,11 +6,11 @@ import Image from 'next/image';
 import { User } from '@clerk/nextjs/server';
 import { formatTimestampWithSuffix } from '@/utils/util-functions/favorites-page';
 import Rating from '@/components/movie/rating';
-import { MovieListResults } from '@/models/movie-list-types';
+import { MovieList, MovieListResults } from '@/models/movie-list-types';
 import Loading from '@/app/(main)/loading';
 import FavoriteMovieCard from '@/components/favorites/favorite-movie-card';
 import PaginationCustom from '@/components/favorites/pagination';
-import { TVListResults } from '@/models/tv-list-types';
+import { TVList, TVListResults } from '@/models/tv-list-types';
 import FavoriteTVCard from '@/components/favorites/favorite-tv-card';
 import { getFavoriteItem, getWatchlistItem } from '@/apis/saved-items';
 import { fetchSearchSpecificMovie, fetchSearchSpecificTV } from '@/apis/search';
@@ -28,7 +28,9 @@ const FavoritesPage: React.FC<FavoritesPageProps> = ({ user }) => {
   const type = searchParams.get('type');
   const [src, setSrc] = useState(user?.imageUrl);
   const [movieResults, setMovieResults] = useState<MovieListResults | null>(null);
+  const [originalMovieResults, setOriginalMovieResults] = useState<MovieList[] | null>(null);
   const [tvResults, setTVResults] = useState<TVListResults | null>(null);
+  const [originalTVResults, setOriginalTVResults] = useState<TVList[] | null>(null);
   const [loading, setLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const [isNewAcsess, setIsNewAcsess] = useState(true);
@@ -49,6 +51,79 @@ const FavoritesPage: React.FC<FavoritesPageProps> = ({ user }) => {
 
   const findRatingByMediaAndType = (media_id: number, type: 'movie' | 'tv_show') => {
     return ratings.find((rating) => rating.media_id === media_id && rating.type === type)?.rating || null;
+  };
+
+  const changeRating = async () => {
+    const ratingsResponse = await getRatingsByUser(user?.id ?? '');
+    setRatings(ratingsResponse.data.data.ratings);
+  };
+
+  const changeMovieFavorite = (movie: MovieList | TVList) => {
+    if ('name' in movie) {
+      return;
+    }
+
+    setMovieResults((prevResults) => {
+      if (!prevResults) return null;
+
+      const isAlreadyInResults = prevResults.results.some((e) => e.id === movie.id);
+
+      if (isAlreadyInResults) {
+        return {
+          ...prevResults,
+          results: prevResults.results.filter((e) => e.id !== movie.id),
+        };
+      }
+
+      if (originalMovieResults) {
+        const originalIndex = originalMovieResults.findIndex((e) => e.id === movie.id);
+        const updatedResults = [...prevResults.results];
+        updatedResults.splice(originalIndex, 0, movie);
+        return {
+          ...prevResults,
+          results: updatedResults,
+        };
+      }
+
+      return {
+        ...prevResults,
+        results: [...prevResults.results, movie],
+      };
+    });
+  };
+
+  const changeTVFavorite = (tv: MovieList | TVList) => {
+    if ('title' in tv) {
+      return;
+    }
+
+    setTVResults((prevResults) => {
+      if (!prevResults) return null;
+
+      const isAlreadyInResults = prevResults.results.some((e) => e.id === tv.id);
+
+      if (isAlreadyInResults) {
+        return {
+          ...prevResults,
+          results: prevResults.results.filter((e) => e.id !== tv.id),
+        };
+      }
+
+      if (originalTVResults) {
+        const originalIndex = originalTVResults.findIndex((e) => e.id === tv.id);
+        const updatedResults = [...prevResults.results];
+        updatedResults.splice(originalIndex, 0, tv);
+        return {
+          ...prevResults,
+          results: updatedResults,
+        };
+      }
+
+      return {
+        ...prevResults,
+        results: [...prevResults.results, tv],
+      };
+    });
   };
 
   const fetchData = async (page: string | null, isChangeMode: boolean) => {
@@ -132,6 +207,18 @@ const FavoritesPage: React.FC<FavoritesPageProps> = ({ user }) => {
     fetchData(page, false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page]);
+
+  useEffect(() => {
+    if (movieResults) {
+      setOriginalMovieResults(movieResults.results);
+    }
+  }, [movieResults]);
+
+  useEffect(() => {
+    if (tvResults) {
+      setOriginalTVResults(tvResults.results);
+    }
+  }, [tvResults]);
 
   const updateUrl = (key: string, value: string | null) => {
     const url = new URL(window.location.href);
@@ -239,9 +326,9 @@ const FavoritesPage: React.FC<FavoritesPageProps> = ({ user }) => {
                       movieResults.results.length > 0 ? (
                         <>
                           <>
-                            {movieResults.results.map((movie, index) => (
+                            {movieResults.results.map((movie) => (
                               <FavoriteMovieCard
-                                key={index}
+                                key={movie.id}
                                 movie={movie}
                                 isFavorite={true}
                                 isWatchlist={movieWatchlist.includes(movie.id)}
@@ -249,6 +336,8 @@ const FavoritesPage: React.FC<FavoritesPageProps> = ({ user }) => {
                                 user_id={user?.id ?? ''}
                                 avatar={user?.imageUrl ?? ''}
                                 username={(user?.firstName ?? '') + ' ' + (user?.lastName ?? '')}
+                                changeRating={changeRating}
+                                changeItem={changeMovieFavorite}
                               />
                             ))}
                           </>
@@ -276,9 +365,9 @@ const FavoritesPage: React.FC<FavoritesPageProps> = ({ user }) => {
                       tvResults.results.length > 0 ? (
                         <>
                           <>
-                            {tvResults.results.map((tv, index) => (
+                            {tvResults.results.map((tv) => (
                               <FavoriteTVCard
-                                key={index}
+                                key={tv.id}
                                 tv={tv}
                                 isFavorite={true}
                                 isWatchlist={tvWatchlist.includes(tv.id)}
@@ -286,6 +375,8 @@ const FavoritesPage: React.FC<FavoritesPageProps> = ({ user }) => {
                                 user_id={user?.id ?? ''}
                                 avatar={user?.imageUrl ?? ''}
                                 username={(user?.firstName ?? '') + ' ' + (user?.lastName ?? '')}
+                                changeRating={changeRating}
+                                changeItem={changeTVFavorite}
                               />
                             ))}
                           </>
