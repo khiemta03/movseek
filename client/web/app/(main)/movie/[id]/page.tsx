@@ -14,7 +14,7 @@ import MainMovieInformationDummy from '@/components/movie/main-movie-information
 import Trailer from '@/components/movie/trailer';
 import RecommendationList from '@/components/movie/recommendations';
 import ReviewsAndRating from '@/components/movie/reviews-and-rating';
-import { useUser } from '@clerk/clerk-react';
+import { useUser } from '@clerk/nextjs';
 
 const MovieDetail = () => {
   const params = useParams();
