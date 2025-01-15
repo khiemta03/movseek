@@ -77,7 +77,7 @@ const ReviewsAndRating: React.FC<ReviewsAndRatingProps> = ({ tv, isSignedIn, use
 
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [originRating, originReview]);
 
   const handleSubmit = async () => {
     if (isSignedIn) {
@@ -239,7 +239,7 @@ const ReviewsAndRating: React.FC<ReviewsAndRatingProps> = ({ tv, isSignedIn, use
                   value={[myRating != null ? myRating : 0]}
                   max={100}
                   step={10}
-                  onValueChange={(value) => setMyRating(value[0])}
+                  onValueChange={(value) => setMyRating(value[0] > 0 ? value[0] : null)}
                 />
                 <Button
                   variant="default"
