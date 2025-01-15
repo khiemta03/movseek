@@ -14,6 +14,7 @@ import TVSearchCard from '@/components/search/tv-search-card';
 import { fetchGenresTV, fetchTVTopRated } from '@/apis/tv-list';
 import useInitFilterSortState from '@/hooks/useInitFilterSortState';
 import { useRouter } from 'next/navigation';
+import { toast } from '@/hooks/use-toast';
 
 export default function TVTopRatedPage() {
   const searchParams = useSearchParams();
@@ -102,11 +103,21 @@ export default function TVTopRatedPage() {
     const dateValue = new Date(e.target.value);
     if (!isNaN(dateValue.getTime())) {
       if (key === 'from' && filterSortState.releaseDate.to && dateValue > filterSortState.releaseDate.to) {
-        alert('The "from" date cannot be greater than the "to" date.');
+        toast({
+          title: 'Invalid',
+          description: 'The "from" date cannot be greater than the "to" date.',
+          duration: 3000,
+          className: 'bg-red-600 text-white border border-gray-200',
+        });
         return;
       }
       if (key === 'to' && filterSortState.releaseDate.from && dateValue < filterSortState.releaseDate.from) {
-        alert('The "to" date cannot be earlier than the "from" date.');
+        toast({
+          title: 'Invalid',
+          description: 'The "to" date cannot be earlier than the "from" date.',
+          duration: 3000,
+          className: 'bg-red-600 text-white border border-gray-200',
+        });
         return;
       }
       updateNestedFilterSort('releaseDate', key, dateValue);
