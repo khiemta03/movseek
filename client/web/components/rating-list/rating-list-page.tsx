@@ -53,6 +53,11 @@ const RatinglistPage: React.FC<RatinglistPageProps> = ({ user }) => {
     return ratings.find((rating) => rating.media_id === media_id && rating.type === type)?.rating || null;
   };
 
+  const changeRating = async () => {
+    const ratingsResponse = await getRatingsByUser(user?.id ?? '');
+    setRatings(ratingsResponse.data.data.ratings);
+  };
+
   const fetchData = async (page: string | null, isChangeMode: boolean) => {
     try {
       setLoading(true);
@@ -286,6 +291,8 @@ const RatinglistPage: React.FC<RatinglistPageProps> = ({ user }) => {
                                 user_id={user?.id ?? ''}
                                 avatar={user?.imageUrl ?? ''}
                                 username={(user?.firstName ?? '') + ' ' + (user?.lastName ?? '')}
+                                changeRating={changeRating}
+                                changeItem={() => {}}
                               />
                             ))}
                           </>
@@ -323,6 +330,8 @@ const RatinglistPage: React.FC<RatinglistPageProps> = ({ user }) => {
                                 user_id={user?.id ?? ''}
                                 avatar={user?.imageUrl ?? ''}
                                 username={(user?.firstName ?? '') + ' ' + (user?.lastName ?? '')}
+                                changeRating={changeRating}
+                                changeItem={() => {}}
                               />
                             ))}
                           </>
